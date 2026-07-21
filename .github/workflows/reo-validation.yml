@@ -1,0 +1,160 @@
+name: REO Validation
+
+on:
+  push:
+    branches: [ main, master, develop ]
+    paths:
+      - 'ontology/**'
+      - 'examples/**'
+      - 'scripts/**'
+      - '.github/workflows/**'
+  pull_request:
+    branches: [ main, master ]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    name: Validate REO Ontology
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install pyshacl rdflib
+
+      - name: Validate syntax (Turtle files)
+        run: python scripts/validate_syntax.py
+
+      - name: Run SHACL validation
+        id: shacl
+        continue-on-error: true 
+        run: >
+          python -m pyshacl
+          -s ontology/reo-shapes.ttl
+          -e ontology/reo-core.ttl
+          -i rdfs
+          --allow-warnings
+          -o examples/medical-emergency/validation-report.txt
+          -f human
+          examples/medical-emergency/hospital.ttl
+
+      # - name: Commit validation report
+      #   run: >
+      #     git config user.name "github-actions[bot]" &&
+      #     git config user.email "github-actions[bot]@users.noreply.github.com" &&
+      #     git add examples/medical-emergency/validation-report.txt &&
+      #     git diff --cached --quiet || git commit -m "chore: update validation report [skip ci]" &&
+      #     git push
+
+      - name: Test Case 01 — Success
+        run: >
+          python -m pyshacl
+          -s ontology/reo-shapes.ttl
+          -e ontology/reo-core.ttl
+          -i rdfs
+          --allow-warnings          
+          -o test-cases/01-success/report.txt
+          -f human
+          test-cases/01-success/hospital-success.ttl
+
+      - name: Test Case 02 — Success with warning
+        continue-on-error: true
+        run: >
+          python -m pyshacl
+          -s ontology/reo-shapes.ttl
+          -e ontology/reo-core.ttl
+          -i rdfs
+          --allow-warnings
+          -o test-cases/02-success-with-warning/report.txt
+          -f human
+          test-cases/02-success-with-warning/hospital-warning.ttl
+      
+      - name: Test Case 03 — Failure
+        continue-on-error: true
+        run: >
+          python -m pyshacl
+          -s ontology/reo-shapes.ttl
+          -e ontology/reo-core.ttl
+          -i rdfs
+          --allow-warnings
+          -o test-cases/03-violations/report.txt
+          -f human
+          test-cases/03-violations/hospital-violations.ttl
+
+      - name: Reference derivation checker (requirement-state and impact)
+        run: python prototype.py
+
+          
+      - name: Commit validation reports
+        run: |
+          git config user.name "github-actions[bot]" 
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add \
+            examples/medical-emergency/validation-report.txt \
+            test-cases/01-success/report.txt \
+            test-cases/02-success-with-warning/report.txt \
+            test-cases/03-violations/report.txt
+          if ! git diff --cached --quiet; then
+            git commit -m "chore: update validation reports [skip ci]"
+            git push
+          else
+            echo "No changes to commit"
+          fi
+
+      - name: Upload validation report
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: validation-report
+          path: examples/medical-emergency/validation-report.txt
+          retention-days: 30
+
+      - name: Check validation result
+        run: |
+          if grep -q "Conforms: False" examples/medical-emergency/validation-report.txt; then
+            echo "❌ VALIDATION FAILED"
+            cat examples/medical-emergency/validation-report.txt
+            exit 1
+          else
+            echo "✅ VALIDATION PASSED"
+            cat examples/medical-emergency/validation-report.txt
+          fi
+
+  build-dist:
+    runs-on: ubuntu-latest
+    name: Build Distribution Files
+    needs: validate
+    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Build distribution
+        run: |
+          mkdir -p dist
+          cat ontology/reo-core.ttl > dist/reo-full.ttl
+          echo "" >> dist/reo-full.ttl
+          cat ontology/reo-axioms.ttl >> dist/reo-full.ttl
+          echo "" >> dist/reo-full.ttl
+          cat examples/medical-emergency/hospital.ttl >> dist/reo-full.ttl
+          echo "Distribution files built."
+
+      - name: Upload distribution
+        uses: actions/upload-artifact@v4
+        with:
+          name: reo-dist
+          path: dist/
+          retention-days: 90

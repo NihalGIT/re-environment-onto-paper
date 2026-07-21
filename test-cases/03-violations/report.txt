@@ -1,0 +1,157 @@
+Validation Report
+Conforms: False
+Results (24):
+Constraint Violation in InConstraintComponent (http://www.w3.org/ns/shacl#InConstraintComponent):
+	Severity: sh:Violation
+	Source Shape: [ sh:datatype xsd:string ; sh:in ( Literal("AND") Literal("OR") Literal("leaf") ) ; sh:maxCount Literal("1", datatype=xsd:integer) ; sh:message Literal("refinementType must be AND, OR, or leaf.") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path reo:refinementType ; sh:severity sh:Violation ]
+	Focus Node: ex:BadGoal_BadRefinement
+	Value Node: Literal("INVALID")
+	Result Path: reo:refinementType
+	Message: refinementType must be AND, OR, or leaf.
+Constraint Violation in InConstraintComponent (http://www.w3.org/ns/shacl#InConstraintComponent):
+	Severity: sh:Violation
+	Source Shape: [ sh:datatype xsd:string ; sh:in ( Literal("error") Literal("warning") ) ; sh:message Literal("severity ∈ {error, warning}.") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path reo:severity ; sh:severity sh:Violation ]
+	Focus Node: ex:Inv_BadSeverity
+	Value Node: Literal("critical")
+	Result Path: reo:severity
+	Message: severity ∈ {error, warning}.
+Constraint Violation in InConstraintComponent (http://www.w3.org/ns/shacl#InConstraintComponent):
+	Severity: sh:Violation
+	Source Shape: [ sh:datatype xsd:string ; sh:in ( Literal("hard") Literal("soft") ) ; sh:message Literal("enforcementLevel ∈ {hard, soft}.") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path reo:enforcementLevel ; sh:severity sh:Violation ]
+	Focus Node: ex:BadConstraint_BadLevel
+	Value Node: Literal("medium")
+	Result Path: reo:enforcementLevel
+	Message: enforcementLevel ∈ {hard, soft}.
+Constraint Violation in InConstraintComponent (http://www.w3.org/ns/shacl#InConstraintComponent):
+	Severity: sh:Violation
+	Source Shape: [ sh:datatype xsd:string ; sh:in ( Literal("low") Literal("medium") Literal("high") Literal("critical") ) ; sh:maxCount Literal("1", datatype=xsd:integer) ; sh:message Literal("impactLevel ∈ {low, medium, high, critical}.") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path reo:impactLevel ; sh:severity sh:Violation ]
+	Focus Node: ex:BadUncertainty_BadImpact
+	Value Node: Literal("severe")
+	Result Path: reo:impactLevel
+	Message: impactLevel ∈ {low, medium, high, critical}.
+Constraint Violation in InConstraintComponent (http://www.w3.org/ns/shacl#InConstraintComponent):
+	Severity: sh:Violation
+	Source Shape: [ sh:datatype xsd:string ; sh:in ( Literal("string") Literal("integer") Literal("decimal") Literal("boolean") Literal("enum") Literal("reference") ) ; sh:message Literal("propertyType ∈ {string, integer, decimal, boolean, enum, reference}.") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path reo:propertyType ; sh:severity sh:Violation ]
+	Focus Node: ex:Prop_BadType
+	Value Node: Literal("invalid_type")
+	Result Path: reo:propertyType
+	Message: propertyType ∈ {string, integer, decimal, boolean, enum, reference}.
+Constraint Violation in InConstraintComponent (http://www.w3.org/ns/shacl#InConstraintComponent):
+	Severity: sh:Violation
+	Source Shape: [ sh:datatype xsd:string ; sh:in ( Literal("unvalidated") Literal("validated") Literal("rejected") ) ; sh:maxCount Literal("1", datatype=xsd:integer) ; sh:message Literal("status ∈ {unvalidated, validated, rejected}.") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path reo:status ; sh:severity sh:Violation ]
+	Focus Node: ex:BadUncertainty_BadStatus
+	Value Node: Literal("pending")
+	Result Path: reo:status
+	Message: status ∈ {unvalidated, validated, rejected}.
+Constraint Violation in MaxInclusiveConstraintComponent (http://www.w3.org/ns/shacl#MaxInclusiveConstraintComponent):
+	Severity: sh:Violation
+	Source Shape: [ sh:datatype xsd:integer ; sh:maxCount Literal("1", datatype=xsd:integer) ; sh:maxInclusive Literal("10", datatype=xsd:integer) ; sh:message Literal("priority ∈ [1,10] — 1 critical, 10 low.") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:minInclusive Literal("1", datatype=xsd:integer) ; sh:path reo:priority ; sh:severity sh:Violation ]
+	Focus Node: ex:BadGoal_BadPriority
+	Value Node: Literal("99", datatype=xsd:integer)
+	Result Path: reo:priority
+	Message: priority ∈ [1,10] — 1 critical, 10 low.
+Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
+	Severity: sh:Violation
+	Source Shape: [ sh:class reo:Actor ; sh:message Literal("A Goal must have at least one stakeholder (∀g ∈ G, ∀a_id ∈ g.stakeholders : ∃a ∈ A).") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path reo:hasStakeholder ; sh:severity sh:Violation ]
+	Focus Node: ex:BadGoal_NoStakeholder
+	Result Path: reo:hasStakeholder
+	Message: A Goal must have at least one stakeholder (∀g ∈ G, ∀a_id ∈ g.stakeholders : ∃a ∈ A).
+Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
+	Severity: sh:Violation
+	Source Shape: [ sh:class reo:Goal ; sh:message Literal("An Actor must be responsible for at least one Goal (∀g ∈ G : ∃a ∈ A : responsible_for(a,g)).") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path reo:isResponsibleFor ; sh:severity sh:Violation ]
+	Focus Node: ex:BadActor_NoGoal
+	Result Path: reo:isResponsibleFor
+	Message: An Actor must be responsible for at least one Goal (∀g ∈ G : ∃a ∈ A : responsible_for(a,g)).
+Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
+	Severity: sh:Violation
+	Source Shape: [ sh:class reo:Goal ; sh:message Literal("An Actor must be responsible for at least one Goal (∀g ∈ G : ∃a ∈ A : responsible_for(a,g)).") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path reo:isResponsibleFor ; sh:severity sh:Violation ]
+	Focus Node: ex:D001_Medication
+	Result Path: reo:isResponsibleFor
+	Message: An Actor must be responsible for at least one Goal (∀g ∈ G : ∃a ∈ A : responsible_for(a,g)).
+Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
+	Severity: sh:Violation
+	Source Shape: [ sh:datatype xsd:string ; sh:maxCount Literal("1", datatype=xsd:integer) ; sh:message Literal("A Context must have a contextId.") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path reo:contextId ; sh:severity sh:Violation ]
+	Focus Node: ex:BadContext_NoId
+	Result Path: reo:contextId
+	Message: A Context must have a contextId.
+Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
+	Severity: sh:Violation
+	Source Shape: [ sh:datatype xsd:string ; sh:maxCount Literal("1", datatype=xsd:integer) ; sh:message Literal("A DomainConcept must have a conceptId.") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path reo:conceptId ; sh:severity sh:Violation ]
+	Focus Node: ex:BadConcept_NoId
+	Result Path: reo:conceptId
+	Message: A DomainConcept must have a conceptId.
+Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
+	Severity: sh:Violation
+	Source Shape: [ sh:datatype xsd:string ; sh:maxCount Literal("1", datatype=xsd:integer) ; sh:message Literal("A Goal must have a unique goalId.") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:minLength Literal("1", datatype=xsd:integer) ; sh:path reo:goalId ; sh:severity sh:Violation ]
+	Focus Node: ex:BadGoal_NoId
+	Result Path: reo:goalId
+	Message: A Goal must have a unique goalId.
+Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
+	Severity: sh:Violation
+	Source Shape: [ sh:datatype xsd:string ; sh:maxCount Literal("1", datatype=xsd:integer) ; sh:message Literal("An Actor must have an actorName.") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:minLength Literal("1", datatype=xsd:integer) ; sh:path reo:actorName ; sh:severity sh:Violation ]
+	Focus Node: ex:D001_Medication
+	Result Path: reo:actorName
+	Message: An Actor must have an actorName.
+Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
+	Severity: sh:Violation
+	Source Shape: [ sh:datatype xsd:string ; sh:maxCount Literal("1", datatype=xsd:integer) ; sh:message Literal("An Actor must have exactly one non-empty actorId.") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:minLength Literal("1", datatype=xsd:integer) ; sh:path reo:actorId ; sh:severity sh:Violation ]
+	Focus Node: ex:BadActor_NoId
+	Result Path: reo:actorId
+	Message: An Actor must have exactly one non-empty actorId.
+Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
+	Severity: sh:Violation
+	Source Shape: [ sh:datatype xsd:string ; sh:maxCount Literal("1", datatype=xsd:integer) ; sh:message Literal("An Actor must have exactly one non-empty actorId.") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:minLength Literal("1", datatype=xsd:integer) ; sh:path reo:actorId ; sh:severity sh:Violation ]
+	Focus Node: ex:D001_Medication
+	Result Path: reo:actorId
+	Message: An Actor must have exactly one non-empty actorId.
+Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
+	Severity: sh:Violation
+	Source Shape: [ sh:datatype xsd:string ; sh:maxCount Literal("1", datatype=xsd:integer) ; sh:message Literal("An Interaction must have an interactionId.") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path reo:interactionId ; sh:severity sh:Violation ]
+	Focus Node: ex:BadInteraction_NoId
+	Result Path: reo:interactionId
+	Message: An Interaction must have an interactionId.
+Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
+	Severity: sh:Violation
+	Source Shape: [ sh:datatype xsd:string ; sh:maxCount Literal("1", datatype=xsd:integer) ; sh:message Literal("An Uncertainty must have an uncertaintyId.") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path reo:uncertaintyId ; sh:severity sh:Violation ]
+	Focus Node: ex:BadUncertainty_NoId
+	Result Path: reo:uncertaintyId
+	Message: An Uncertainty must have an uncertaintyId.
+Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
+	Severity: sh:Violation
+	Source Shape: [ sh:datatype xsd:string ; sh:message Literal("A RegulatoryConstraint must cite its source legal text (∀c ∈ C_normative : ∃ authoritative_text(c)).") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path reo:hasAuthoritativeText ; sh:severity sh:Violation ]
+	Focus Node: ex:BadConstraint_NoText
+	Result Path: reo:hasAuthoritativeText
+	Message: A RegulatoryConstraint must cite its source legal text (∀c ∈ C_normative : ∃ authoritative_text(c)).
+Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
+	Severity: sh:Violation
+	Source Shape: [ sh:datatype xsd:string ; sh:message Literal("An Actor must have an authorityLevel (referential integrity A-C).") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path reo:authorityLevel ; sh:severity sh:Violation ]
+	Focus Node: ex:BadActor_NoAuthority
+	Result Path: reo:authorityLevel
+	Message: An Actor must have an authorityLevel (referential integrity A-C).
+Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
+	Severity: sh:Violation
+	Source Shape: [ sh:datatype xsd:string ; sh:message Literal("An Actor must have an authorityLevel (referential integrity A-C).") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path reo:authorityLevel ; sh:severity sh:Violation ]
+	Focus Node: ex:D001_Medication
+	Result Path: reo:authorityLevel
+	Message: An Actor must have an authorityLevel (referential integrity A-C).
+Constraint Violation in NotConstraintComponent (http://www.w3.org/ns/shacl#NotConstraintComponent):
+	Severity: sh:Violation
+	Source Shape: [ sh:message Literal("A StrategicGoal cannot be a leaf goal — it must be decomposed.") ; sh:not [ sh:hasValue Literal("leaf") ] ; sh:path reo:refinementType ; sh:severity sh:Violation ]
+	Focus Node: ex:BadStrategic_Leaf
+	Value Node: Literal("leaf")
+	Result Path: reo:refinementType
+	Message: A StrategicGoal cannot be a leaf goal — it must be decomposed.
+Constraint Violation in OrConstraintComponent (http://www.w3.org/ns/shacl#OrConstraintComponent):
+	Severity: sh:Violation
+	Source Shape: [ sh:maxCount Literal("1", datatype=xsd:integer) ; sh:message Literal("target ∈ A ∪ E_D — target must be an Actor or a DomainConcept.") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:or ( [ sh:class reo:Actor ] [ sh:class reo:DomainConcept ] ) ; sh:path reo:hasTarget ; sh:severity sh:Violation ]
+	Focus Node: ex:BadInteraction_BadSource
+	Value Node: ex:Pharmacist
+	Result Path: reo:hasTarget
+	Message: target ∈ A ∪ E_D — target must be an Actor or a DomainConcept.
+Constraint Violation in OrConstraintComponent (http://www.w3.org/ns/shacl#OrConstraintComponent):
+	Severity: sh:Violation
+	Source Shape: [ sh:maxCount Literal("1", datatype=xsd:integer) ; sh:message Literal("target ∈ A ∪ E_D — target must be an Actor or a DomainConcept.") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:or ( [ sh:class reo:Actor ] [ sh:class reo:DomainConcept ] ) ; sh:path reo:hasTarget ; sh:severity sh:Violation ]
+	Focus Node: ex:BadInteraction_BadTarget
+	Value Node: ex:BadConstraint_NoText
+	Result Path: reo:hasTarget
+	Message: target ∈ A ∪ E_D — target must be an Actor or a DomainConcept.

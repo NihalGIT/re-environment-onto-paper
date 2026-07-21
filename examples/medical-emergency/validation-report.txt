@@ -1,0 +1,16 @@
+Validation Report
+Conforms: True
+Results (1):
+Validation Result in SPARQLConstraintComponent (http://www.w3.org/ns/shacl#SPARQLConstraintComponent):
+	Severity: sh:Warning
+	Source Shape: reo:UncertaintyShape
+	Focus Node: ex:U001_DrugDBFrequency
+	Value Node: ex:U001_DrugDBFrequency
+	Source Constraint: [ sh:message Literal("Unresolved uncertainty blocks Goals — conditional requirements generated.") ; sh:select Literal("
+                PREFIX reo: <http://re-environment-onto.org/ontology#>
+                SELECT $this WHERE {
+                    $this reo:status "unvalidated" ;
+                          reo:blocks ?goal .
+                }
+            ") ; sh:severity sh:Warning ]
+	Message: Unresolved uncertainty blocks Goals — conditional requirements generated.

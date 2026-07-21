@@ -1,0 +1,629 @@
+@prefix reo:  <http://re-environment-onto.org/ontology#> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix dc:   <http://purl.org/dc/elements/1.1/> .
+
+# ============================================================
+# ONTOLOGY REO — RE-Environment-Onto
+# Version: 1.0.0
+# Author: EE Modelisation Project
+#
+# Models the environment E = <A, G, D, C, X, U, I>
+# as defined in EE Modelisation (Part 1).
+# ============================================================
+
+<http://re-environment-onto.org/ontology>
+    a owl:Ontology ;
+    dc:title "RE-Environment-Onto (REO)" ;
+    dc:description """Ontologie formelle pour l'Environment-Centric 
+    Requirements Engineering. Encode les sept dimensions de 
+    l'environnement socio-technique E = <A, G, D, C, X, U, I>.""" ;
+    dc:version "1.0.0" ;
+    owl:versionIRI <http://re-environment-onto.org/ontology/1.0.0> .
+
+# ============================================================
+# SECTION 1 — A: ACTORS
+# Corresponds to dimension A = {a1, a2, ..., an}
+# Each actor a = <id, name, actor_type, capabilities,
+#   responsibilities, authority_level, organizational_unit,
+#   constraints>
+# ============================================================
+
+reo:Actor a owl:Class ;
+    rdfs:label "Actor"@en ;
+    skos:definition """Entity (human, system or organization) 
+    interacting in the socio-technical environment. 
+    Corresponds to a_i ∈ A.""" .
+
+reo:HumanActor a owl:Class ;
+    rdfs:subClassOf reo:Actor ;
+    rdfs:label "Human Actor"@en ;
+    skos:definition "Human-type actor (physician, pharmacist, etc.)." ;
+    owl:disjointWith reo:SystemActor, reo:OrganizationActor .
+
+reo:SystemActor a owl:Class ;
+    rdfs:subClassOf reo:Actor ;
+    rdfs:label "System Actor"@en ;
+    skos:definition "Software or hardware system actor (EHR, API, etc.)." ;
+    owl:disjointWith reo:HumanActor, reo:OrganizationActor .
+
+reo:OrganizationActor a owl:Class ;
+    rdfs:subClassOf reo:Actor ;
+    rdfs:label "Organization Actor"@en ;
+    skos:definition "Organization-type actor (hospital, regulatory agency, etc.)." ;
+    owl:disjointWith reo:HumanActor, reo:SystemActor .
+
+# Actor Properties
+
+reo:actorId a owl:DatatypeProperty ;
+    rdfs:domain reo:Actor ;
+    rdfs:range xsd:string ;
+    rdfs:label "actor ID" ;
+    skos:definition "Unique identifier of the actor (e.g., PHY001)." .
+
+reo:actorName a owl:DatatypeProperty ;
+    rdfs:domain reo:Actor ;
+    rdfs:range xsd:string ;
+    rdfs:label "actor name" .
+
+reo:authorityLevel a owl:DatatypeProperty ;
+    rdfs:domain reo:Actor ;
+    rdfs:range xsd:string ;
+    rdfs:label "authority level" ;
+    skos:definition "Authority level defining the scope of permitted actions." .
+
+reo:organizationalUnit a owl:DatatypeProperty ;
+    rdfs:domain reo:Actor ;
+    rdfs:range xsd:string ;
+    rdfs:label "organizational unit" .
+
+reo:hasCapability a owl:ObjectProperty ;
+    rdfs:domain reo:Actor ;
+    rdfs:range reo:Action ;
+    rdfs:label "has capability" ;
+    skos:definition "Action that the actor is authorized to perform. capabilities ⊆ P(Actions)." .
+
+reo:isResponsibleFor a owl:ObjectProperty ;
+    rdfs:domain reo:Actor ;
+    rdfs:range reo:Goal ;
+    rdfs:label "is responsible for" ;
+    skos:definition "Goal dont l'acteur est accountable. responsibilities ⊆ G." .
+
+reo:isSubjectTo a owl:ObjectProperty ;
+    rdfs:domain reo:Actor ;
+    rdfs:range reo:Constraint ;
+    rdfs:label "is subject to" ;
+    skos:definition "Constraint directly applicable to this actor. constraints ⊆ C." .
+
+# Actions (atomic capabilities of actors)
+
+reo:Action a owl:Class ;
+    rdfs:label "Action"@en ;
+    skos:definition "Atomic action that an actor can perform (prescribe, diagnose, etc.)." .
+
+
+# ============================================================
+# SECTION 2 — G: GOALS
+# Corresponds to G = <Gs, Go, R_G>
+# Each goal g = <id, name, goal_type, refinement_type,
+#   parent_goals, sub_goals, priority, stakeholders>
+# ============================================================
+
+reo:Goal a owl:Class ;
+    rdfs:label "Goal"@en ;
+    skos:definition """Intentional objective of one or more actors. 
+    Element of G = <Gs, Go, R_G>.""" .
+
+reo:StrategicGoal a owl:Class ;
+    rdfs:subClassOf reo:Goal ;
+    rdfs:label "Strategic Goal"@en ;
+    skos:definition "High-level objective (Gs). Always decomposed into sub-goals." ;
+    owl:disjointWith reo:OperationalGoal .
+
+reo:OperationalGoal a owl:Class ;
+    rdfs:subClassOf reo:Goal ;
+    rdfs:label "Operational Goal"@en ;
+    skos:definition "Leaf goal (Go). Direct seed for requirement derivation." ;
+    owl:disjointWith reo:StrategicGoal .
+
+# Goal Properties
+
+reo:goalId a owl:DatatypeProperty ;
+    rdfs:domain reo:Goal ;
+    rdfs:range xsd:string ;
+    rdfs:label "goal ID" .
+
+reo:goalName a owl:DatatypeProperty ;
+    rdfs:domain reo:Goal ;
+    rdfs:range xsd:string ;
+    rdfs:label "goal name" .
+
+reo:refinementType a owl:DatatypeProperty ;
+    rdfs:domain reo:Goal ;
+    rdfs:range xsd:string ;
+    rdfs:label "refinement type" ;
+    skos:definition "AND = all sub-goals required. OR = at least one is sufficient. ∅ = leaf goal." .
+
+reo:priority a owl:DatatypeProperty ;
+    rdfs:domain reo:Goal ;
+    rdfs:range xsd:integer ;
+    rdfs:label "priority" ;
+    skos:definition "Priority from 1 (critical) to 10 (low). priority ∈ [1,10]." .
+
+reo:refines a owl:ObjectProperty ;
+    rdfs:domain reo:Goal ;
+    rdfs:range reo:Goal ;
+    rdfs:label "refines" ;
+    skos:definition "Relation R_G: this goal is a sub-goal of the object. Must be acyclic." .
+
+reo:hasStakeholder a owl:ObjectProperty ;
+    rdfs:domain reo:Goal ;
+    rdfs:range reo:Actor ;
+    rdfs:label "has stakeholder" ;
+    skos:definition "Actor concerned by this goal. stakeholders ⊆ A." .
+
+
+# ============================================================
+# SECTION 3 — D : DOMAIN
+# Corresponds to D = <E_D, R_D, S_D>
+# Each concept d = <id, name, properties, invariants,
+#   parent_concepts, related_concepts>
+# ============================================================
+
+reo:DomainConcept a owl:Class ;
+    rdfs:label "Domain Concept"@en ;
+    skos:definition """Business domain entity (Medication, Patient, Prescription...). 
+    Element of E_D.""" .
+
+reo:DomainProperty a owl:Class ;
+    rdfs:label "Domain Property"@en ;
+    skos:definition """Attribute of a DomainConcept. 
+    p = <name, property_type, is_mandatory, default_value, reference_target>.""" .
+
+reo:DomainInvariant a owl:Class ;
+    rdfs:label "Domain Invariant"@en ;
+    skos:definition """Rule that must always hold on instances of a concept. 
+    ι = <expression, formal_logic, severity>.""" .
+
+# Domain Concept Properties
+
+reo:conceptId a owl:DatatypeProperty ;
+    rdfs:domain reo:DomainConcept ;
+    rdfs:range xsd:string ;
+    rdfs:label "concept ID" .
+
+reo:conceptName a owl:DatatypeProperty ;
+    rdfs:domain reo:DomainConcept ;
+    rdfs:range xsd:string ;
+    rdfs:label "concept name" .
+
+reo:hasProperty a owl:ObjectProperty ;
+    rdfs:domain reo:DomainConcept ;
+    rdfs:range reo:DomainProperty ;
+    rdfs:label "has property" .
+
+reo:hasInvariant a owl:ObjectProperty ;
+    rdfs:domain reo:DomainConcept ;
+    rdfs:range reo:DomainInvariant ;
+    rdfs:label "has invariant" .
+
+reo:relatedTo a owl:ObjectProperty ;
+    rdfs:domain reo:DomainConcept ;
+    rdfs:range reo:DomainConcept ;
+    rdfs:label "related to" ;
+    skos:definition "Relation R_D between domain concepts." .
+
+# Domain Property Properties
+
+reo:propertyName a owl:DatatypeProperty ;
+    rdfs:domain reo:DomainProperty ;
+    rdfs:range xsd:string ;
+    rdfs:label "property name" .
+
+reo:propertyType a owl:DatatypeProperty ;
+    rdfs:domain reo:DomainProperty ;
+    rdfs:range xsd:string ;
+    rdfs:label "property type" ;
+    skos:definition "string | integer | decimal | boolean | enum | reference" .
+
+reo:isMandatory a owl:DatatypeProperty ;
+    rdfs:domain reo:DomainProperty ;
+    rdfs:range xsd:boolean ;
+    rdfs:label "is mandatory" .
+
+reo:referenceTarget a owl:DatatypeProperty ;
+    rdfs:domain reo:DomainProperty ;
+    rdfs:range xsd:string ;
+    rdfs:label "reference target" ;
+    skos:definition "If propertyType=reference, name of the target DomainConcept." .
+
+# Domain Invariant Properties
+
+reo:invariantExpression a owl:DatatypeProperty ;
+    rdfs:domain reo:DomainInvariant ;
+    rdfs:range xsd:string ;
+    rdfs:label "invariant expression" ;
+    skos:definition "Human-readable expression (e.g., 'dosage > 0')." .
+
+reo:formalLogic a owl:DatatypeProperty ;
+    rdfs:domain reo:DomainInvariant ;
+    rdfs:range xsd:string ;
+    rdfs:label "formal logic" ;
+    skos:definition "Formal encoding machine-verifiable." .
+
+reo:severity a owl:DatatypeProperty ;
+    rdfs:domain reo:DomainInvariant ;
+    rdfs:range xsd:string ;
+    rdfs:label "severity" ;
+    skos:definition "error (blocks derivation) | warning (signal only)." .
+
+
+# ============================================================
+# SECTION 4 — C: CONSTRAINTS
+# Corresponds to C = {c1, c2, ..., cm}
+# Each constraint c = <id, name, constraint_type,
+#   formal_expression, natural_language, applies_to,
+#   enforcement_level, exceptions>
+# ============================================================
+
+reo:Constraint a owl:Class ;
+    rdfs:label "Constraint"@en ;
+    skos:definition "Rule bounding the space of valid requirements. Element of C." .
+
+reo:RegulatoryConstraint a owl:Class ;
+    rdfs:subClassOf reo:Constraint ;
+    rdfs:label "Regulatory Constraint"@en ;
+    skos:definition "Constraint originating from laws, regulations (HIPAA, GDPR, FDA...). C_normative." ;
+    owl:disjointWith reo:BusinessConstraint, reo:TechnicalConstraint, reo:QualityConstraint .
+
+reo:BusinessConstraint a owl:Class ;
+    rdfs:subClassOf reo:Constraint ;
+    rdfs:label "Business Constraint"@en ;
+    skos:definition "Organizational business rule. Part of C_normative." ;
+    owl:disjointWith reo:RegulatoryConstraint, reo:TechnicalConstraint, reo:QualityConstraint .
+
+reo:TechnicalConstraint a owl:Class ;
+    rdfs:subClassOf reo:Constraint ;
+    rdfs:label "Technical Constraint"@en ;
+    skos:definition "Technical constraint (performance, interface, capacity). C_technical." ;
+    owl:disjointWith reo:RegulatoryConstraint, reo:BusinessConstraint, reo:QualityConstraint .
+
+reo:QualityConstraint a owl:Class ;
+    rdfs:subClassOf reo:Constraint ;
+    rdfs:label "Quality Constraint"@en ;
+    skos:definition "Quality constraint (security, availability). Part of C_technical." ;
+    owl:disjointWith reo:RegulatoryConstraint, reo:BusinessConstraint, reo:TechnicalConstraint .
+
+# Constraint Properties
+
+reo:constraintId a owl:DatatypeProperty ;
+    rdfs:domain reo:Constraint ;
+    rdfs:range xsd:string ;
+    rdfs:label "constraint ID" .
+
+reo:constraintName a owl:DatatypeProperty ;
+    rdfs:domain reo:Constraint ;
+    rdfs:range xsd:string ;
+    rdfs:label "constraint name" .
+
+reo:formalExpression a owl:DatatypeProperty ;
+    rdfs:domain reo:Constraint ;
+    rdfs:range xsd:string ;
+    rdfs:label "formal expression" ;
+    skos:definition "Formal encoding machine-verifiable of the constraint." .
+
+reo:naturalLanguage a owl:DatatypeProperty ;
+    rdfs:domain reo:Constraint ;
+    rdfs:range xsd:string ;
+    rdfs:label "natural language" ;
+    skos:definition "Version readable by stakeholders." .
+
+reo:enforcementLevel a owl:DatatypeProperty ;
+    rdfs:domain reo:Constraint ;
+    rdfs:range xsd:string ;
+    rdfs:label "enforcement level" ;
+    skos:definition "hard (inviolable) | soft (preference, relaxable)." .
+
+reo:appliesTo a owl:ObjectProperty ;
+    rdfs:domain reo:Constraint ;
+    rdfs:range owl:Thing ;
+    rdfs:label "applies to" ;
+    skos:definition "Elements governed by this constraint. applies_to ⊆ A ∪ I ∪ G." .
+
+reo:hasException a owl:ObjectProperty ;
+    rdfs:domain reo:Constraint ;
+    rdfs:range reo:Context ;
+    rdfs:label "has exception" ;
+    skos:definition "Contexts in which this constraint does not apply. exceptions ⊆ X." .
+
+reo:hasAuthoritativeText a owl:DatatypeProperty ;
+    rdfs:domain reo:RegulatoryConstraint ;
+    rdfs:range xsd:string ;
+    rdfs:label "authoritative text" ;
+    skos:definition "Reference to the source legal text (mandatory for C_normative)." .
+
+
+# ============================================================
+# SECTION 5 — X: CONTEXTS
+# Corresponds to X = {x1, x2, ..., xk}
+# Each context x = <id, name, properties,
+#   active_constraints, active_actors,
+#   temporal_validity, spatial_scope>
+# ============================================================
+
+reo:Context a owl:Class ;
+    rdfs:label "Context"@en ;
+    skos:definition "Operational situation in which the system operates. Element of X." .
+
+# Context Properties
+
+reo:contextId a owl:DatatypeProperty ;
+    rdfs:domain reo:Context ;
+    rdfs:range xsd:string ;
+    rdfs:label "context ID" .
+
+reo:contextName a owl:DatatypeProperty ;
+    rdfs:domain reo:Context ;
+    rdfs:range xsd:string ;
+    rdfs:label "context name" .
+
+reo:temporalStart a owl:DatatypeProperty ;
+    rdfs:domain reo:Context ;
+    rdfs:range xsd:dateTime ;
+    rdfs:label "temporal start" ;
+    skos:definition "Start of temporal validity. ∅ if permanent." .
+
+reo:temporalEnd a owl:DatatypeProperty ;
+    rdfs:domain reo:Context ;
+    rdfs:range xsd:dateTime ;
+    rdfs:label "temporal end" .
+
+reo:spatialScope a owl:DatatypeProperty ;
+    rdfs:domain reo:Context ;
+    rdfs:range xsd:string ;
+    rdfs:label "spatial scope" ;
+    skos:definition "Geographic or organizational boundary." .
+
+reo:contextProperty a owl:DatatypeProperty ;
+    rdfs:domain reo:Context ;
+    rdfs:range xsd:string ;
+    rdfs:label "context property" ;
+    skos:definition "Operational characteristics (time_critical, resource_constrained...)." .
+
+reo:hasActiveConstraint a owl:ObjectProperty ;
+    rdfs:domain reo:Context ;
+    rdfs:range reo:Constraint ;
+    rdfs:label "has active constraint" ;
+    skos:definition "Active constraints in this context. active_constraints ⊆ C." .
+
+reo:hasActiveActor a owl:ObjectProperty ;
+    rdfs:domain reo:Context ;
+    rdfs:range reo:Actor ;
+    rdfs:label "has active actor" ;
+    skos:definition "Actors operating in this context. active_actors ⊆ A." .
+
+
+# ============================================================
+# SECTION 6 — U: UNCERTAINTIES
+# Corresponds to U = {u1, u2, ..., up}
+# Each uncertainty u = <id, name, uncertainty_type,
+#   subject, impact_level, status,
+#   validation_plan, affects, blocks>
+# ============================================================
+
+reo:Uncertainty a owl:Class ;
+    rdfs:label "Uncertainty"@en ;
+    skos:definition """Epistemic marker on an environment element. 
+    Element of U. Can block requirement derivation.""" .
+
+reo:AssumptionUncertainty a owl:Class ;
+    rdfs:subClassOf reo:Uncertainty ;
+    rdfs:label "Assumption"@en ;
+    skos:definition "Value believed true but not yet validated." ;
+    owl:disjointWith reo:UnknownUncertainty, reo:AmbiguityUncertainty, reo:RiskUncertainty .
+
+reo:UnknownUncertainty a owl:Class ;
+    rdfs:subClassOf reo:Uncertainty ;
+    rdfs:label "Unknown"@en ;
+    skos:definition "Value or decision simply not yet available." ;
+    owl:disjointWith reo:AssumptionUncertainty, reo:AmbiguityUncertainty, reo:RiskUncertainty .
+
+reo:AmbiguityUncertainty a owl:Class ;
+    rdfs:subClassOf reo:Uncertainty ;
+    rdfs:label "Ambiguity"@en ;
+    skos:definition "Conflicting stakeholder views on the same element." ;
+    owl:disjointWith reo:AssumptionUncertainty, reo:UnknownUncertainty, reo:RiskUncertainty .
+
+reo:RiskUncertainty a owl:Class ;
+    rdfs:subClassOf reo:Uncertainty ;
+    rdfs:label "Risk"@en ;
+    skos:definition "Condition that may occur and impact the system." ;
+    owl:disjointWith reo:AssumptionUncertainty, reo:UnknownUncertainty, reo:AmbiguityUncertainty .
+
+# Uncertainty Properties
+
+reo:uncertaintyId a owl:DatatypeProperty ;
+    rdfs:domain reo:Uncertainty ;
+    rdfs:range xsd:string ;
+    rdfs:label "uncertainty ID" .
+
+reo:uncertaintyName a owl:DatatypeProperty ;
+    rdfs:domain reo:Uncertainty ;
+    rdfs:range xsd:string ;
+    rdfs:label "uncertainty name" .
+
+reo:subject a owl:DatatypeProperty ;
+    rdfs:domain reo:Uncertainty ;
+    rdfs:range xsd:string ;
+    rdfs:label "subject" ;
+    skos:definition "Description of what is uncertain." .
+
+reo:impactLevel a owl:DatatypeProperty ;
+    rdfs:domain reo:Uncertainty ;
+    rdfs:range xsd:string ;
+    rdfs:label "impact level" ;
+    skos:definition "low | medium | high | critical" .
+
+reo:status a owl:DatatypeProperty ;
+    rdfs:domain reo:Uncertainty ;
+    rdfs:range xsd:string ;
+    rdfs:label "status" ;
+    skos:definition "unvalidated | validated | rejected" .
+
+reo:validationPlan a owl:DatatypeProperty ;
+    rdfs:domain reo:Uncertainty ;
+    rdfs:range xsd:string ;
+    rdfs:label "validation plan" ;
+    skos:definition "Describes how and when this uncertainty will be resolved." .
+
+reo:affects a owl:ObjectProperty ;
+    rdfs:domain reo:Uncertainty ;
+    rdfs:range owl:Thing ;
+    rdfs:label "affects" ;
+    skos:definition "Elements of E impacted by this uncertainty. affects : U → P(E)." .
+
+reo:blocks a owl:ObjectProperty ;
+    rdfs:domain reo:Uncertainty ;
+    rdfs:range reo:Goal ;
+    rdfs:label "blocks" ;
+    skos:definition """Goals whose derivation is suspended until resolution. 
+    blocks : U → P(G). If non-empty and unresolved → requirement CONDITIONAL.""" .
+
+
+# ============================================================
+# SECTION 7 — I: INTERACTIONS
+# Corresponds to I ⊆ A × (A ∪ E_D)
+# Each interaction i = <id, name, interaction_type,
+#   source, target, data_exchanged, triggering_event,
+#   constraints, protocol>
+# ============================================================
+# Each interaction i = <id, name, interaction_type,
+#   source, target, data_exchanged, triggering_event,
+#   constraints, protocol>
+# ============================================================
+
+reo:Interaction a owl:Class ;
+    rdfs:label "Interaction"@en ;
+    skos:definition """Communication or data flow between actors and/or domain entities. 
+    Element of I ⊆ A × (A ∪ E_D).""" .
+
+reo:CommunicationInteraction a owl:Class ;
+    rdfs:subClassOf reo:Interaction ;
+    rdfs:label "Communication"@en ;
+    owl:disjointWith reo:DataFlowInteraction, reo:ControlFlowInteraction, reo:ServiceCallInteraction .
+
+reo:DataFlowInteraction a owl:Class ;
+    rdfs:subClassOf reo:Interaction ;
+    rdfs:label "DataFlow"@en ;
+    owl:disjointWith reo:CommunicationInteraction, reo:ControlFlowInteraction, reo:ServiceCallInteraction .
+
+reo:ControlFlowInteraction a owl:Class ;
+    rdfs:subClassOf reo:Interaction ;
+    rdfs:label "ControlFlow"@en ;
+    owl:disjointWith reo:CommunicationInteraction, reo:DataFlowInteraction, reo:ServiceCallInteraction .
+
+reo:ServiceCallInteraction a owl:Class ;
+    rdfs:subClassOf reo:Interaction ;
+    rdfs:label "ServiceCall"@en ;
+    owl:disjointWith reo:CommunicationInteraction, reo:DataFlowInteraction, reo:ControlFlowInteraction .
+
+# Interaction Properties
+
+reo:interactionId a owl:DatatypeProperty ;
+    rdfs:domain reo:Interaction ;
+    rdfs:range xsd:string ;
+    rdfs:label "interaction ID" .
+
+reo:interactionName a owl:DatatypeProperty ;
+    rdfs:domain reo:Interaction ;
+    rdfs:range xsd:string ;
+    rdfs:label "interaction name" .
+
+reo:hasSource a owl:ObjectProperty ;
+    rdfs:domain reo:Interaction ;
+    rdfs:range reo:Actor ;
+    rdfs:label "has source" ;
+    skos:definition """Source of the interaction — ALWAYS an Actor. 
+    source ∈ A. Structural constraint: only actors initiate.""" .
+
+reo:hasTarget a owl:ObjectProperty ;
+    rdfs:domain reo:Interaction ;
+    rdfs:range owl:Thing ;
+    rdfs:label "has target" ;
+    skos:definition "Target: an Actor or a DomainConcept. target ∈ A ∪ E_D." .
+
+reo:exchangesData a owl:ObjectProperty ;
+    rdfs:domain reo:Interaction ;
+    rdfs:range reo:DomainConcept ;
+    rdfs:label "exchanges data" ;
+    skos:definition "Domain concepts transferred. data_exchanged ⊆ E_D." .
+
+reo:triggeringEvent a owl:DatatypeProperty ;
+    rdfs:domain reo:Interaction ;
+    rdfs:range xsd:string ;
+    rdfs:label "triggering event" ;
+    skos:definition "Condition that triggers the interaction." .
+
+reo:protocol a owl:DatatypeProperty ;
+    rdfs:domain reo:Interaction ;
+    rdfs:range xsd:string ;
+    rdfs:label "protocol" ;
+    skos:definition "Communication standard (HL7-FHIR, REST, DICOM, SOAP...)." .
+
+reo:governedBy a owl:ObjectProperty ;
+    rdfs:domain reo:Interaction ;
+    rdfs:range reo:Constraint ;
+    rdfs:label "governed by" ;
+    skos:definition "Constraints that govern this interaction. constraints ⊆ C." .
+
+# ============================================================
+# SECTION 8 — OWL AXIOMS - Added here bcse my CI crashes using axioms.ttl directly
+# Structural rules encoding the integrity constraints
+# ============================================================
+
+# Axiom 1: Every Actor must have at least one authorityLevel
+reo:Actor rdfs:subClassOf [
+    a owl:Restriction ;
+    owl:onProperty reo:authorityLevel ;
+    owl:minCardinality 1
+] .
+
+# Axiom 2: Every Interaction must have exactly one source of type Actor
+reo:Interaction rdfs:subClassOf [
+    a owl:Restriction ;
+    owl:onProperty reo:hasSource ;
+    owl:minCardinality 1
+] .
+
+reo:Interaction rdfs:subClassOf [
+    a owl:Restriction ;
+    owl:onProperty reo:hasSource ;
+    owl:maxCardinality 1
+] .
+
+# Axiom 3: Every Goal must have a priority between 1 and 10
+# (encoded in SHACL shapes as OWL cannot handle numeric ranges)
+
+# Axiom 4: Every RegulatoryConstraint must have an authoritative text
+reo:RegulatoryConstraint rdfs:subClassOf [
+    a owl:Restriction ;
+    owl:onProperty reo:hasAuthoritativeText ;
+    owl:minCardinality 1
+] .
+
+# Axiom 5: Every Uncertainty must have an impactLevel
+reo:Uncertainty rdfs:subClassOf [
+    a owl:Restriction ;
+    owl:onProperty reo:impactLevel ;
+    owl:minCardinality 1
+] .
+
+# Axiom 6: Every Uncertainty must have a status
+reo:Uncertainty rdfs:subClassOf [
+    a owl:Restriction ;
+    owl:onProperty reo:status ;
+    owl:minCardinality 1
+] .

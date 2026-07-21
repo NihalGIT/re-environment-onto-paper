@@ -1,0 +1,202 @@
+@prefix reo:  <http://re-environment-onto.org/ontology#> .
+@prefix ex:   <http://hospital.example.org#> .
+@prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+
+# ============================================================
+# TEST CASE — Validation with Violations (Conforms: False)
+# Multiple intentional errors to test SHACL shape detection
+# ============================================================
+
+# --- ACTOR VIOLATIONS ---
+
+# V1: Missing actorId (required by ActorShape)
+ex:BadActor_NoId a reo:HumanActor ;
+    reo:actorName "BadActor" ;
+    reo:authorityLevel "test" ;
+    reo:isResponsibleFor ex:BadGoal .
+
+# V2: Missing authorityLevel (required by ActorShape)
+ex:BadActor_NoAuthority a reo:HumanActor ;
+    reo:actorId "BAD002" ;
+    reo:actorName "NoAuthority" ;
+    reo:isResponsibleFor ex:BadGoal .
+
+# V3: No responsible Goal (required by ActorShape)
+ex:BadActor_NoGoal a reo:HumanActor ;
+    reo:actorId "BAD003" ;
+    reo:actorName "NoGoal" ;
+    reo:authorityLevel "test" .
+
+# --- GOAL VIOLATIONS ---
+
+# V4: Missing goalId (required by GoalShape)
+ex:BadGoal_NoId a reo:OperationalGoal ;
+    reo:goalName "No ID Goal" ;
+    reo:refinementType "leaf" ;
+    reo:priority 1 ;
+    reo:hasStakeholder ex:Physician .
+
+# V5: Priority out of range [1,10] (required by GoalShape)
+ex:BadGoal_BadPriority a reo:OperationalGoal ;
+    reo:goalId "G-BAD" ;
+    reo:goalName "Bad Priority" ;
+    reo:refinementType "leaf" ;
+    reo:priority 99 ;
+    reo:hasStakeholder ex:Physician .
+
+# V6: Invalid refinementType (must be AND/OR/leaf)
+ex:BadGoal_BadRefinement a reo:OperationalGoal ;
+    reo:goalId "G-BAD2" ;
+    reo:goalName "Bad Refinement" ;
+    reo:refinementType "INVALID" ;
+    reo:priority 1 ;
+    reo:hasStakeholder ex:Physician .
+
+# V7: No stakeholder (required by GoalShape)
+ex:BadGoal_NoStakeholder a reo:OperationalGoal ;
+    reo:goalId "G-BAD3" ;
+    reo:goalName "No Stakeholder" ;
+    reo:refinementType "leaf" ;
+    reo:priority 1 .
+
+# V8: StrategicGoal with leaf refinement (invalid)
+ex:BadStrategic_Leaf a reo:StrategicGoal ;
+    reo:goalId "G-BAD4" ;
+    reo:goalName "Strategic as Leaf" ;
+    reo:refinementType "leaf" ;
+    reo:priority 1 ;
+    reo:hasStakeholder ex:Physician .
+
+# --- DOMAIN CONCEPT VIOLATIONS ---
+
+# V9: Missing conceptId (required by DomainConceptShape)
+ex:BadConcept_NoId a reo:DomainConcept ;
+    reo:conceptName "No ID Concept" ;
+    reo:hasProperty ex:Prop_Test .
+
+# V10: Property with invalid type (must be string/integer/decimal/boolean/enum/reference)
+ex:Prop_BadType a reo:DomainProperty ;
+    reo:propertyName "bad_prop" ;
+    reo:propertyType "invalid_type" ;
+    reo:isMandatory true .
+
+# V11: Invariant with invalid severity (must be error/warning)
+ex:Inv_BadSeverity a reo:DomainInvariant ;
+    reo:invariantExpression "test > 0" ;
+    reo:severity "critical" .
+
+# --- CONSTRAINT VIOLATIONS ---
+
+# V12: RegulatoryConstraint without authoritativeText (required)
+ex:BadConstraint_NoText a reo:RegulatoryConstraint ;
+    reo:constraintId "C-BAD" ;
+    reo:constraintName "No Authoritative Text" ;
+    reo:formalExpression "test" ;
+    reo:naturalLanguage "Test constraint." ;
+    reo:enforcementLevel "hard" .
+
+# V13: Invalid enforcementLevel (must be hard/soft)
+ex:BadConstraint_BadLevel a reo:Constraint ;
+    reo:constraintId "C-BAD2" ;
+    reo:constraintName "Bad Level" ;
+    reo:formalExpression "test" ;
+    reo:naturalLanguage "Test." ;
+    reo:enforcementLevel "medium" .
+
+# --- CONTEXT VIOLATIONS ---
+
+# V14: Missing contextId (required by ContextShape)
+ex:BadContext_NoId a reo:Context ;
+    reo:contextName "No ID Context" ;
+    reo:hasActiveActor ex:Physician .
+
+# --- UNCERTAINTY VIOLATIONS ---
+
+# V15: Missing uncertaintyId (required by UncertaintyShape)
+ex:BadUncertainty_NoId a reo:UnknownUncertainty ;
+    reo:uncertaintyName "No ID" ;
+    reo:subject "Test" ;
+    reo:impactLevel "high" ;
+    reo:status "unvalidated" .
+
+# V16: Invalid impactLevel (must be low/medium/high/critical)
+ex:BadUncertainty_BadImpact a reo:UnknownUncertainty ;
+    reo:uncertaintyId "U-BAD" ;
+    reo:uncertaintyName "Bad Impact" ;
+    reo:subject "Test" ;
+    reo:impactLevel "severe" ;
+    reo:status "unvalidated" .
+
+# V17: Invalid status (must be unvalidated/validated/rejected)
+ex:BadUncertainty_BadStatus a reo:UnknownUncertainty ;
+    reo:uncertaintyId "U-BAD2" ;
+    reo:uncertaintyName "Bad Status" ;
+    reo:subject "Test" ;
+    reo:impactLevel "high" ;
+    reo:status "pending" .
+
+# --- INTERACTION VIOLATIONS ---
+
+# V18: Missing interactionId (required by InteractionShape)
+ex:BadInteraction_NoId a reo:DataFlowInteraction ;
+    reo:interactionName "No ID Interaction" ;
+    reo:hasSource ex:Physician ;
+    reo:hasTarget ex:EHR_System ;
+    reo:exchangesData ex:D001_Medication ;
+    reo:protocol "HL7-FHIR" .
+
+# V19: Source is not an Actor (must be Actor type)
+# Using a DomainConcept as source — structural violation
+ex:BadInteraction_BadSource a reo:DataFlowInteraction ;
+    reo:interactionId "I-BAD" ;
+    reo:interactionName "Bad Source" ;
+    reo:hasSource ex:D001_Medication ;
+    reo:hasTarget ex:Pharmacist ;
+    reo:exchangesData ex:D002_Patient ;
+    reo:protocol "HL7-FHIR" .
+
+# V20: Target is not Actor or DomainConcept (invalid target)
+ex:BadInteraction_BadTarget a reo:DataFlowInteraction ;
+    reo:interactionId "I-BAD2" ;
+    reo:interactionName "Bad Target" ;
+    reo:hasSource ex:Physician ;
+    reo:hasTarget ex:BadConstraint_NoText ;
+    reo:exchangesData ex:D001_Medication ;
+    reo:protocol "HL7-FHIR" .
+
+# --- VALID REFERENCE OBJECTS (needed for violations above) ---
+ex:Physician a reo:HumanActor ;
+    reo:actorId "PHY001" ;
+    reo:actorName "Physician" ;
+    reo:authorityLevel "licensed" ;
+    reo:isResponsibleFor ex:BadGoal .
+
+ex:EHR_System a reo:SystemActor ;
+    reo:actorId "SYS001" ;
+    reo:actorName "EHR" ;
+    reo:authorityLevel "system" ;
+    reo:isResponsibleFor ex:BadGoal .
+
+ex:BadGoal a reo:OperationalGoal ;
+    reo:goalId "G-BAD-REF" ;
+    reo:goalName "Reference Goal" ;
+    reo:refinementType "leaf" ;
+    reo:priority 1 ;
+    reo:hasStakeholder ex:Physician .
+
+ex:D001_Medication a reo:DomainConcept ;
+    reo:conceptId "D-001" ;
+    reo:conceptName "Medication" ;
+    reo:hasProperty ex:Prop_Test .
+
+ex:D002_Patient a reo:DomainConcept ;
+    reo:conceptId "D-002" ;
+    reo:conceptName "Patient" ;
+    reo:hasProperty ex:Prop_Test .
+
+ex:Prop_Test a reo:DomainProperty ;
+    reo:propertyName "test" ;
+    reo:propertyType "string" ;
+    reo:isMandatory true .

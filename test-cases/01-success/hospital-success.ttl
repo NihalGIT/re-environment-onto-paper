@@ -1,0 +1,200 @@
+@prefix reo:  <http://re-environment-onto.org/ontology#> .
+@prefix ex:   <http://hospital.example.org#> .
+@prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+
+# ============================================================
+# TEST CASE — Successful Validation (Conforms: True)
+# All uncertainties resolved, all constraints satisfied
+# ============================================================
+
+# --- ACTORS (3) ---
+ex:Physician a reo:HumanActor ;
+    reo:actorId "PHY001" ;
+    reo:actorName "Physician" ;
+    reo:authorityLevel "licensed_medical_professional" ;
+    reo:organizationalUnit "EmergencyDept" ;
+    reo:hasCapability ex:Action_Prescribe ;
+    reo:isResponsibleFor ex:G001 ;
+    reo:isSubjectTo ex:C001_HIPAA ;
+    reo:isSubjectTo ex:C002_FDA .
+
+ex:Pharmacist a reo:HumanActor ;
+    reo:actorId "PHA001" ;
+    reo:actorName "Pharmacist" ;
+    reo:authorityLevel "licensed_pharmacist" ;
+    reo:organizationalUnit "Pharmacy" ;
+    reo:hasCapability ex:Action_Dispense ;
+    reo:isResponsibleFor ex:G005 ;
+    reo:isSubjectTo ex:C002_FDA .
+
+ex:EHR_System a reo:SystemActor ;
+    reo:actorId "SYS001" ;
+    reo:actorName "EHR_System" ;
+    reo:authorityLevel "system_level" ;
+    reo:organizationalUnit "IT_Department" ;
+    reo:hasCapability ex:Action_StoreRecords ;
+    reo:isResponsibleFor ex:G005 ;
+    reo:isSubjectTo ex:C001_HIPAA ;
+    reo:isSubjectTo ex:C002_FDA .
+
+ex:Action_Prescribe a reo:Action ; rdfs:label "prescribe" .
+ex:Action_Dispense a reo:Action ; rdfs:label "dispense" .
+ex:Action_StoreRecords a reo:Action ; rdfs:label "store_records" .
+
+# --- GOALS (5) — All resolved, no uncertainties ---
+ex:G001 a reo:StrategicGoal ;
+    reo:goalId "G-001" ;
+    reo:goalName "Ensure Safe Medication Prescribing" ;
+    reo:refinementType "AND" ;
+    reo:priority 1 ;
+    reo:hasStakeholder ex:Physician .
+
+ex:G002 a reo:OperationalGoal ;
+    reo:goalId "G-002" ;
+    reo:goalName "Verify Drug Interactions" ;
+    reo:refinementType "leaf" ;
+    reo:priority 1 ;
+    reo:hasStakeholder ex:Physician ;
+    reo:refines ex:G001 .
+
+ex:G003 a reo:OperationalGoal ;
+    reo:goalId "G-003" ;
+    reo:goalName "Check Patient Allergies" ;
+    reo:refinementType "leaf" ;
+    reo:priority 1 ;
+    reo:hasStakeholder ex:Physician ;
+    reo:refines ex:G001 .
+
+ex:G004 a reo:OperationalGoal ;
+    reo:goalId "G-004" ;
+    reo:goalName "Validate Dosage" ;
+    reo:refinementType "leaf" ;
+    reo:priority 2 ;
+    reo:hasStakeholder ex:Physician ;
+    reo:refines ex:G001 .
+
+ex:G005 a reo:OperationalGoal ;
+    reo:goalId "G-005" ;
+    reo:goalName "Notify Pharmacist" ;
+    reo:refinementType "leaf" ;
+    reo:priority 2 ;
+    reo:hasStakeholder ex:Pharmacist ;
+    reo:hasStakeholder ex:EHR_System ;
+    reo:refines ex:G001 .
+
+# --- DOMAIN CONCEPTS (2) ---
+ex:D001_Medication a reo:DomainConcept ;
+    reo:conceptId "D-001" ;
+    reo:conceptName "Medication" ;
+    reo:hasProperty ex:Prop_MedName ;
+    reo:hasProperty ex:Prop_Dosage ;
+    reo:hasInvariant ex:Inv_DosagePositive ;
+    reo:relatedTo ex:D002_Patient .
+
+ex:D002_Patient a reo:DomainConcept ;
+    reo:conceptId "D-002" ;
+    reo:conceptName "Patient" ;
+    reo:hasProperty ex:Prop_PatientId ;
+    reo:hasProperty ex:Prop_Allergies ;
+    reo:hasInvariant ex:Inv_PatientIdUnique ;
+    reo:relatedTo ex:D001_Medication .
+
+ex:Prop_MedName a reo:DomainProperty ;
+    reo:propertyName "name" ;
+    reo:propertyType "string" ;
+    reo:isMandatory true .
+
+ex:Prop_Dosage a reo:DomainProperty ;
+    reo:propertyName "dosage" ;
+    reo:propertyType "decimal" ;
+    reo:isMandatory true .
+
+ex:Prop_PatientId a reo:DomainProperty ;
+    reo:propertyName "id" ;
+    reo:propertyType "string" ;
+    reo:isMandatory true .
+
+ex:Prop_Allergies a reo:DomainProperty ;
+    reo:propertyName "allergies" ;
+    reo:propertyType "reference" ;
+    reo:isMandatory false ;
+    reo:referenceTarget "KnownSubstances" .
+
+ex:Inv_DosagePositive a reo:DomainInvariant ;
+    reo:invariantExpression "dosage > 0" ;
+    reo:formalLogic "dosage > 0" ;
+    reo:severity "error" .
+
+ex:Inv_PatientIdUnique a reo:DomainInvariant ;
+    reo:invariantExpression "id is unique across all patients" ;
+    reo:formalLogic "∀p1,p2 ∈ Patient : p1.id = p2.id → p1 = p2" ;
+    reo:severity "error" .
+
+# --- CONSTRAINTS (2) ---
+ex:C001_HIPAA a reo:RegulatoryConstraint ;
+    reo:constraintId "C-001" ;
+    reo:constraintName "HIPAA Privacy Rule" ;
+    reo:formalExpression "access_record → has_consent(patient) ∨ emergency_override" ;
+    reo:naturalLanguage "Patient consent required before accessing medical records, unless emergency override applies." ;
+    reo:enforcementLevel "hard" ;
+    reo:hasAuthoritativeText "45 CFR Parts 160 and 164 (HIPAA Privacy Rule, HHS 2013)" ;
+    reo:appliesTo ex:Physician ;
+    reo:appliesTo ex:EHR_System ;
+    reo:hasException ex:X001_EmergencyDept .
+
+ex:C002_FDA a reo:RegulatoryConstraint ;
+    reo:constraintId "C-002" ;
+    reo:constraintName "FDA Prescription Rules" ;
+    reo:formalExpression "prescribe(medication) → actor.authority = licensed_medical_professional" ;
+    reo:naturalLanguage "Only licensed medical professionals may prescribe controlled medications." ;
+    reo:enforcementLevel "hard" ;
+    reo:hasAuthoritativeText "21 CFR Part 1306 (DEA Prescription Requirements)" ;
+    reo:appliesTo ex:Physician ;
+    reo:appliesTo ex:Pharmacist .
+
+# --- CONTEXT (1) ---
+ex:X001_EmergencyDept a reo:Context ;
+    reo:contextId "X-001" ;
+    reo:contextName "Emergency Department" ;
+    reo:spatialScope "Emergency_Wing_Hospital" ;
+    reo:contextProperty "time_critical=true" ;
+    reo:contextProperty "resource_constrained=high" ;
+    reo:hasActiveConstraint ex:C002_FDA ;
+    reo:hasActiveActor ex:Physician ;
+    reo:hasActiveActor ex:EHR_System ;
+    reo:hasActiveActor ex:Pharmacist .
+
+# --- UNCERTAINTIES (1) — RESOLVED (validated) ---
+# This uncertainty is VALIDATED → no warning, no violation
+ex:U001_DrugDBFrequency a reo:UnknownUncertainty ;
+    reo:uncertaintyId "U-001" ;
+    reo:uncertaintyName "Drug DB Update Frequency" ;
+    reo:subject "Drug database update frequency — resolved via infrastructure analysis." ;
+    reo:impactLevel "high" ;
+    reo:status "validated" ;
+    reo:validationPlan "Infrastructure analysis completed Week 12." ;
+    reo:affects ex:G002 .
+    # No reo:blocks → no conditional requirements
+
+# --- INTERACTIONS (2) ---
+ex:I001_PhysicianToEHR a reo:DataFlowInteraction ;
+    reo:interactionId "I-001" ;
+    reo:interactionName "Physician reads Patient data from EHR" ;
+    reo:hasSource ex:Physician ;
+    reo:hasTarget ex:EHR_System ;
+    reo:exchangesData ex:D002_Patient ;
+    reo:triggeringEvent "physician_initiates_prescription" ;
+    reo:protocol "HL7-FHIR" ;
+    reo:governedBy ex:C001_HIPAA .
+
+ex:I002_EHRToPharmacy a reo:DataFlowInteraction ;
+    reo:interactionId "I-002" ;
+    reo:interactionName "EHR forwards confirmed prescription to Pharmacy" ;
+    reo:hasSource ex:EHR_System ;
+    reo:hasTarget ex:Pharmacist ;
+    reo:exchangesData ex:D001_Medication ;
+    reo:triggeringEvent "physician_confirms_prescription" ;
+    reo:protocol "HL7-FHIR" ;
+    reo:governedBy ex:C002_FDA .
