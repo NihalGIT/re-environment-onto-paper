@@ -1,0 +1,10 @@
+html5rdf==1.2.1
+importlib-metadata==9.0.0
+owlrl==7.6.2
+packaging==26.2
+prettytable==3.18.0
+pyparsing==3.3.2
+pyshacl==0.40.0
+rdflib==7.6.0
+wcwidth==0.8.2
+zipp==4.1.0
