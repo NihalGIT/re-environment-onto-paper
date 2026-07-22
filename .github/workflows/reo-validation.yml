@@ -2,14 +2,25 @@ name: REO Validation
 
 on:
   push:
-    branches: [ main, master, develop ]
+    branches: [main, master, develop]
     paths:
       - 'ontology/**'
       - 'examples/**'
+      - 'test-cases/**'
       - 'scripts/**'
+      - 'prototype.py'
+      - 'requirements.txt'
       - '.github/workflows/**'
   pull_request:
-    branches: [ main, master ]
+    branches: [main, master]
+    paths:
+      - 'ontology/**'
+      - 'examples/**'
+      - 'test-cases/**'
+      - 'scripts/**'
+      - 'prototype.py'
+      - 'requirements.txt'
+      - '.github/workflows/**'
   workflow_dispatch:
 
 permissions:
@@ -18,7 +29,7 @@ permissions:
 jobs:
   validate:
     runs-on: ubuntu-latest
-    name: Validate REO Ontology
+    name: Validate REO ontology and derivation contract
 
     steps:
       - name: Checkout repository
@@ -26,115 +37,154 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Set up Python
+      - name: Set up pinned Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.11'
+          python-version: '3.11.15'
+          check-latest: false
+          cache: 'pip'
 
-      - name: Install dependencies
-        run: pip install pyshacl rdflib
+      - name: Install pinned dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -r requirements.txt
 
-      - name: Validate syntax (Turtle files)
+      - name: Report execution environment
+        run: |
+          python --version
+          python -m pip show rdflib pyshacl
+          python -m pip freeze
+
+      - name: Validate Turtle syntax
         run: python scripts/validate_syntax.py
 
-      - name: Run SHACL validation
-        id: shacl
-        continue-on-error: true 
-        run: >
-          python -m pyshacl
-          -s ontology/reo-shapes.ttl
-          -e ontology/reo-core.ttl
-          -i rdfs
-          --allow-warnings
-          -o examples/medical-emergency/validation-report.txt
-          -f human
-          examples/medical-emergency/hospital.ttl
+      - name: Regenerate and verify artifact metrics
+        run: |
+          python scripts/artifact_metrics.py
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          metrics = json.loads(Path("artifact_metrics.json").read_text(encoding="utf-8"))
+          assert metrics["turtle_file_count"] == 6, metrics
+          assert metrics["total_triples"] == 1492, metrics
+          assert metrics["core"]["owl_classes"] == 27, metrics
+          assert metrics["core"]["object_properties"] == 18, metrics
+          assert metrics["core"]["datatype_properties"] == 39, metrics
+          assert metrics["core"]["owl_restrictions"] == 6, metrics
+          assert metrics["shapes"]["node_shapes"] == 12, metrics
+          assert metrics["shapes"]["property_paths"] == 41, metrics
+          assert metrics["shapes"]["sparql_constraints"] == 2, metrics
+          print("Artifact metrics match the paper inventory.")
+          PY
 
-      # - name: Commit validation report
-      #   run: >
-      #     git config user.name "github-actions[bot]" &&
-      #     git config user.email "github-actions[bot]@users.noreply.github.com" &&
-      #     git add examples/medical-emergency/validation-report.txt &&
-      #     git diff --cached --quiet || git commit -m "chore: update validation report [skip ci]" &&
-      #     git push
+      - name: Validate main medical instance
+        run: |
+          python -m pyshacl \
+            -s ontology/reo-shapes.ttl \
+            -e ontology/reo-core.ttl \
+            -i rdfs \
+            --allow-warnings \
+            -o examples/medical-emergency/validation-report.txt \
+            -f human \
+            examples/medical-emergency/hospital.ttl
+          grep -q '^Conforms: True$' examples/medical-emergency/validation-report.txt
+          grep -q 'Severity: sh:Warning' examples/medical-emergency/validation-report.txt
+          grep -q 'Unresolved uncertainty blocks Goals' examples/medical-emergency/validation-report.txt
 
-      - name: Test Case 01 — Success
-        run: >
-          python -m pyshacl
-          -s ontology/reo-shapes.ttl
-          -e ontology/reo-core.ttl
-          -i rdfs
-          --allow-warnings          
-          -o test-cases/01-success/report.txt
-          -f human
-          test-cases/01-success/hospital-success.ttl
+      - name: Validate success fixture
+        run: |
+          python -m pyshacl \
+            -s ontology/reo-shapes.ttl \
+            -e ontology/reo-core.ttl \
+            -i rdfs \
+            --allow-warnings \
+            -o test-cases/01-success/report.txt \
+            -f human \
+            test-cases/01-success/hospital-success.ttl
+          grep -q '^Conforms: True$' test-cases/01-success/report.txt
+          if grep -q '^Results (' test-cases/01-success/report.txt; then
+            echo 'Unexpected validation result in the fully conforming fixture.'
+            cat test-cases/01-success/report.txt
+            exit 1
+          fi
 
-      - name: Test Case 02 — Success with warning
-        continue-on-error: true
-        run: >
-          python -m pyshacl
-          -s ontology/reo-shapes.ttl
-          -e ontology/reo-core.ttl
-          -i rdfs
-          --allow-warnings
-          -o test-cases/02-success-with-warning/report.txt
-          -f human
-          test-cases/02-success-with-warning/hospital-warning.ttl
-      
-      - name: Test Case 03 — Failure
-        continue-on-error: true
-        run: >
-          python -m pyshacl
-          -s ontology/reo-shapes.ttl
-          -e ontology/reo-core.ttl
-          -i rdfs
-          --allow-warnings
-          -o test-cases/03-violations/report.txt
-          -f human
-          test-cases/03-violations/hospital-violations.ttl
+      - name: Validate warning fixture
+        run: |
+          python -m pyshacl \
+            -s ontology/reo-shapes.ttl \
+            -e ontology/reo-core.ttl \
+            -i rdfs \
+            --allow-warnings \
+            -o test-cases/02-success-with-warning/report.txt \
+            -f human \
+            test-cases/02-success-with-warning/hospital-warning.ttl
+          grep -q '^Conforms: True$' test-cases/02-success-with-warning/report.txt
+          grep -q '^Results (1):$' test-cases/02-success-with-warning/report.txt
+          grep -q 'Severity: sh:Warning' test-cases/02-success-with-warning/report.txt
+          grep -q 'Unresolved uncertainty blocks Goals' test-cases/02-success-with-warning/report.txt
 
-      - name: Reference derivation checker (requirement-state and impact)
+      - name: Validate violation fixture
+        run: |
+          set +e
+          python -m pyshacl \
+            -s ontology/reo-shapes.ttl \
+            -e ontology/reo-core.ttl \
+            -i rdfs \
+            --allow-warnings \
+            -o test-cases/03-violations/report.txt \
+            -f human \
+            test-cases/03-violations/hospital-violations.ttl
+          command_status=$?
+          set -e
+          echo "pySHACL exit code for expected negative fixture: ${command_status}"
+          grep -q '^Conforms: False$' test-cases/03-violations/report.txt
+          grep -q '^Results (24):$' test-cases/03-violations/report.txt
+
+      - name: Run reference derivation checker
         run: python prototype.py
 
-          
-      - name: Commit validation reports
+      - name: Assert derivation and impact results
+        run: python scripts/assert_derivation_results.py
+
+      - name: Commit regenerated result files
+        if: >-
+          github.event_name == 'push' &&
+          (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master') &&
+          github.actor != 'github-actions[bot]'
         run: |
-          git config user.name "github-actions[bot]" 
-          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add \
             examples/medical-emergency/validation-report.txt \
             test-cases/01-success/report.txt \
             test-cases/02-success-with-warning/report.txt \
-            test-cases/03-violations/report.txt
+            test-cases/03-violations/report.txt \
+            evaluation_results.csv \
+            artifact_metrics.json
           if ! git diff --cached --quiet; then
-            git commit -m "chore: update validation reports [skip ci]"
+            git commit -m 'chore: regenerate validation results [skip ci]'
             git push
           else
-            echo "No changes to commit"
+            echo 'Generated result files are already up to date.'
           fi
 
-      - name: Upload validation report
+      - name: Upload validation artifacts
         uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: validation-report
-          path: examples/medical-emergency/validation-report.txt
-          retention-days: 30
-
-      - name: Check validation result
-        run: |
-          if grep -q "Conforms: False" examples/medical-emergency/validation-report.txt; then
-            echo "❌ VALIDATION FAILED"
-            cat examples/medical-emergency/validation-report.txt
-            exit 1
-          else
-            echo "✅ VALIDATION PASSED"
-            cat examples/medical-emergency/validation-report.txt
-          fi
+          name: reo-validation-results
+          path: |
+            examples/medical-emergency/validation-report.txt
+            test-cases/01-success/report.txt
+            test-cases/02-success-with-warning/report.txt
+            test-cases/03-violations/report.txt
+            evaluation_results.csv
+            artifact_metrics.json
+          retention-days: 90
 
   build-dist:
     runs-on: ubuntu-latest
-    name: Build Distribution Files
+    name: Build distribution files
     needs: validate
     if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
 
@@ -146,11 +196,9 @@ jobs:
         run: |
           mkdir -p dist
           cat ontology/reo-core.ttl > dist/reo-full.ttl
-          echo "" >> dist/reo-full.ttl
-          cat ontology/reo-axioms.ttl >> dist/reo-full.ttl
-          echo "" >> dist/reo-full.ttl
+          echo '' >> dist/reo-full.ttl
           cat examples/medical-emergency/hospital.ttl >> dist/reo-full.ttl
-          echo "Distribution files built."
+          echo 'Distribution files built.'
 
       - name: Upload distribution
         uses: actions/upload-artifact@v4

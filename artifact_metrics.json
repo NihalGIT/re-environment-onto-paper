@@ -1,0 +1,26 @@
+{
+  "core": {
+    "datatype_properties": 39,
+    "object_properties": 18,
+    "owl_classes": 27,
+    "owl_restrictions": 6,
+    "triples": 433
+  },
+  "reo_version": "1.0.0",
+  "shapes": {
+    "node_shapes": 12,
+    "property_paths": 41,
+    "sparql_constraints": 2,
+    "triples": 354
+  },
+  "total_triples": 1492,
+  "triples_by_file": {
+    "examples/medical-emergency/hospital.ttl": 207,
+    "ontology/reo-core.ttl": 433,
+    "ontology/reo-shapes.ttl": 354,
+    "test-cases/01-success/hospital-success.ttl": 161,
+    "test-cases/02-success-with-warning/hospital-warning.ttl": 207,
+    "test-cases/03-violations/hospital-violations.ttl": 130
+  },
+  "turtle_file_count": 6
+}

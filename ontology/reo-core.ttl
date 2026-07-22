@@ -580,8 +580,9 @@ reo:governedBy a owl:ObjectProperty ;
     skos:definition "Constraints that govern this interaction. constraints ⊆ C." .
 
 # ============================================================
-# SECTION 8 — OWL AXIOMS - Added here bcse my CI crashes using axioms.ttl directly
-# Structural rules encoding the integrity constraints
+# SECTION 8 — CANONICAL OWL RESTRICTIONS
+# Structural rules encoding the integrity constraints.
+# These six restrictions are defined here as the single source of truth.
 # ============================================================
 
 # Axiom 1: Every Actor must have at least one authorityLevel
