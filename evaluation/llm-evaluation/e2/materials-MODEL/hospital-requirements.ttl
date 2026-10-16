@@ -1,0 +1,139 @@
+@prefix reo:  <http://re-environment-onto.org/ontology#> .
+@prefix ex:   <http://hospital.example.org#> .
+@prefix req:  <http://hospital.example.org/requirements#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+
+# ============================================================
+# REQUIREMENT SET FOR THE EMERGENCY-PRESCRIPTION FIXTURE (REO v1.1.0)
+# Each requirement carries its natural-language text and the explicit,
+# manually authored mapping to environment elements that the derivation
+# contract evaluates (reo-derivation.ttl). The text is not parsed.
+# R001 is the running example of the paper.
+# ============================================================
+
+req:R001 a reo:Requirement ;
+    reo:requirementId "R001" ;
+    reo:requirementText "The Physician shall verify Medication.contraindications against Patient.current_medications before prescribing." ;
+    reo:hasSeedGoal ex:G002 ;
+    reo:assessedInContext ex:X001_EmergencyDept ;
+    reo:hasResponsibleActor ex:Physician ;
+    reo:performsAction ex:Action_Prescribe ;
+    reo:performsAction ex:Action_AccessRecords ;
+    reo:requiresAuthorityOf ex:Physician ;
+    reo:refersToConcept ex:D001_Medication ;
+    reo:refersToConcept ex:D002_Patient ;
+    reo:refersToProperty ex:Prop_Contraindications ;
+    reo:refersToProperty ex:Prop_CurrentMedications ;
+    reo:usesInteraction ex:I001_PhysicianToEHR ;
+    reo:expectsInteractionSource ex:Physician ;
+    reo:requiresProtocol true ;
+    reo:declaresHardConstraint ex:C002_FDA .
+
+req:R002 a reo:Requirement ;
+    reo:requirementId "R002" ;
+    reo:requirementText "The Physician shall check Patient.allergies before prescribing." ;
+    reo:hasSeedGoal ex:G003 ;
+    reo:assessedInContext ex:X001_EmergencyDept ;
+    reo:hasResponsibleActor ex:Physician ;
+    reo:performsAction ex:Action_Prescribe ;
+    reo:performsAction ex:Action_AccessRecords ;
+    reo:requiresAuthorityOf ex:Physician ;
+    reo:refersToConcept ex:D002_Patient ;
+    reo:refersToProperty ex:Prop_Allergies ;
+    reo:usesInteraction ex:I001_PhysicianToEHR ;
+    reo:expectsInteractionSource ex:Physician ;
+    reo:requiresProtocol true .
+
+req:R003 a reo:Requirement ;
+    reo:requirementId "R003" ;
+    reo:requirementText "The Physician shall validate that Medication.dosage is positive before prescribing." ;
+    reo:hasSeedGoal ex:G004 ;
+    reo:assessedInContext ex:X001_EmergencyDept ;
+    reo:hasResponsibleActor ex:Physician ;
+    reo:performsAction ex:Action_Prescribe ;
+    reo:requiresAuthorityOf ex:Physician ;
+    reo:refersToConcept ex:D001_Medication ;
+    reo:refersToProperty ex:Prop_Dosage .
+
+req:R004 a reo:Requirement ;
+    reo:requirementId "R004" ;
+    reo:requirementText "The EHR_System shall forward each confirmed prescription to the Pharmacist using HL7-FHIR." ;
+    reo:hasSeedGoal ex:G005 ;
+    reo:assessedInContext ex:X001_EmergencyDept ;
+    reo:hasResponsibleActor ex:EHR_System ;
+    reo:performsAction ex:Action_ForwardPrescription ;
+    reo:refersToConcept ex:D001_Medication ;
+    reo:usesInteraction ex:I002_EHRToPharmacy ;
+    reo:expectsInteractionSource ex:EHR_System ;
+    reo:requiresProtocol true .
+
+req:R005 a reo:Requirement ;
+    reo:requirementId "R005" ;
+    reo:requirementText "The Pharmacist shall verify each received prescription before dispensing the Medication." ;
+    reo:hasSeedGoal ex:G005 ;
+    reo:assessedInContext ex:X001_EmergencyDept ;
+    reo:hasResponsibleActor ex:Pharmacist ;
+    reo:performsAction ex:Action_VerifyPrescription ;
+    reo:performsAction ex:Action_Dispense ;
+    reo:refersToConcept ex:D001_Medication ;
+    reo:usesInteraction ex:I002_EHRToPharmacy ;
+    reo:expectsInteractionSource ex:EHR_System .
+
+req:R006 a reo:Requirement ;
+    reo:requirementId "R006" ;
+    reo:requirementText "The Pharmacist shall prescribe the Medication dosage." ;
+    reo:hasSeedGoal ex:G004 ;
+    reo:assessedInContext ex:X001_EmergencyDept ;
+    reo:hasResponsibleActor ex:Pharmacist ;
+    reo:performsAction ex:Action_Prescribe ;
+    reo:requiresAuthorityOf ex:Pharmacist ;
+    reo:refersToConcept ex:D001_Medication ;
+    reo:refersToProperty ex:Prop_Dosage .
+
+req:R007 a reo:Requirement ;
+    reo:requirementId "R007" ;
+    reo:requirementText "The EHR_System shall query the drug database to refresh Medication.contraindications." ;
+    reo:hasSeedGoal ex:G002 ;
+    reo:assessedInContext ex:X001_EmergencyDept ;
+    reo:hasResponsibleActor ex:EHR_System ;
+    reo:performsAction ex:Action_QueryDatabase ;
+    reo:refersToConcept ex:D001_Medication ;
+    reo:refersToProperty ex:Prop_Contraindications .
+
+req:R008 a reo:Requirement ;
+    reo:requirementId "R008" ;
+    reo:requirementText "In the outpatient clinic, the Physician shall review Patient.medical_history before prescribing." ;
+    reo:hasSeedGoal ex:G003 ;
+    reo:assessedInContext ex:X002_Outpatient ;
+    reo:hasResponsibleActor ex:Physician ;
+    reo:performsAction ex:Action_Prescribe ;
+    reo:performsAction ex:Action_AccessRecords ;
+    reo:requiresAuthorityOf ex:Physician ;
+    reo:refersToConcept ex:D002_Patient ;
+    reo:refersToProperty ex:Prop_MedicalHistory ;
+    reo:usesInteraction ex:I001_PhysicianToEHR ;
+    reo:expectsInteractionSource ex:Physician ;
+    reo:requiresProtocol true .
+
+req:R009 a reo:Requirement ;
+    reo:requirementId "R009" ;
+    reo:requirementText "In the outpatient clinic, the Physician shall validate Medication.route before prescribing." ;
+    reo:hasSeedGoal ex:G004 ;
+    reo:assessedInContext ex:X002_Outpatient ;
+    reo:hasResponsibleActor ex:Physician ;
+    reo:performsAction ex:Action_Prescribe ;
+    reo:requiresAuthorityOf ex:Physician ;
+    reo:refersToConcept ex:D001_Medication ;
+    reo:refersToProperty ex:Prop_Route .
+
+req:R010 a reo:Requirement ;
+    reo:requirementId "R010" ;
+    reo:requirementText "The EHR_System shall send Patient.medical_history to the Pharmacist." ;
+    reo:hasSeedGoal ex:G005 ;
+    reo:assessedInContext ex:X001_EmergencyDept ;
+    reo:hasResponsibleActor ex:EHR_System ;
+    reo:performsAction ex:Action_ForwardPrescription ;
+    reo:refersToConcept ex:D002_Patient ;
+    reo:refersToProperty ex:Prop_MedicalHistory ;
+    reo:usesInteraction ex:I002_EHRToPharmacy ;
+    reo:expectsInteractionSource ex:EHR_System .

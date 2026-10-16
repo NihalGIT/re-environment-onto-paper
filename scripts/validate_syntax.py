@@ -27,7 +27,7 @@ def validate_file(filepath: Path) -> bool:
 
 def main():
     base = Path(__file__).parent.parent
-    files = list(base.glob("ontology/*.ttl")) + list(base.glob("examples/**/*.ttl"))+ list(base.glob("test-cases/**/*.ttl"))
+    files = sorted(list(base.glob("ontology/*.ttl")) + list(base.glob("examples/**/*.ttl")) + list(base.glob("test-cases/**/*.ttl")))
 
     if not files:
         print("No .ttl files found.")

@@ -1,23 +1,43 @@
-kind,name,expected,observed,pass,trace_size,detail
-scenario,accepted_freshness_resolved,accepted,accepted,True,8,OK: C001_HIPAA: constraint C001_HIPAA waived: X001_EmergencyDept is a declared exception | OK: C002_FDA: Physician has authority licensed_medical_professional | ACCEPT: all mandatory obligations discharged
-scenario,accepted_outpatient_consent_and_freshness,accepted,accepted,True,8,OK: C001_HIPAA: constraint C001_HIPAA waived: X002_Outpatient is a declared exception | OK: C002_FDA: Physician has authority licensed_medical_professional | ACCEPT: all mandatory obligations discharged
-scenario,accepted_with_reservations_soft_constraint,accepted_with_reservations,accepted_with_reservations,True,8,OK: C002_FDA: Physician has authority licensed_medical_professional | RESERVATION: constraint C001_HIPAA: consent required outside an exception context (active=X001_EmergencyDept) | ACCEPT WITH RESERVATIONS: all hard obligations discharged; one or more soft obligations remain unsatisfied
-scenario,conditional_baseline_unresolved_freshness,conditional,conditional,True,9,OK: C001_HIPAA: constraint C001_HIPAA waived: X001_EmergencyDept is a declared exception | OK: C002_FDA: Physician has authority licensed_medical_professional | CONDITIONAL: unresolved uncertainty ['U001_DrugDBFrequency'] blocks G002
-scenario,conditional_outpatient_consent_unresolved_freshness,conditional,conditional,True,9,OK: C001_HIPAA: constraint C001_HIPAA waived: X002_Outpatient is a declared exception | OK: C002_FDA: Physician has authority licensed_medical_professional | CONDITIONAL: unresolved uncertainty ['U001_DrugDBFrequency'] blocks G002
-scenario,pending_review_missing_hard_constraint,pending_review,pending_review,True,8,OK: C001_HIPAA: constraint C001_HIPAA waived: X001_EmergencyDept is a declared exception | PENDING REVIEW: hard constraint C002_FDA undefined
-scenario,pending_review_no_induced_obligations,pending_review,pending_review,True,2,PENDING REVIEW: no validation obligation could be discharged
-scenario,pending_review_hard_constraint_without_checker,pending_review,pending_review,True,9,OK: C001_HIPAA: constraint C001_HIPAA waived: X001_EmergencyDept is a declared exception | OK: C002_FDA: Physician has authority licensed_medical_professional | PENDING REVIEW: hard constraint C900_ManualSafetyReview has no registered checker
-scenario,rejected_missing_actor,rejected,rejected,True,8,REJECT: actor Physician undefined | REJECT: actor Physician undefined for capability check | REJECT: actor Physician undefined for authority check | OK: C001_HIPAA: constraint C001_HIPAA waived: X001_EmergencyDept is a declared exception | REJECT: constraint C002_FDA: actor Physician is undefined
-scenario,rejected_missing_capability,rejected,rejected,True,9,REJECT: actor Physician lacks capability Action_Prescribe | OK: C001_HIPAA: constraint C001_HIPAA waived: X001_EmergencyDept is a declared exception | OK: C002_FDA: Physician has authority licensed_medical_professional
-scenario,rejected_missing_authority,rejected,rejected,True,9,REJECT: actor Physician lacks an authority level | OK: C001_HIPAA: constraint C001_HIPAA waived: X001_EmergencyDept is a declared exception | REJECT: constraint C002_FDA: Physician is not licensed
-scenario,rejected_missing_domain_concept,rejected,rejected,True,8,REJECT: domain concept D001_Medication undefined | REJECT: domain concept D001_Medication undefined for property check | OK: C001_HIPAA: constraint C001_HIPAA waived: X001_EmergencyDept is a declared exception | OK: C002_FDA: Physician has authority licensed_medical_professional
-scenario,rejected_missing_domain_property,rejected,rejected,True,9,REJECT: concept D002_Patient lacks property Prop_CurrentMedications | OK: C001_HIPAA: constraint C001_HIPAA waived: X001_EmergencyDept is a declared exception | OK: C002_FDA: Physician has authority licensed_medical_professional
-scenario,rejected_missing_interaction,rejected,rejected,True,8,REJECT: interaction I001_PhysicianToEHR undefined | REJECT: interaction I001_PhysicianToEHR undefined for protocol check | OK: C001_HIPAA: constraint C001_HIPAA waived: X001_EmergencyDept is a declared exception | OK: C002_FDA: Physician has authority licensed_medical_professional
-scenario,rejected_missing_protocol,rejected,rejected,True,9,REJECT: interaction I001_PhysicianToEHR declares no protocol | OK: C001_HIPAA: constraint C001_HIPAA waived: X001_EmergencyDept is a declared exception | OK: C002_FDA: Physician has authority licensed_medical_professional
-scenario,rejected_consent_without_exception,rejected,rejected,True,9,REJECT: constraint C001_HIPAA: consent required outside an exception context (active=X001_EmergencyDept) | OK: C002_FDA: Physician has authority licensed_medical_professional
-scenario,rejected_unlicensed_prescriber,rejected,rejected,True,9,REJECT: actor Physician lacks an authority level | OK: C001_HIPAA: constraint C001_HIPAA waived: X001_EmergencyDept is a declared exception | REJECT: constraint C002_FDA: Physician is not licensed
-scenario,not_derived_inactive_seed_goal,not_derived,not_derived,True,0,NOT DERIVED: no active anchoring slice for seed G002
-impact_query,change::C002_FDA,hit,hit,True,9,requirements(C002_FDA) -> ['R001']
-impact_query,change::D001_Medication,hit,hit,True,9,requirements(D001_Medication) -> ['R001']
-impact_query,change::U001_DrugDBFrequency,hit,hit,True,9,requirements(U001_DrugDBFrequency) -> ['R001']
-impact_query,change::G005,miss,miss,True,9,requirements(G005) -> []
+suite,name,expected,observed,pass,trace_size,shacl_verdict,note
+original-18,accepted_freshness_resolved,accepted,accepted,True,14,conforming,
+original-18,accepted_outpatient_exception_and_freshness,accepted,accepted,True,15,conforming,
+original-18,accepted_with_reservations_soft_constraint,accepted_with_reservations,accepted_with_reservations,True,14,conforming,
+original-18,conditional_baseline_unresolved_freshness,conditional,conditional,True,14,conforming with warning,
+original-18,conditional_outpatient_exception_unresolved_freshness,conditional,conditional,True,15,conforming with warning,
+original-18,pending_review_missing_hard_constraint,pending_review,pending_review,True,14,non-conforming,
+original-18,pending_review_no_induced_obligations,pending_review,pending_review,True,2,non-conforming,
+original-18,pending_review_hard_constraint_without_checker,pending_review,pending_review,True,15,conforming,
+original-18,rejected_missing_actor,rejected,rejected,True,14,non-conforming,
+original-18,rejected_missing_capability,rejected,rejected,True,14,conforming with warning,
+original-18,rejected_missing_authority,rejected,rejected,True,14,non-conforming,
+original-18,rejected_missing_domain_concept,rejected,rejected,True,14,non-conforming,
+original-18,rejected_missing_domain_property,rejected,rejected,True,14,conforming with warning,
+original-18,rejected_missing_interaction,rejected,rejected,True,14,conforming with warning,
+original-18,rejected_missing_protocol,rejected,rejected,True,14,conforming with warning,
+original-18,rejected_consent_without_exception,rejected,rejected,True,14,conforming with warning,
+original-18,rejected_wrong_authority_value,rejected,rejected,True,14,conforming with warning,"v1.0.0 used an empty string, which duplicated rejected_missing_authority"
+original-18,not_derived_inactive_seed_goal,not_derived,not_derived,True,2,non-conforming,
+impact-4,change::C002_FDA,hit,hit,True,14,,
+impact-4,change::D001_Medication,hit,hit,True,14,,
+impact-4,change::U001_DrugDBFrequency,hit,hit,True,14,,
+impact-4,change::G005,miss,miss,True,14,,
+targeted,T20_impact_query_on_resolved_uncertainty,hit,hit,True,14,,
+targeted,T01_hard_rule_via_interaction_governedBy_without_validator,pending_review,pending_review,True,15,conforming with warning,
+targeted,T02_hard_rule_via_actor_isSubjectTo_without_validator,pending_review,pending_review,True,15,conforming with warning,
+targeted,T03_hard_rule_only_on_unreferenced_Pharmacist,conditional,conditional,True,14,conforming with warning,v1.0.0 revision patch returned pending_review (over-inclusive applicability)
+targeted,T04_hard_rule_appliesTo_unreferenced_EHR_only,conditional,conditional,True,14,conforming with warning,v1.0.0 returned pending_review
+targeted,T05_blocking_premise_refuted,rejected,rejected,True,14,conforming,v1.0.0 returned accepted
+targeted,T06_critical_uncertainty_affects_actor_without_blocking,conditional,conditional,True,15,conforming,v1.0.0 returned accepted
+targeted,T07_low_uncertainty_affects_concept,accepted_with_reservations,accepted_with_reservations,True,15,conforming,
+targeted,T08_uncertainty_blocks_parent_goal,conditional,conditional,True,15,conforming with warning,v1.0.0 returned accepted
+targeted,T09_actor_neither_active_nor_responsible,rejected,rejected,True,14,conforming,v1.0.0 returned accepted
+targeted,T10_interaction_direction_reversed,rejected,rejected,True,14,conforming,v1.0.0 returned accepted
+targeted,T11_interaction_exchanges_no_referenced_concept,rejected,rejected,True,14,conforming,v1.0.0 returned accepted
+targeted,T12_constraint_identifier_renamed,conditional,conditional,True,14,conforming with warning,v1.0.0 returned pending_review (validator registry keyed by instance identifier)
+targeted,T13_conflicting_authority_values,pending_review,pending_review,True,14,conforming,
+targeted,T14_ambiguous_reference_modelled_as_ambiguity,conditional,conditional,True,15,conforming,
+targeted,T15_goal_also_typed_as_constraint,pending_review,pending_review,True,14,non-conforming,
+targeted,T16_refinement_cycle_through_seed,pending_review,pending_review,True,14,non-conforming,
+targeted,T17_requirement_without_references,pending_review,pending_review,True,2,conforming with warning,
+targeted,T18_text_changed_annotation_unchanged,accepted,accepted,True,14,conforming,documents that the text is not parsed (annotation fidelity is an input assumption)
+targeted,T19_uncertainty_reopened_after_resolution,conditional,conditional,True,14,conforming with warning,

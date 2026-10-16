@@ -1,0 +1,357 @@
+{
+ "seed": 2026,
+ "base_decisions": {
+  "R001": "conditional",
+  "R002": "accepted_with_reservations",
+  "R003": "accepted",
+  "R004": "accepted",
+  "R005": "pending_review",
+  "R006": "rejected",
+  "R007": "conditional",
+  "R008": "rejected",
+  "R009": "accepted",
+  "R010": "rejected"
+ },
+ "cases": [
+  {
+   "case": "C01",
+   "mutant": "M0766",
+   "operator": "NEW-UNC",
+   "truth": {
+    "R001": "conditional",
+    "R002": "accepted_with_reservations",
+    "R003": "accepted",
+    "R004": "accepted",
+    "R005": "pending_review",
+    "R006": "rejected",
+    "R007": "conditional",
+    "R008": "rejected",
+    "R009": "accepted",
+    "R010": "rejected"
+   }
+  },
+  {
+   "case": "C02",
+   "mutant": "M0292",
+   "operator": "ENUM",
+   "truth": {
+    "R001": "conditional",
+    "R002": "accepted_with_reservations",
+    "R003": "accepted",
+    "R004": "accepted",
+    "R005": "pending_review",
+    "R006": "rejected",
+    "R007": "conditional",
+    "R008": "rejected",
+    "R009": "accepted",
+    "R010": "rejected"
+   }
+  },
+  {
+   "case": "C03",
+   "mutant": "M0651",
+   "operator": "ADD-LINK",
+   "truth": {
+    "R001": "conditional",
+    "R002": "accepted_with_reservations",
+    "R003": "accepted",
+    "R004": "accepted",
+    "R005": "pending_review",
+    "R006": "rejected",
+    "R007": "conditional",
+    "R008": "rejected",
+    "R009": "accepted",
+    "R010": "rejected"
+   }
+  },
+  {
+   "case": "C04",
+   "mutant": "M0339",
+   "operator": "AUTH",
+   "truth": {
+    "R001": "rejected",
+    "R002": "rejected",
+    "R003": "rejected",
+    "R004": "accepted",
+    "R005": "pending_review",
+    "R006": "rejected",
+    "R007": "conditional",
+    "R008": "rejected",
+    "R009": "rejected",
+    "R010": "rejected"
+   }
+  },
+  {
+   "case": "C05",
+   "mutant": "M0617",
+   "operator": "ADD-LINK",
+   "truth": {
+    "R001": "conditional",
+    "R002": "accepted_with_reservations",
+    "R003": "accepted",
+    "R004": "pending_review",
+    "R005": "pending_review",
+    "R006": "rejected",
+    "R007": "conditional",
+    "R008": "rejected",
+    "R009": "accepted",
+    "R010": "rejected"
+   }
+  },
+  {
+   "case": "C06",
+   "mutant": "M0333",
+   "operator": "ENUM",
+   "truth": {
+    "R001": "rejected",
+    "R002": "accepted_with_reservations",
+    "R003": "accepted",
+    "R004": "accepted",
+    "R005": "pending_review",
+    "R006": "rejected",
+    "R007": "rejected",
+    "R008": "rejected",
+    "R009": "accepted",
+    "R010": "rejected"
+   }
+  },
+  {
+   "case": "C07",
+   "mutant": "M0215",
+   "operator": "DEL-T",
+   "truth": {
+    "R001": "conditional",
+    "R002": "accepted_with_reservations",
+    "R003": "accepted",
+    "R004": "accepted",
+    "R005": "pending_review",
+    "R006": "rejected",
+    "R007": "conditional",
+    "R008": "rejected",
+    "R009": "accepted",
+    "R010": "rejected"
+   }
+  },
+  {
+   "case": "C08",
+   "mutant": "M0341",
+   "operator": "DUP",
+   "truth": {
+    "R001": "pending_review",
+    "R002": "pending_review",
+    "R003": "pending_review",
+    "R004": "pending_review",
+    "R005": "pending_review",
+    "R006": "rejected",
+    "R007": "pending_review",
+    "R008": "pending_review",
+    "R009": "pending_review",
+    "R010": "rejected"
+   }
+  },
+  {
+   "case": "C09",
+   "mutant": "M0738",
+   "operator": "NEW-RULE",
+   "truth": {
+    "R001": "conditional",
+    "R002": "accepted_with_reservations",
+    "R003": "accepted",
+    "R004": "accepted",
+    "R005": "pending_review",
+    "R006": "rejected",
+    "R007": "conditional",
+    "R008": "rejected",
+    "R009": "accepted",
+    "R010": "rejected"
+   }
+  },
+  {
+   "case": "C10",
+   "mutant": "M0335",
+   "operator": "AUTH",
+   "truth": {
+    "R001": "conditional",
+    "R002": "accepted_with_reservations",
+    "R003": "accepted",
+    "R004": "accepted",
+    "R005": "pending_review",
+    "R006": "rejected",
+    "R007": "conditional",
+    "R008": "rejected",
+    "R009": "accepted",
+    "R010": "rejected"
+   }
+  },
+  {
+   "case": "C11",
+   "mutant": "M0262",
+   "operator": "DEL-E",
+   "truth": {
+    "R001": "rejected",
+    "R002": "accepted_with_reservations",
+    "R003": "accepted",
+    "R004": "accepted",
+    "R005": "pending_review",
+    "R006": "rejected",
+    "R007": "rejected",
+    "R008": "rejected",
+    "R009": "accepted",
+    "R010": "rejected"
+   }
+  },
+  {
+   "case": "C12",
+   "mutant": "M0266",
+   "operator": "DEL-E",
+   "truth": {
+    "R001": "conditional",
+    "R002": "accepted_with_reservations",
+    "R003": "accepted",
+    "R004": "accepted",
+    "R005": "pending_review",
+    "R006": "rejected",
+    "R007": "conditional",
+    "R008": "rejected",
+    "R009": "accepted",
+    "R010": "rejected"
+   }
+  },
+  {
+   "case": "C13",
+   "mutant": "M0465",
+   "operator": "RETARGET",
+   "truth": {
+    "R001": "conditional",
+    "R002": "accepted_with_reservations",
+    "R003": "accepted",
+    "R004": "accepted",
+    "R005": "rejected",
+    "R006": "rejected",
+    "R007": "conditional",
+    "R008": "rejected",
+    "R009": "accepted",
+    "R010": "rejected"
+   }
+  },
+  {
+   "case": "C14",
+   "mutant": "M0397",
+   "operator": "RETARGET",
+   "truth": {
+    "R001": "conditional",
+    "R002": "accepted_with_reservations",
+    "R003": "accepted",
+    "R004": "accepted",
+    "R005": "pending_review",
+    "R006": "rejected",
+    "R007": "conditional",
+    "R008": "rejected",
+    "R009": "accepted",
+    "R010": "rejected"
+   }
+  },
+  {
+   "case": "C15",
+   "mutant": "M0205",
+   "operator": "DEL-T",
+   "truth": {
+    "R001": "conditional",
+    "R002": "accepted_with_reservations",
+    "R003": "accepted",
+    "R004": "accepted",
+    "R005": "pending_review",
+    "R006": "rejected",
+    "R007": "conditional",
+    "R008": "rejected",
+    "R009": "rejected",
+    "R010": "rejected"
+   }
+  },
+  {
+   "case": "C16",
+   "mutant": "M0769",
+   "operator": "NEW-UNC",
+   "truth": {
+    "R001": "conditional",
+    "R002": "accepted_with_reservations",
+    "R003": "conditional",
+    "R004": "accepted",
+    "R005": "pending_review",
+    "R006": "rejected",
+    "R007": "conditional",
+    "R008": "rejected",
+    "R009": "conditional",
+    "R010": "rejected"
+   }
+  },
+  {
+   "case": "C17",
+   "mutant": "M0345",
+   "operator": "DUP",
+   "truth": {
+    "R001": "conditional",
+    "R002": "accepted_with_reservations",
+    "R003": "accepted",
+    "R004": "accepted",
+    "R005": "pending_review",
+    "R006": "rejected",
+    "R007": "conditional",
+    "R008": "rejected",
+    "R009": "accepted",
+    "R010": "rejected"
+   }
+  },
+  {
+   "case": "C18",
+   "mutant": "M0575",
+   "operator": "ADD-LINK",
+   "truth": {
+    "R001": "conditional",
+    "R002": "accepted_with_reservations",
+    "R003": "accepted_with_reservations",
+    "R004": "accepted_with_reservations",
+    "R005": "pending_review",
+    "R006": "rejected",
+    "R007": "conditional",
+    "R008": "rejected",
+    "R009": "accepted_with_reservations",
+    "R010": "rejected"
+   }
+  },
+  {
+   "case": "C19",
+   "mutant": "M0742",
+   "operator": "NEW-RULE",
+   "truth": {
+    "R001": "pending_review",
+    "R002": "pending_review",
+    "R003": "accepted",
+    "R004": "accepted",
+    "R005": "pending_review",
+    "R006": "rejected",
+    "R007": "conditional",
+    "R008": "rejected",
+    "R009": "accepted",
+    "R010": "rejected"
+   }
+  },
+  {
+   "case": "C20",
+   "mutant": "M0649",
+   "operator": "ADD-LINK",
+   "truth": {
+    "R001": "conditional",
+    "R002": "accepted_with_reservations",
+    "R003": "accepted",
+    "R004": "accepted",
+    "R005": "pending_review",
+    "R006": "rejected",
+    "R007": "conditional",
+    "R008": "rejected",
+    "R009": "accepted",
+    "R010": "rejected"
+   }
+  }
+ ]
+}

@@ -1,0 +1,67 @@
+@prefix reo:  <http://re-environment-onto.org/ontology#> .
+@prefix sh:   <http://www.w3.org/ns/shacl#> .
+@prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+
+# ============================================================
+# REO DERIVATION SHAPES — version 1.1.0
+# Closed-world obligations for requirement annotations and
+# decision records (complements reo-shapes.ttl).
+# ============================================================
+
+reo:RequirementShape a sh:NodeShape ;
+    sh:targetClass reo:Requirement ;
+    sh:name "RequirementShape" ;
+    sh:property [ sh:path reo:requirementId ; sh:minCount 1 ; sh:maxCount 1 ; sh:datatype xsd:string ;
+                  sh:message "A requirement needs exactly one identifier." ] ;
+    sh:property [ sh:path reo:requirementText ; sh:minCount 1 ; sh:datatype xsd:string ;
+                  sh:message "A requirement needs its natural-language text." ] ;
+    sh:property [ sh:path reo:hasSeedGoal ; sh:minCount 1 ; sh:maxCount 1 ; sh:class reo:Goal ;
+                  sh:message "A requirement is anchored to exactly one seed goal." ] ;
+    sh:property [ sh:path reo:assessedInContext ; sh:minCount 1 ; sh:maxCount 1 ; sh:class reo:Context ;
+                  sh:message "A requirement is assessed in exactly one context." ] ;
+    sh:property [ sh:path reo:hasResponsibleActor ; sh:maxCount 1 ; sh:class reo:Actor ] ;
+    sh:property [ sh:path reo:performsAction ; sh:class reo:Action ] ;
+    sh:property [ sh:path reo:refersToConcept ; sh:class reo:DomainConcept ] ;
+    sh:property [ sh:path reo:refersToProperty ; sh:class reo:DomainProperty ] ;
+    sh:property [ sh:path reo:usesInteraction ; sh:maxCount 1 ; sh:class reo:Interaction ] ;
+    sh:property [ sh:path reo:declaresHardConstraint ; sh:class reo:Constraint ] ;
+    sh:property [ sh:path reo:declaresSoftConstraint ; sh:class reo:Constraint ] ;
+    # A referenced property must belong to a referenced concept.
+    sh:sparql [
+        a sh:SPARQLConstraint ;
+        sh:message "Referenced domain property {?p} does not belong to any concept referenced by the requirement." ;
+        sh:select """
+            PREFIX reo: <http://re-environment-onto.org/ontology#>
+            SELECT $this ?p WHERE {
+                $this reo:refersToProperty ?p .
+                FILTER NOT EXISTS { $this reo:refersToConcept ?c . ?c reo:hasProperty ?p . }
+            }""" ;
+    ] .
+
+reo:DerivationRecordShape a sh:NodeShape ;
+    sh:targetClass reo:DerivationRecord ;
+    sh:name "DerivationRecordShape" ;
+    sh:property [ sh:path reo:assesses ; sh:minCount 1 ; sh:maxCount 1 ; sh:class reo:Requirement ] ;
+    sh:property [ sh:path reo:hasDecision ; sh:minCount 1 ; sh:maxCount 1 ;
+                  sh:in ( reo:Accepted reo:AcceptedWithReservations reo:Conditional
+                          reo:PendingReview reo:Rejected reo:NotDerived ) ] ;
+    sh:property [ sh:path reo:environmentSnapshot ; sh:minCount 1 ; sh:maxCount 1 ; sh:datatype xsd:string ] ;
+    sh:property [ sh:path reo:policyVersion ; sh:minCount 1 ; sh:maxCount 1 ; sh:datatype xsd:string ] ;
+    sh:property [ sh:path prov:wasGeneratedBy ; sh:minCount 1 ; sh:maxCount 1 ; sh:class reo:ValidationActivity ] ;
+    # An accepted record must have consulted at least one element (no vacuous acceptance).
+    sh:sparql [
+        a sh:SPARQLConstraint ;
+        sh:message "An accepted record must have a non-empty trace." ;
+        sh:select """
+            PREFIX reo: <http://re-environment-onto.org/ontology#>
+            PREFIX prov: <http://www.w3.org/ns/prov#>
+            SELECT $this WHERE {
+                $this reo:hasDecision ?d .
+                FILTER (?d IN (reo:Accepted, reo:AcceptedWithReservations))
+                $this prov:wasGeneratedBy ?a .
+                FILTER NOT EXISTS { ?a reo:consulted ?e . }
+            }""" ;
+    ] .

@@ -306,7 +306,7 @@ ex:X001_EmergencyDept a reo:Context ;
 ex:U001_DrugDBFrequency a reo:UnknownUncertainty ;
     reo:uncertaintyId "U-001" ;
     reo:uncertaintyName "Drug DB Update Frequency" ;
-    reo:subject "Fréquence de mise à jour de la base de données médicaments — non encore déterminée." ;
+    reo:subject "Update frequency of the drug-interaction database (not yet determined)." ;
     reo:impactLevel "high" ;
     reo:status "unvalidated" ;
     reo:validationPlan "Infrastructure analysis scheduled Week 12." ;

@@ -1,0 +1,55 @@
+{
+  "engine": "HermiT via Owlready2",
+  "positive": {
+    "P1_core": {
+      "consistent": true,
+      "unsatisfiable_classes": [],
+      "triples": 500,
+      "pass": true
+    },
+    "P2_core_plus_derivation": {
+      "consistent": true,
+      "unsatisfiable_classes": [],
+      "triples": 728,
+      "pass": true
+    },
+    "P3_all_modules_example_extension_requirements_records": {
+      "consistent": true,
+      "unsatisfiable_classes": [],
+      "triples": 1397,
+      "pass": true
+    }
+  },
+  "negative": {
+    "N1_actor_typed_human_and_system": {
+      "v1_1_detected": true,
+      "v1_0_detected": true
+    },
+    "N2_goal_used_as_interaction_source": {
+      "v1_1_detected": true,
+      "v1_0_detected": false
+    },
+    "N3_goal_also_typed_constraint": {
+      "v1_1_detected": true,
+      "v1_0_detected": false
+    },
+    "N4_actor_responsible_for_domain_concept": {
+      "v1_1_detected": true,
+      "v1_0_detected": false
+    },
+    "N5_uncertainty_blocks_actor": {
+      "v1_1_detected": true,
+      "v1_0_detected": false
+    },
+    "N6_second_interaction_source": {
+      "v1_1_detected": true,
+      "v1_0_detected": false
+    },
+    "N7_record_with_two_decisions": {
+      "v1_1_detected": true
+    },
+    "N8_requirement_seeded_by_actor": {
+      "v1_1_detected": true
+    }
+  }
+}

@@ -1,0 +1,192 @@
+{
+  "frameworks": 12,
+  "concerns": {
+    "actor": {
+      "first_class": 4,
+      "partial": 3,
+      "C1": true,
+      "C2": true,
+      "C3": "existence, participation, capability, authority",
+      "C3_holds": true,
+      "C4": true,
+      "retained_by_rule": true,
+      "decision": "view A"
+    },
+    "stakeholder": {
+      "first_class": 2,
+      "partial": 3,
+      "C1": false,
+      "C2": false,
+      "C3": "none of its own",
+      "C3_holds": false,
+      "C4": true,
+      "retained_by_rule": false,
+      "decision": "merged into A (reo:hasStakeholder links actors to goals)"
+    },
+    "goal": {
+      "first_class": 4,
+      "partial": 2,
+      "C1": true,
+      "C2": true,
+      "C3": "seed anchoring, lineage, blocking",
+      "C3_holds": true,
+      "C4": true,
+      "retained_by_rule": true,
+      "decision": "view G"
+    },
+    "quality": {
+      "first_class": 3,
+      "partial": 3,
+      "C1": true,
+      "C2": false,
+      "C3": "via soft/hard constraints",
+      "C3_holds": true,
+      "C4": true,
+      "retained_by_rule": false,
+      "decision": "merged: intention -> G; measurable bound -> C (QualityConstraint)"
+    },
+    "domain_entity": {
+      "first_class": 3,
+      "partial": 3,
+      "C1": true,
+      "C2": true,
+      "C3": "concept existence, exchanged data",
+      "C3_holds": true,
+      "C4": true,
+      "retained_by_rule": true,
+      "decision": "view D"
+    },
+    "domain_property": {
+      "first_class": 3,
+      "partial": 2,
+      "C1": true,
+      "C2": false,
+      "C3": "property ownership",
+      "C3_holds": true,
+      "C4": true,
+      "retained_by_rule": false,
+      "decision": "merged into D (DomainProperty, DomainInvariant); unvalidated assumptions -> U"
+    },
+    "constraint": {
+      "first_class": 3,
+      "partial": 5,
+      "C1": true,
+      "C2": true,
+      "C3": "applicability routes, validators, hard/soft",
+      "C3_holds": true,
+      "C4": true,
+      "retained_by_rule": true,
+      "decision": "view C"
+    },
+    "context": {
+      "first_class": 3,
+      "partial": 2,
+      "C1": true,
+      "C2": true,
+      "C3": "activation, exceptions, participation",
+      "C3_holds": true,
+      "C4": true,
+      "retained_by_rule": true,
+      "decision": "view X"
+    },
+    "time": {
+      "first_class": 2,
+      "partial": 0,
+      "C1": false,
+      "C2": false,
+      "C3": "none in the contract",
+      "C3_holds": false,
+      "C4": false,
+      "retained_by_rule": false,
+      "decision": "merged into X (temporalStart/temporalEnd)"
+    },
+    "location": {
+      "first_class": 1,
+      "partial": 0,
+      "C1": false,
+      "C2": false,
+      "C3": "none in the contract",
+      "C3_holds": false,
+      "C4": false,
+      "retained_by_rule": false,
+      "decision": "merged into X (spatialScope)"
+    },
+    "uncertainty": {
+      "first_class": 3,
+      "partial": 2,
+      "C1": true,
+      "C2": true,
+      "C3": "conditional / rejected / review states",
+      "C3_holds": true,
+      "C4": true,
+      "retained_by_rule": true,
+      "decision": "view U"
+    },
+    "interaction": {
+      "first_class": 4,
+      "partial": 2,
+      "C1": true,
+      "C2": true,
+      "C3": "endpoint, direction, data, protocol",
+      "C3_holds": true,
+      "C4": true,
+      "retained_by_rule": true,
+      "decision": "view I"
+    },
+    "action": {
+      "first_class": 4,
+      "partial": 1,
+      "C1": true,
+      "C2": false,
+      "C3": "capability obligation (an actor question)",
+      "C3_holds": true,
+      "C4": true,
+      "retained_by_rule": false,
+      "decision": "merged into A as auxiliary class Action"
+    },
+    "resource": {
+      "first_class": 1,
+      "partial": 1,
+      "C1": false,
+      "C2": false,
+      "C3": "none of its own",
+      "C3_holds": false,
+      "C4": true,
+      "retained_by_rule": false,
+      "decision": "merged into D (or A for an autonomous resource, as a distinct role individual)"
+    },
+    "process": {
+      "first_class": 0,
+      "partial": 1,
+      "C1": false,
+      "C2": true,
+      "C3": "none implemented (needs behavioural semantics)",
+      "C3_holds": false,
+      "C4": true,
+      "retained_by_rule": false,
+      "decision": "excluded from the core; candidate extension"
+    },
+    "event": {
+      "first_class": 0,
+      "partial": 4,
+      "C1": false,
+      "C2": false,
+      "C3": "none in the contract",
+      "C3_holds": false,
+      "C4": true,
+      "retained_by_rule": false,
+      "decision": "merged into I (triggeringEvent)"
+    },
+    "provenance": {
+      "first_class": 1,
+      "partial": 1,
+      "C1": false,
+      "C2": true,
+      "C3": "none of its own: records decisions (cross-cutting), not environment facts",
+      "C3_holds": false,
+      "C4": true,
+      "retained_by_rule": false,
+      "decision": "excluded from the views; derivation module (PROV-O)"
+    }
+  }
+}

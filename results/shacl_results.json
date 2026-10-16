@@ -1,0 +1,168 @@
+{
+  "main_example": {
+    "conforms": true,
+    "violations": 0,
+    "warnings": 1,
+    "components": [
+      "SPARQLConstraintComponent"
+    ],
+    "triples": 243,
+    "pass": true
+  },
+  "fixture_01_success": {
+    "conforms": true,
+    "violations": 0,
+    "warnings": 0,
+    "components": [],
+    "triples": 161,
+    "pass": true
+  },
+  "fixture_02_warning": {
+    "conforms": true,
+    "violations": 0,
+    "warnings": 1,
+    "components": [
+      "SPARQLConstraintComponent"
+    ],
+    "triples": 207,
+    "pass": true
+  },
+  "fixture_03_violations": {
+    "conforms": false,
+    "violations": 24,
+    "warnings": 0,
+    "components": [
+      "InConstraintComponent",
+      "MaxInclusiveConstraintComponent",
+      "MinCountConstraintComponent",
+      "NotConstraintComponent",
+      "OrConstraintComponent"
+    ],
+    "triples": 130,
+    "pass": true
+  },
+  "example_extension_requirements_records": {
+    "conforms": true,
+    "violations": 0,
+    "warnings": 1,
+    "components": [
+      "SPARQLConstraintComponent"
+    ],
+    "triples": 669,
+    "pass": true
+  },
+  "cross_view_errors": {
+    "goal_used_as_interaction_source": {
+      "rdfs": {
+        "conforms": false,
+        "violations": 5,
+        "warnings": 1,
+        "components": [
+          "MaxCountConstraintComponent",
+          "MinCountConstraintComponent",
+          "SPARQLConstraintComponent"
+        ],
+        "triples": 244
+      },
+      "none": {
+        "conforms": false,
+        "violations": 2,
+        "warnings": 1,
+        "components": [
+          "ClassConstraintComponent",
+          "MaxCountConstraintComponent",
+          "SPARQLConstraintComponent"
+        ],
+        "triples": 244
+      }
+    },
+    "goal_also_typed_constraint": {
+      "rdfs": {
+        "conforms": false,
+        "violations": 5,
+        "warnings": 1,
+        "components": [
+          "MinCountConstraintComponent",
+          "SPARQLConstraintComponent"
+        ],
+        "triples": 244
+      },
+      "none": {
+        "conforms": false,
+        "violations": 5,
+        "warnings": 1,
+        "components": [
+          "MinCountConstraintComponent",
+          "SPARQLConstraintComponent"
+        ],
+        "triples": 244
+      }
+    },
+    "actor_responsible_for_domain_concept": {
+      "rdfs": {
+        "conforms": false,
+        "violations": 5,
+        "warnings": 1,
+        "components": [
+          "MinCountConstraintComponent",
+          "SPARQLConstraintComponent"
+        ],
+        "triples": 244
+      },
+      "none": {
+        "conforms": false,
+        "violations": 1,
+        "warnings": 1,
+        "components": [
+          "ClassConstraintComponent",
+          "SPARQLConstraintComponent"
+        ],
+        "triples": 244
+      }
+    },
+    "uncertainty_blocks_actor": {
+      "rdfs": {
+        "conforms": false,
+        "violations": 5,
+        "warnings": 1,
+        "components": [
+          "MinCountConstraintComponent",
+          "SPARQLConstraintComponent"
+        ],
+        "triples": 244
+      },
+      "none": {
+        "conforms": true,
+        "violations": 1,
+        "warnings": 1,
+        "components": [
+          "ClassConstraintComponent",
+          "SPARQLConstraintComponent"
+        ],
+        "triples": 244
+      }
+    },
+    "second_interaction_source": {
+      "rdfs": {
+        "conforms": false,
+        "violations": 1,
+        "warnings": 1,
+        "components": [
+          "MaxCountConstraintComponent",
+          "SPARQLConstraintComponent"
+        ],
+        "triples": 244
+      },
+      "none": {
+        "conforms": false,
+        "violations": 1,
+        "warnings": 1,
+        "components": [
+          "MaxCountConstraintComponent",
+          "SPARQLConstraintComponent"
+        ],
+        "triples": 244
+      }
+    }
+  }
+}

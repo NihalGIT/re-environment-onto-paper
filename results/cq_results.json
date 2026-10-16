@@ -1,0 +1,949 @@
+{
+  "passed": 34,
+  "total": 34,
+  "by_category": {
+    "lookup": [
+      11,
+      11
+    ],
+    "integrity": [
+      10,
+      10
+    ],
+    "reasoning": [
+      5,
+      5
+    ],
+    "requirement": [
+      4,
+      4
+    ],
+    "provenance": [
+      4,
+      4
+    ]
+  },
+  "vocabulary_size": 111,
+  "vocabulary_covered": 49,
+  "coverage_by_kind": {
+    "classes": [
+      8,
+      31
+    ],
+    "object_properties": [
+      31,
+      34
+    ],
+    "datatype_properties": [
+      10,
+      46
+    ]
+  },
+  "covered_terms": [
+    "Actor",
+    "Constraint",
+    "DataFlowInteraction",
+    "Goal",
+    "Interaction",
+    "RegulatoryConstraint",
+    "StrategicGoal",
+    "Uncertainty",
+    "affects",
+    "appliesTo",
+    "assessedInContext",
+    "assesses",
+    "authorityLevel",
+    "blocks",
+    "consulted",
+    "declaresHardConstraint",
+    "enforcementLevel",
+    "exchangesData",
+    "expectsInteractionSource",
+    "governedBy",
+    "hasActiveActor",
+    "hasActiveConstraint",
+    "hasAuthoritativeText",
+    "hasCapability",
+    "hasDecision",
+    "hasException",
+    "hasInvariant",
+    "hasProperty",
+    "hasResponsibleActor",
+    "hasSeedGoal",
+    "hasSource",
+    "hasStakeholder",
+    "hasTarget",
+    "impactLevel",
+    "isResponsibleFor",
+    "isSubjectTo",
+    "performsAction",
+    "protocol",
+    "refersToConcept",
+    "refersToProperty",
+    "refinementType",
+    "refines",
+    "relatedTo",
+    "requirementId",
+    "requiresAuthorityOf",
+    "status",
+    "usesInteraction",
+    "validationPlan",
+    "validatorKey"
+  ],
+  "uncovered_terms": [
+    "Action",
+    "AmbiguityUncertainty",
+    "AssumptionUncertainty",
+    "BusinessConstraint",
+    "CommunicationInteraction",
+    "Context",
+    "ControlFlowInteraction",
+    "DecisionState",
+    "DerivationRecord",
+    "DomainConcept",
+    "DomainInvariant",
+    "DomainProperty",
+    "HumanActor",
+    "OperationalGoal",
+    "OrganizationActor",
+    "QualityConstraint",
+    "Requirement",
+    "RiskUncertainty",
+    "ServiceCallInteraction",
+    "SystemActor",
+    "TechnicalConstraint",
+    "UnknownUncertainty",
+    "ValidationActivity",
+    "actorId",
+    "actorName",
+    "conceptId",
+    "conceptName",
+    "constraintId",
+    "constraintName",
+    "contextId",
+    "contextName",
+    "contextProperty",
+    "declaresSoftConstraint",
+    "environmentSnapshot",
+    "formalExpression",
+    "formalLogic",
+    "goalId",
+    "goalName",
+    "hasJustification",
+    "interactionId",
+    "interactionName",
+    "invariantExpression",
+    "isMandatory",
+    "naturalLanguage",
+    "organizationalUnit",
+    "policyVersion",
+    "priority",
+    "propertyName",
+    "propertyType",
+    "referenceTarget",
+    "requirementText",
+    "requiresProtocol",
+    "severity",
+    "spatialScope",
+    "subject",
+    "supersededBy",
+    "supersedes",
+    "temporalEnd",
+    "temporalStart",
+    "triggeringEvent",
+    "uncertaintyId",
+    "uncertaintyName"
+  ],
+  "results": [
+    {
+      "id": "CQ-A1",
+      "category": "lookup",
+      "origin": "v1.0.0 suite",
+      "graph": "base",
+      "question": "Which actors are represented in the emergency-prescription environment?",
+      "expected": [
+        [
+          "EHR_System"
+        ],
+        [
+          "Pharmacist"
+        ],
+        [
+          "Physician"
+        ]
+      ],
+      "observed": [
+        [
+          "EHR_System"
+        ],
+        [
+          "Pharmacist"
+        ],
+        [
+          "Physician"
+        ]
+      ],
+      "pass": true
+    },
+    {
+      "id": "CQ-A2",
+      "category": "lookup",
+      "origin": "v1.0.0 suite",
+      "graph": "base",
+      "question": "What authority level is asserted for the Physician?",
+      "expected": [
+        [
+          "licensed_medical_professional"
+        ]
+      ],
+      "observed": [
+        [
+          "licensed_medical_professional"
+        ]
+      ],
+      "pass": true
+    },
+    {
+      "id": "CQ-G1",
+      "category": "lookup",
+      "origin": "v1.0.0 suite",
+      "graph": "base",
+      "question": "Which actors are stakeholders of G005?",
+      "expected": [
+        [
+          "EHR_System"
+        ],
+        [
+          "Pharmacist"
+        ]
+      ],
+      "observed": [
+        [
+          "EHR_System"
+        ],
+        [
+          "Pharmacist"
+        ]
+      ],
+      "pass": true
+    },
+    {
+      "id": "CQ-G2",
+      "category": "integrity",
+      "origin": "v1.0.0 suite",
+      "graph": "base",
+      "question": "Does the goal-refinement graph contain a cycle?",
+      "expected": false,
+      "observed": false,
+      "pass": true
+    },
+    {
+      "id": "CQ-D1",
+      "category": "lookup",
+      "origin": "v1.0.0 suite",
+      "graph": "base",
+      "question": "Which domain properties belong to Medication?",
+      "expected": [
+        [
+          "Prop_Contraindications"
+        ],
+        [
+          "Prop_Dosage"
+        ],
+        [
+          "Prop_MedName"
+        ],
+        [
+          "Prop_Route"
+        ]
+      ],
+      "observed": [
+        [
+          "Prop_Contraindications"
+        ],
+        [
+          "Prop_Dosage"
+        ],
+        [
+          "Prop_MedName"
+        ],
+        [
+          "Prop_Route"
+        ]
+      ],
+      "pass": true
+    },
+    {
+      "id": "CQ-C1",
+      "category": "lookup",
+      "origin": "v1.0.0 suite",
+      "graph": "base",
+      "question": "Which hard constraints explicitly apply to the Physician?",
+      "expected": [
+        [
+          "C001_HIPAA"
+        ],
+        [
+          "C002_FDA"
+        ]
+      ],
+      "observed": [
+        [
+          "C001_HIPAA"
+        ],
+        [
+          "C002_FDA"
+        ]
+      ],
+      "pass": true
+    },
+    {
+      "id": "CQ-C2",
+      "category": "lookup",
+      "origin": "v1.0.0 suite",
+      "graph": "base",
+      "question": "Is the Emergency Department declared as an exception to the HIPAA constraint?",
+      "expected": true,
+      "observed": true,
+      "pass": true
+    },
+    {
+      "id": "CQ-X1",
+      "category": "lookup",
+      "origin": "v1.0.0 suite",
+      "graph": "base",
+      "question": "Which constraints are explicitly active in the Emergency Department context?",
+      "expected": [
+        [
+          "C002_FDA"
+        ]
+      ],
+      "observed": [
+        [
+          "C002_FDA"
+        ]
+      ],
+      "pass": true
+    },
+    {
+      "id": "CQ-X2",
+      "category": "lookup",
+      "origin": "v1.0.0 suite",
+      "graph": "base",
+      "question": "Which actors are active in the Emergency Department context?",
+      "expected": [
+        [
+          "EHR_System"
+        ],
+        [
+          "Pharmacist"
+        ],
+        [
+          "Physician"
+        ]
+      ],
+      "observed": [
+        [
+          "EHR_System"
+        ],
+        [
+          "Pharmacist"
+        ],
+        [
+          "Physician"
+        ]
+      ],
+      "pass": true
+    },
+    {
+      "id": "CQ-U1",
+      "category": "lookup",
+      "origin": "v1.0.0 suite",
+      "graph": "base",
+      "question": "Which unresolved uncertainty blocks G002?",
+      "expected": [
+        [
+          "U001_DrugDBFrequency"
+        ]
+      ],
+      "observed": [
+        [
+          "U001_DrugDBFrequency"
+        ]
+      ],
+      "pass": true
+    },
+    {
+      "id": "CQ-U2",
+      "category": "integrity",
+      "origin": "v1.0.0 suite",
+      "graph": "base",
+      "question": "Is there any goal-blocking uncertainty without a validation plan?",
+      "expected": false,
+      "observed": false,
+      "pass": true
+    },
+    {
+      "id": "CQ-I1",
+      "category": "lookup",
+      "origin": "v1.0.0 suite",
+      "graph": "base",
+      "question": "What are the source and target of the Physician-to-EHR interaction?",
+      "expected": [
+        [
+          "Physician",
+          "EHR_System"
+        ]
+      ],
+      "observed": [
+        [
+          "Physician",
+          "EHR_System"
+        ]
+      ],
+      "pass": true
+    },
+    {
+      "id": "CQ-I2",
+      "category": "lookup",
+      "origin": "v1.0.0 suite",
+      "graph": "base",
+      "question": "Which domain concept is exchanged by I001?",
+      "expected": [
+        [
+          "D002_Patient"
+        ]
+      ],
+      "observed": [
+        [
+          "D002_Patient"
+        ]
+      ],
+      "pass": true
+    },
+    {
+      "id": "CQ-I3",
+      "category": "integrity",
+      "origin": "v1.0.0 suite",
+      "graph": "base",
+      "question": "Is there any interaction in the fixture without a source or target?",
+      "expected": false,
+      "observed": false,
+      "pass": true
+    },
+    {
+      "id": "CQ-R1",
+      "category": "integrity",
+      "origin": "v1.0.0 suite",
+      "graph": "base",
+      "question": "Is there any explicitly typed RegulatoryConstraint without authoritative text?",
+      "expected": false,
+      "observed": false,
+      "pass": true
+    },
+    {
+      "id": "CQ-C3",
+      "category": "reasoning",
+      "origin": "v1.1.0 revision",
+      "graph": "full",
+      "question": "Which constraints are applicable to R001 through any applicability route (declared, active in its context, governing its actor or interaction, or applying to one of its references)?",
+      "expected": [
+        [
+          "C001_HIPAA"
+        ],
+        [
+          "C002_FDA"
+        ],
+        [
+          "C003_ResponseTime"
+        ]
+      ],
+      "observed": [
+        [
+          "C001_HIPAA"
+        ],
+        [
+          "C002_FDA"
+        ],
+        [
+          "C003_ResponseTime"
+        ]
+      ],
+      "pass": true
+    },
+    {
+      "id": "CQ-C4",
+      "category": "reasoning",
+      "origin": "v1.1.0 revision",
+      "graph": "full",
+      "question": "For which requirements is a rule governing their responsible actor waived by an exception for the requirement's context?",
+      "expected": [
+        [
+          "R001"
+        ],
+        [
+          "R002"
+        ],
+        [
+          "R003"
+        ],
+        [
+          "R004"
+        ],
+        [
+          "R007"
+        ],
+        [
+          "R010"
+        ]
+      ],
+      "observed": [
+        [
+          "R001"
+        ],
+        [
+          "R002"
+        ],
+        [
+          "R003"
+        ],
+        [
+          "R004"
+        ],
+        [
+          "R007"
+        ],
+        [
+          "R010"
+        ]
+      ],
+      "pass": true
+    },
+    {
+      "id": "CQ-U3",
+      "category": "reasoning",
+      "origin": "v1.1.0 revision",
+      "graph": "full",
+      "question": "Which goals are blocked, directly or through an ancestor goal, by an unvalidated uncertainty?",
+      "expected": [
+        [
+          "G002"
+        ]
+      ],
+      "observed": [
+        [
+          "G002"
+        ]
+      ],
+      "pass": true
+    },
+    {
+      "id": "CQ-U4",
+      "category": "requirement",
+      "origin": "v1.1.0 revision",
+      "graph": "full",
+      "question": "Which requirements depend, through their seed lineage, on an unvalidated uncertainty?",
+      "expected": [
+        [
+          "R001"
+        ],
+        [
+          "R007"
+        ]
+      ],
+      "observed": [
+        [
+          "R001"
+        ],
+        [
+          "R007"
+        ]
+      ],
+      "pass": true
+    },
+    {
+      "id": "CQ-A3",
+      "category": "requirement",
+      "origin": "v1.1.0 revision",
+      "graph": "full",
+      "question": "Which requirements ask their responsible actor to perform an action outside its capabilities?",
+      "expected": [
+        [
+          "R006",
+          "Action_Prescribe"
+        ]
+      ],
+      "observed": [
+        [
+          "R006",
+          "Action_Prescribe"
+        ]
+      ],
+      "pass": true
+    },
+    {
+      "id": "CQ-I4",
+      "category": "requirement",
+      "origin": "v1.1.0 revision",
+      "graph": "full",
+      "question": "Which requirements use an interaction that exchanges none of the concepts they reference?",
+      "expected": [
+        [
+          "R010"
+        ]
+      ],
+      "observed": [
+        [
+          "R010"
+        ]
+      ],
+      "pass": true
+    },
+    {
+      "id": "CQ-I5",
+      "category": "integrity",
+      "origin": "v1.1.0 revision",
+      "graph": "full",
+      "question": "Is there a requirement whose expected interaction source differs from the interaction's actual source?",
+      "expected": false,
+      "observed": false,
+      "pass": true
+    },
+    {
+      "id": "CQ-X3",
+      "category": "integrity",
+      "origin": "v1.1.0 revision",
+      "graph": "full",
+      "question": "Is there a requirement assessed in a context in which its responsible actor is neither active nor responsible for the seed lineage?",
+      "expected": false,
+      "observed": false,
+      "pass": true
+    },
+    {
+      "id": "CQ-D2",
+      "category": "integrity",
+      "origin": "v1.1.0 revision",
+      "graph": "full",
+      "question": "Is there a requirement that references a domain property not owned by any concept it references?",
+      "expected": false,
+      "observed": false,
+      "pass": true
+    },
+    {
+      "id": "CQ-G3",
+      "category": "requirement",
+      "origin": "v1.1.0 revision",
+      "graph": "full",
+      "question": "Which goals have no requirement anchored in them?",
+      "expected": [
+        [
+          "G001"
+        ]
+      ],
+      "observed": [
+        [
+          "G001"
+        ]
+      ],
+      "pass": true
+    },
+    {
+      "id": "CQ-P1",
+      "category": "provenance",
+      "origin": "v1.1.0 revision",
+      "graph": "full",
+      "question": "Which requirements must be re-evaluated if the Physician changes (direct trace-based impact)?",
+      "expected": [
+        [
+          "R001"
+        ],
+        [
+          "R002"
+        ],
+        [
+          "R003"
+        ],
+        [
+          "R008"
+        ],
+        [
+          "R009"
+        ]
+      ],
+      "observed": [
+        [
+          "R001"
+        ],
+        [
+          "R002"
+        ],
+        [
+          "R003"
+        ],
+        [
+          "R008"
+        ],
+        [
+          "R009"
+        ]
+      ],
+      "pass": true
+    },
+    {
+      "id": "CQ-P2",
+      "category": "provenance",
+      "origin": "v1.1.0 revision",
+      "graph": "full",
+      "question": "Which records are conditional, and which uncertainty did their validation consult?",
+      "expected": [
+        [
+          "R001",
+          "U001_DrugDBFrequency"
+        ],
+        [
+          "R007",
+          "U001_DrugDBFrequency"
+        ]
+      ],
+      "observed": [
+        [
+          "R001",
+          "U001_DrugDBFrequency"
+        ],
+        [
+          "R007",
+          "U001_DrugDBFrequency"
+        ]
+      ],
+      "pass": true
+    },
+    {
+      "id": "CQ-P3",
+      "category": "provenance",
+      "origin": "v1.1.0 revision",
+      "graph": "full",
+      "question": "Which records consulted a constraint that names no validator, and what decision did they receive?",
+      "expected": [
+        [
+          "R001",
+          "C003_ResponseTime",
+          "Conditional"
+        ],
+        [
+          "R002",
+          "C003_ResponseTime",
+          "AcceptedWithReservations"
+        ],
+        [
+          "R005",
+          "C004_DispensingLog",
+          "PendingReview"
+        ],
+        [
+          "R006",
+          "C004_DispensingLog",
+          "Rejected"
+        ],
+        [
+          "R008",
+          "C003_ResponseTime",
+          "Rejected"
+        ]
+      ],
+      "observed": [
+        [
+          "R001",
+          "C003_ResponseTime",
+          "Conditional"
+        ],
+        [
+          "R002",
+          "C003_ResponseTime",
+          "AcceptedWithReservations"
+        ],
+        [
+          "R005",
+          "C004_DispensingLog",
+          "PendingReview"
+        ],
+        [
+          "R006",
+          "C004_DispensingLog",
+          "Rejected"
+        ],
+        [
+          "R008",
+          "C003_ResponseTime",
+          "Rejected"
+        ]
+      ],
+      "pass": true
+    },
+    {
+      "id": "CQ-P4",
+      "category": "provenance",
+      "origin": "v1.1.0 revision",
+      "graph": "full",
+      "question": "What decision did each requirement receive?",
+      "expected": [
+        [
+          "R001",
+          "Conditional"
+        ],
+        [
+          "R002",
+          "AcceptedWithReservations"
+        ],
+        [
+          "R003",
+          "Accepted"
+        ],
+        [
+          "R004",
+          "Accepted"
+        ],
+        [
+          "R005",
+          "PendingReview"
+        ],
+        [
+          "R006",
+          "Rejected"
+        ],
+        [
+          "R007",
+          "Conditional"
+        ],
+        [
+          "R008",
+          "Rejected"
+        ],
+        [
+          "R009",
+          "Accepted"
+        ],
+        [
+          "R010",
+          "Rejected"
+        ]
+      ],
+      "observed": [
+        [
+          "R001",
+          "Conditional"
+        ],
+        [
+          "R002",
+          "AcceptedWithReservations"
+        ],
+        [
+          "R003",
+          "Accepted"
+        ],
+        [
+          "R004",
+          "Accepted"
+        ],
+        [
+          "R005",
+          "PendingReview"
+        ],
+        [
+          "R006",
+          "Rejected"
+        ],
+        [
+          "R007",
+          "Conditional"
+        ],
+        [
+          "R008",
+          "Rejected"
+        ],
+        [
+          "R009",
+          "Accepted"
+        ],
+        [
+          "R010",
+          "Rejected"
+        ]
+      ],
+      "pass": true
+    },
+    {
+      "id": "CQ-P5",
+      "category": "integrity",
+      "origin": "v1.1.0 revision",
+      "graph": "full",
+      "question": "Is there an accepted record whose validation consulted no element?",
+      "expected": false,
+      "observed": false,
+      "pass": true
+    },
+    {
+      "id": "CQ-U5",
+      "category": "reasoning",
+      "origin": "v1.1.0 revision",
+      "graph": "full",
+      "question": "Which elements are affected by an uncertainty of high or critical impact, and by which uncertainty?",
+      "expected": [
+        [
+          "G002",
+          "U001_DrugDBFrequency"
+        ]
+      ],
+      "observed": [
+        [
+          "G002",
+          "U001_DrugDBFrequency"
+        ]
+      ],
+      "pass": true
+    },
+    {
+      "id": "CQ-D3",
+      "category": "reasoning",
+      "origin": "v1.1.0 revision",
+      "graph": "full",
+      "question": "Which invariants constrain the concepts related to Patient?",
+      "expected": [
+        [
+          "Inv_ContraindicationsKnown"
+        ],
+        [
+          "Inv_DosagePositive"
+        ]
+      ],
+      "observed": [
+        [
+          "Inv_ContraindicationsKnown"
+        ],
+        [
+          "Inv_DosagePositive"
+        ]
+      ],
+      "pass": true
+    },
+    {
+      "id": "CQ-G5",
+      "category": "integrity",
+      "origin": "v1.1.0 revision",
+      "graph": "full",
+      "question": "Is there a strategic goal declared as a leaf?",
+      "expected": false,
+      "observed": false,
+      "pass": true
+    },
+    {
+      "id": "CQ-I6",
+      "category": "integrity",
+      "origin": "v1.1.0 revision",
+      "graph": "full",
+      "question": "Is there a data-flow interaction without a declared protocol?",
+      "expected": false,
+      "observed": false,
+      "pass": true
+    }
+  ]
+}

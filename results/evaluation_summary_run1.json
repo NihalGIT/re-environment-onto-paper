@@ -1,0 +1,611 @@
+{
+  "policy_version": "ecre-policy-1.1.0",
+  "requirements": [
+    "R001",
+    "R002",
+    "R003",
+    "R004",
+    "R005",
+    "R006",
+    "R007",
+    "R008",
+    "R009",
+    "R010"
+  ],
+  "baseline_decisions": {
+    "R001": "conditional",
+    "R002": "accepted_with_reservations",
+    "R003": "accepted",
+    "R004": "accepted",
+    "R005": "pending_review",
+    "R006": "rejected",
+    "R007": "conditional",
+    "R008": "rejected",
+    "R009": "accepted",
+    "R010": "rejected"
+  },
+  "corpus": {
+    "mutants": 766,
+    "by_operator": {
+      "DEL-T": 233,
+      "DEL-E": 38,
+      "ENUM": 62,
+      "AUTH": 6,
+      "RETARGET": 170,
+      "ADD-LINK": 214,
+      "NEW-RULE": 19,
+      "NEW-UNC": 24
+    },
+    "pairs": 7660,
+    "mutants_changing_some_decision": 312,
+    "decision_changes": 628,
+    "by_operator_changing": {
+      "ADD-LINK": [
+        95,
+        214
+      ],
+      "AUTH": [
+        2,
+        6
+      ],
+      "DEL-E": [
+        28,
+        38
+      ],
+      "DEL-T": [
+        57,
+        233
+      ],
+      "ENUM": [
+        5,
+        62
+      ],
+      "NEW-RULE": [
+        11,
+        19
+      ],
+      "NEW-UNC": [
+        19,
+        24
+      ],
+      "RETARGET": [
+        95,
+        170
+      ]
+    }
+  },
+  "differential": {
+    "pairs": 7660,
+    "agreements": 7641,
+    "disagreements": [
+      {
+        "mutant": "M0022",
+        "desc": "delete C001_HIPAA formalExpression access_records \u2192 has_consent(context) \u2228 exception(context)",
+        "rid": "R001",
+        "checker": "pending_review",
+        "oracle": "conditional"
+      },
+      {
+        "mutant": "M0022",
+        "desc": "delete C001_HIPAA formalExpression access_records \u2192 has_consent(context) \u2228 exception(context)",
+        "rid": "R002",
+        "checker": "pending_review",
+        "oracle": "accepted_with_reservations"
+      },
+      {
+        "mutant": "M0022",
+        "desc": "delete C001_HIPAA formalExpression access_records \u2192 has_consent(context) \u2228 exception(context)",
+        "rid": "R003",
+        "checker": "pending_review",
+        "oracle": "accepted"
+      },
+      {
+        "mutant": "M0022",
+        "desc": "delete C001_HIPAA formalExpression access_records \u2192 has_consent(context) \u2228 exception(context)",
+        "rid": "R004",
+        "checker": "pending_review",
+        "oracle": "accepted"
+      },
+      {
+        "mutant": "M0022",
+        "desc": "delete C001_HIPAA formalExpression access_records \u2192 has_consent(context) \u2228 exception(context)",
+        "rid": "R007",
+        "checker": "pending_review",
+        "oracle": "conditional"
+      },
+      {
+        "mutant": "M0022",
+        "desc": "delete C001_HIPAA formalExpression access_records \u2192 has_consent(context) \u2228 exception(context)",
+        "rid": "R008",
+        "checker": "pending_review",
+        "oracle": "accepted_with_reservations"
+      },
+      {
+        "mutant": "M0022",
+        "desc": "delete C001_HIPAA formalExpression access_records \u2192 has_consent(context) \u2228 exception(context)",
+        "rid": "R009",
+        "checker": "pending_review",
+        "oracle": "accepted"
+      },
+      {
+        "mutant": "M0033",
+        "desc": "delete C002_FDA formalExpression prescribe \u2192 actor.authority = licensed_medical_professional",
+        "rid": "R001",
+        "checker": "pending_review",
+        "oracle": "conditional"
+      },
+      {
+        "mutant": "M0033",
+        "desc": "delete C002_FDA formalExpression prescribe \u2192 actor.authority = licensed_medical_professional",
+        "rid": "R002",
+        "checker": "pending_review",
+        "oracle": "accepted_with_reservations"
+      },
+      {
+        "mutant": "M0033",
+        "desc": "delete C002_FDA formalExpression prescribe \u2192 actor.authority = licensed_medical_professional",
+        "rid": "R003",
+        "checker": "pending_review",
+        "oracle": "accepted"
+      },
+      {
+        "mutant": "M0033",
+        "desc": "delete C002_FDA formalExpression prescribe \u2192 actor.authority = licensed_medical_professional",
+        "rid": "R004",
+        "checker": "pending_review",
+        "oracle": "accepted"
+      },
+      {
+        "mutant": "M0033",
+        "desc": "delete C002_FDA formalExpression prescribe \u2192 actor.authority = licensed_medical_professional",
+        "rid": "R007",
+        "checker": "pending_review",
+        "oracle": "conditional"
+      },
+      {
+        "mutant": "M0033",
+        "desc": "delete C002_FDA formalExpression prescribe \u2192 actor.authority = licensed_medical_professional",
+        "rid": "R009",
+        "checker": "pending_review",
+        "oracle": "accepted"
+      },
+      {
+        "mutant": "M0043",
+        "desc": "delete C003_ResponseTime type QualityConstraint",
+        "rid": "R001",
+        "checker": "pending_review",
+        "oracle": "conditional"
+      },
+      {
+        "mutant": "M0043",
+        "desc": "delete C003_ResponseTime type QualityConstraint",
+        "rid": "R002",
+        "checker": "pending_review",
+        "oracle": "accepted_with_reservations"
+      },
+      {
+        "mutant": "M0646",
+        "desc": "add I001_PhysicianToEHR hasSource EHR_System",
+        "rid": "R001",
+        "checker": "rejected",
+        "oracle": "pending_review"
+      },
+      {
+        "mutant": "M0646",
+        "desc": "add I001_PhysicianToEHR hasSource EHR_System",
+        "rid": "R002",
+        "checker": "rejected",
+        "oracle": "pending_review"
+      },
+      {
+        "mutant": "M0647",
+        "desc": "add I001_PhysicianToEHR hasSource Pharmacist",
+        "rid": "R001",
+        "checker": "rejected",
+        "oracle": "pending_review"
+      },
+      {
+        "mutant": "M0647",
+        "desc": "add I001_PhysicianToEHR hasSource Pharmacist",
+        "rid": "R002",
+        "checker": "rejected",
+        "oracle": "pending_review"
+      }
+    ],
+    "n_disagreements": 19
+  },
+  "baselines": {
+    "shacl_global": {
+      "false_acceptance": 20,
+      "false_rejection": 629,
+      "agreement_broad": 1744,
+      "pairs": 7660,
+      "confusion": {
+        "accepted|accepted": 14,
+        "accepted|accepted_with_reservations": 6,
+        "accepted|conditional": 2,
+        "accepted|pending_review": 4,
+        "accepted|rejected": 14,
+        "conditional|accepted": 1529,
+        "conditional|accepted_with_reservations": 526,
+        "conditional|conditional": 1157,
+        "conditional|not_derived": 22,
+        "conditional|pending_review": 681,
+        "conditional|rejected": 1905,
+        "rejected|accepted": 484,
+        "rejected|accepted_with_reservations": 145,
+        "rejected|conditional": 315,
+        "rejected|not_derived": 18,
+        "rejected|pending_review": 271,
+        "rejected|rejected": 567
+      }
+    },
+    "shacl_focused": {
+      "false_acceptance": 4648,
+      "false_rejection": 60,
+      "agreement_broad": 2785,
+      "pairs": 7660,
+      "confusion": {
+        "accepted|accepted": 1984,
+        "accepted|accepted_with_reservations": 660,
+        "accepted|conditional": 1436,
+        "accepted|not_derived": 22,
+        "accepted|pending_review": 850,
+        "accepted|rejected": 2340,
+        "conditional|pending_review": 1,
+        "conditional|rejected": 5,
+        "rejected|accepted": 43,
+        "rejected|accepted_with_reservations": 17,
+        "rejected|conditional": 38,
+        "rejected|not_derived": 18,
+        "rejected|pending_review": 105,
+        "rejected|rejected": 141
+      }
+    }
+  },
+  "impact": {
+    "assessment": {
+      "M1_fine_trace_touched_diff": {
+        "precision": 0.2682291666666667,
+        "recall": 1.0,
+        "f1": 0.42299794661190965,
+        "tp": 1133,
+        "fp": 3091,
+        "fn": 0,
+        "mean_revalidations": 5.514360313315927
+      },
+      "M2_fine_trace_subject_diff": {
+        "precision": 0.2880175888603884,
+        "recall": 0.6937334510150044,
+        "f1": 0.4070429829104091,
+        "tp": 786,
+        "fp": 1943,
+        "fn": 347,
+        "mean_revalidations": 3.56266318537859
+      },
+      "M3_coarse_trace_subject_diff": {
+        "precision": 0.2819128422676437,
+        "recall": 0.6451897616946161,
+        "f1": 0.39237788513150834,
+        "tp": 731,
+        "fp": 1862,
+        "fn": 402,
+        "mean_revalidations": 3.3851174934725847
+      },
+      "M4_coarse_trace_transitive_closure": {
+        "precision": 0.2409972299168975,
+        "recall": 0.6910856134157105,
+        "f1": 0.357371063441351,
+        "tp": 783,
+        "fp": 2466,
+        "fn": 350,
+        "mean_revalidations": 4.241514360313316
+      },
+      "M5_document_IR_tau_0.10": {
+        "precision": 0.25691699604743085,
+        "recall": 0.4589585172109444,
+        "f1": 0.3294266708900856,
+        "tp": 520,
+        "fp": 1504,
+        "fn": 613,
+        "mean_revalidations": 2.642297650130548
+      },
+      "M6_revalidate_all": {
+        "precision": 0.147911227154047,
+        "recall": 1.0,
+        "f1": 0.2577049926077562,
+        "tp": 1133,
+        "fp": 6527,
+        "fn": 0,
+        "mean_revalidations": 10.0
+      },
+      "_gold_pairs": 1133
+    },
+    "decision": {
+      "M1_fine_trace_touched_diff": {
+        "precision": 0.14867424242424243,
+        "recall": 1.0,
+        "f1": 0.2588623248145095,
+        "tp": 628,
+        "fp": 3596,
+        "fn": 0,
+        "mean_revalidations": 5.514360313315927
+      },
+      "M2_fine_trace_subject_diff": {
+        "precision": 0.16819347746427263,
+        "recall": 0.7308917197452229,
+        "f1": 0.2734584450402145,
+        "tp": 459,
+        "fp": 2270,
+        "fn": 169,
+        "mean_revalidations": 3.56266318537859
+      },
+      "M3_coarse_trace_subject_diff": {
+        "precision": 0.16428846895487853,
+        "recall": 0.678343949044586,
+        "f1": 0.26451412604781127,
+        "tp": 426,
+        "fp": 2167,
+        "fn": 202,
+        "mean_revalidations": 3.3851174934725847
+      },
+      "M4_coarse_trace_transitive_closure": {
+        "precision": 0.14127423822714683,
+        "recall": 0.7308917197452229,
+        "f1": 0.23678101624967762,
+        "tp": 459,
+        "fp": 2790,
+        "fn": 169,
+        "mean_revalidations": 4.241514360313316
+      },
+      "M5_document_IR_tau_0.10": {
+        "precision": 0.16452569169960474,
+        "recall": 0.5302547770700637,
+        "f1": 0.251131221719457,
+        "tp": 333,
+        "fp": 1691,
+        "fn": 295,
+        "mean_revalidations": 2.642297650130548
+      },
+      "M6_revalidate_all": {
+        "precision": 0.08198433420365535,
+        "recall": 1.0,
+        "f1": 0.15154440154440155,
+        "tp": 628,
+        "fp": 7032,
+        "fn": 0,
+        "mean_revalidations": 10.0
+      },
+      "_gold_pairs": 628
+    }
+  },
+  "trace_sufficiency": {
+    "assessment_changes": 1133,
+    "missed_by_touched_trace": 0,
+    "examples": []
+  },
+  "trace_relevance": {
+    "relevant_pairs": 113,
+    "relevant": {
+      "R001": [
+        "Action_AccessRecords",
+        "Action_Prescribe",
+        "C001_HIPAA",
+        "C002_FDA",
+        "C003_ResponseTime",
+        "C004_DispensingLog",
+        "D001_Medication",
+        "D002_Patient",
+        "G002",
+        "I001_PhysicianToEHR",
+        "Physician",
+        "Prop_Contraindications",
+        "Prop_CurrentMedications",
+        "U001_DrugDBFrequency",
+        "X001_EmergencyDept"
+      ],
+      "R002": [
+        "Action_AccessRecords",
+        "Action_Prescribe",
+        "C001_HIPAA",
+        "C002_FDA",
+        "C003_ResponseTime",
+        "C004_DispensingLog",
+        "D002_Patient",
+        "G003",
+        "I001_PhysicianToEHR",
+        "Physician",
+        "Prop_Allergies",
+        "U001_DrugDBFrequency",
+        "X001_EmergencyDept"
+      ],
+      "R008": [
+        "Action_AccessRecords",
+        "Action_Prescribe",
+        "C001_HIPAA",
+        "C002_FDA",
+        "C003_ResponseTime",
+        "C004_DispensingLog",
+        "D002_Patient",
+        "G003",
+        "I001_PhysicianToEHR",
+        "Physician",
+        "Prop_MedicalHistory",
+        "U001_DrugDBFrequency",
+        "X002_Outpatient"
+      ],
+      "R005": [
+        "Action_Dispense",
+        "Action_VerifyPrescription",
+        "C001_HIPAA",
+        "C002_FDA",
+        "C004_DispensingLog",
+        "D001_Medication",
+        "G005",
+        "I002_EHRToPharmacy",
+        "Pharmacist",
+        "U001_DrugDBFrequency",
+        "X001_EmergencyDept"
+      ],
+      "R004": [
+        "Action_ForwardPrescription",
+        "C001_HIPAA",
+        "C002_FDA",
+        "C004_DispensingLog",
+        "D001_Medication",
+        "EHR_System",
+        "G005",
+        "I002_EHRToPharmacy",
+        "U001_DrugDBFrequency",
+        "X001_EmergencyDept"
+      ],
+      "R010": [
+        "Action_ForwardPrescription",
+        "C001_HIPAA",
+        "C002_FDA",
+        "C004_DispensingLog",
+        "D002_Patient",
+        "EHR_System",
+        "G005",
+        "I002_EHRToPharmacy",
+        "Prop_MedicalHistory",
+        "U001_DrugDBFrequency",
+        "X001_EmergencyDept"
+      ],
+      "R003": [
+        "Action_Prescribe",
+        "C001_HIPAA",
+        "C002_FDA",
+        "C004_DispensingLog",
+        "D001_Medication",
+        "G004",
+        "Physician",
+        "Prop_Dosage",
+        "U001_DrugDBFrequency",
+        "X001_EmergencyDept"
+      ],
+      "R006": [
+        "Action_Prescribe",
+        "C001_HIPAA",
+        "C002_FDA",
+        "C004_DispensingLog",
+        "D001_Medication",
+        "G004",
+        "Pharmacist",
+        "Prop_Dosage",
+        "U001_DrugDBFrequency",
+        "X001_EmergencyDept"
+      ],
+      "R009": [
+        "Action_Prescribe",
+        "C001_HIPAA",
+        "C002_FDA",
+        "C004_DispensingLog",
+        "D001_Medication",
+        "G004",
+        "Physician",
+        "Prop_Route",
+        "U001_DrugDBFrequency",
+        "X002_Outpatient"
+      ],
+      "R007": [
+        "Action_QueryDatabase",
+        "C001_HIPAA",
+        "C002_FDA",
+        "C004_DispensingLog",
+        "D001_Medication",
+        "EHR_System",
+        "G002",
+        "Prop_Contraindications",
+        "U001_DrugDBFrequency",
+        "X001_EmergencyDept"
+      ]
+    },
+    "methods": {
+      "recorded_fine_trace": {
+        "precision": 0.8807339449541285,
+        "recall": 0.8495575221238938,
+        "f1": 0.8648648648648649,
+        "tp": 96,
+        "fp": 13,
+        "fn": 17
+      },
+      "coarse_trace": {
+        "precision": 0.8488372093023255,
+        "recall": 0.6460176991150443,
+        "f1": 0.7336683417085427,
+        "tp": 73,
+        "fp": 13,
+        "fn": 40
+      },
+      "IR_tfidf_tau_0.05": {
+        "precision": 0.6310679611650486,
+        "recall": 0.5752212389380531,
+        "f1": 0.601851851851852,
+        "tp": 65,
+        "fp": 38,
+        "fn": 48
+      },
+      "IR_tfidf_tau_0.10": {
+        "precision": 0.6923076923076923,
+        "recall": 0.4778761061946903,
+        "f1": 0.5654450261780104,
+        "tp": 54,
+        "fp": 24,
+        "fn": 59
+      },
+      "IR_tfidf_tau_0.15": {
+        "precision": 0.7164179104477612,
+        "recall": 0.4247787610619469,
+        "f1": 0.5333333333333332,
+        "tp": 48,
+        "fp": 19,
+        "fn": 65
+      },
+      "IR_tfidf_tau_0.20": {
+        "precision": 0.8076923076923077,
+        "recall": 0.37168141592920356,
+        "f1": 0.5090909090909091,
+        "tp": 42,
+        "fp": 10,
+        "fn": 71
+      },
+      "IR_tfidf_tau_0.25": {
+        "precision": 0.8974358974358975,
+        "recall": 0.30973451327433627,
+        "f1": 0.46052631578947373,
+        "tp": 35,
+        "fp": 4,
+        "fn": 78
+      },
+      "IR_tfidf_tau_0.30": {
+        "precision": 0.9285714285714286,
+        "recall": 0.23008849557522124,
+        "f1": 0.36879432624113473,
+        "tp": 26,
+        "fp": 2,
+        "fn": 87
+      }
+    }
+  },
+  "overhead": {
+    "environment_triples": 281,
+    "environment_elements_seven_views": 19,
+    "auxiliary_elements": 19,
+    "annotation_triples_per_requirement": {
+      "mean": 11.7,
+      "min": 9,
+      "max": 17
+    },
+    "references_per_requirement": {
+      "mean": 5.1
+    },
+    "trace_size": {
+      "mean": 10.9,
+      "min": 9,
+      "max": 15
+    },
+    "mean_validate_ms_per_requirement": 0.44178200652701743
+  },
+  "runtime_seconds": 579.7921380996704
+}

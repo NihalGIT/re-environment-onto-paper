@@ -1,0 +1,130 @@
+{
+  "coding": "2 = first-class construct of the framework; 1 = present as an attribute, secondary construct or textual item; 0 = not represented. Coded by the first author from the cited primary sources; a second independent coding is part of the evaluation protocol (Section X).",
+  "C1_support": "first-class (2) in at least 3 of the 12 frameworks",
+  "C2_distinct_question": "answers an assessment question no other retained view answers",
+  "C3_decision_consequence": "induces at least one obligation or decision-state rule in the derivation contract",
+  "C4_cross_view_links": "participates in typed links to at least two other retained concerns",
+  "decision_rule": "retain as a view iff C1-C4 hold; otherwise merge into the retained view that answers its question (recording the mapping) or exclude as cross-cutting/out of scope",
+  "assessment": {
+    "actor": {
+      "C2": true,
+      "C3": "existence, participation, capability, authority",
+      "C4": true,
+      "decision": "view A",
+      "C3_holds": true
+    },
+    "stakeholder": {
+      "C2": false,
+      "C3": "none of its own",
+      "C4": true,
+      "decision": "merged into A (reo:hasStakeholder links actors to goals)",
+      "C3_holds": false
+    },
+    "goal": {
+      "C2": true,
+      "C3": "seed anchoring, lineage, blocking",
+      "C4": true,
+      "decision": "view G",
+      "C3_holds": true
+    },
+    "quality": {
+      "C2": false,
+      "C3": "via soft/hard constraints",
+      "C4": true,
+      "decision": "merged: intention -> G; measurable bound -> C (QualityConstraint)",
+      "C3_holds": true
+    },
+    "domain_entity": {
+      "C2": true,
+      "C3": "concept existence, exchanged data",
+      "C4": true,
+      "decision": "view D",
+      "C3_holds": true
+    },
+    "domain_property": {
+      "C2": false,
+      "C3": "property ownership",
+      "C4": true,
+      "decision": "merged into D (DomainProperty, DomainInvariant); unvalidated assumptions -> U",
+      "C3_holds": true
+    },
+    "constraint": {
+      "C2": true,
+      "C3": "applicability routes, validators, hard/soft",
+      "C4": true,
+      "decision": "view C",
+      "C3_holds": true
+    },
+    "context": {
+      "C2": true,
+      "C3": "activation, exceptions, participation",
+      "C4": true,
+      "decision": "view X",
+      "C3_holds": true
+    },
+    "time": {
+      "C2": false,
+      "C3": "none in the contract",
+      "C4": false,
+      "decision": "merged into X (temporalStart/temporalEnd)",
+      "C3_holds": false
+    },
+    "location": {
+      "C2": false,
+      "C3": "none in the contract",
+      "C4": false,
+      "decision": "merged into X (spatialScope)",
+      "C3_holds": false
+    },
+    "uncertainty": {
+      "C2": true,
+      "C3": "conditional / rejected / review states",
+      "C4": true,
+      "decision": "view U",
+      "C3_holds": true
+    },
+    "interaction": {
+      "C2": true,
+      "C3": "endpoint, direction, data, protocol",
+      "C4": true,
+      "decision": "view I",
+      "C3_holds": true
+    },
+    "action": {
+      "C2": false,
+      "C3": "capability obligation (an actor question)",
+      "C4": true,
+      "decision": "merged into A as auxiliary class Action",
+      "C3_holds": true
+    },
+    "resource": {
+      "C2": false,
+      "C3": "none of its own",
+      "C4": true,
+      "decision": "merged into D (or A for an autonomous resource, as a distinct role individual)",
+      "C3_holds": false
+    },
+    "process": {
+      "C2": true,
+      "C3": "none implemented (needs behavioural semantics)",
+      "C4": true,
+      "decision": "excluded from the core; candidate extension",
+      "C3_holds": false
+    },
+    "event": {
+      "C2": false,
+      "C3": "none in the contract",
+      "C4": true,
+      "decision": "merged into I (triggeringEvent)",
+      "C3_holds": false
+    },
+    "provenance": {
+      "C2": true,
+      "C3": "none of its own: records decisions (cross-cutting), not environment facts",
+      "C4": true,
+      "decision": "excluded from the views; derivation module (PROV-O)",
+      "C3_holds": false
+    }
+  },
+  "C3_note": "C3 is recorded as an explicit boolean (C3_holds) next to the free-text note (C3). It holds only if the concern induces an obligation or a decision-state rule of the contract. Until 2026-10-15 the scripts derived C3 from the note (any note not starting with 'none' counted as satisfied), which wrongly marked provenance as satisfying C3; provenance records decisions and induces no obligation, as Section III-B states."
+}

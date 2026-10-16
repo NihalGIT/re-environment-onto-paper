@@ -1,0 +1,106 @@
+{
+  "analyst_code": "MODEL-2",
+  "self_reported_model": "claude-sonnet-5-5",
+  "answers": [
+    {
+      "case": "C01",
+      "decisions": {"R001": "conditional", "R002": "accepted_with_reservations", "R003": "accepted", "R004": "accepted", "R005": "pending_review", "R006": "rejected", "R007": "conditional", "R008": "rejected", "R009": "accepted", "R010": "rejected"},
+      "note": "New open blocker on G002 only affects R001 and R007, which are already conditional."
+    },
+    {
+      "case": "C02",
+      "decisions": {"R001": "conditional", "R002": "accepted_with_reservations", "R003": "accepted", "R004": "accepted", "R005": "pending_review", "R006": "rejected", "R007": "conditional", "R008": "rejected", "R009": "accepted", "R010": "rejected"},
+      "note": "propertyType is not read by any obligation, so R002 is unchanged."
+    },
+    {
+      "case": "C03",
+      "decisions": {"R001": "conditional", "R002": "accepted_with_reservations", "R003": "accepted", "R004": "accepted", "R005": "pending_review", "R006": "rejected", "R007": "conditional", "R008": "rejected", "R009": "accepted", "R010": "rejected"},
+      "note": "Prop_Allergies still belongs to the referenced concept D002 (a second owner is not a conflicting attribute value)."
+    },
+    {
+      "case": "C04",
+      "decisions": {"R001": "rejected", "R002": "rejected", "R003": "rejected", "R004": "accepted", "R005": "pending_review", "R006": "rejected", "R007": "conditional", "R008": "rejected", "R009": "rejected", "R010": "rejected"},
+      "note": "Physician authority no longer equals licensed_medical_professional, so C002 fails wherever the Physician prescribes."
+    },
+    {
+      "case": "C05",
+      "decisions": {"R001": "conditional", "R002": "accepted_with_reservations", "R003": "accepted", "R004": "pending_review", "R005": "pending_review", "R006": "rejected", "R007": "conditional", "R008": "rejected", "R009": "accepted", "R010": "rejected"},
+      "note": "Hard C004 without validator now governs I002, so R004 becomes unchecked and goes to review."
+    },
+    {
+      "case": "C06",
+      "decisions": {"R001": "rejected", "R002": "accepted_with_reservations", "R003": "accepted", "R004": "accepted", "R005": "pending_review", "R006": "rejected", "R007": "rejected", "R008": "rejected", "R009": "accepted", "R010": "rejected"},
+      "note": "A refuted uncertainty blocking G002 fails O8 for R001 and R007."
+    },
+    {
+      "case": "C07",
+      "decisions": {"R001": "conditional", "R002": "accepted_with_reservations", "R003": "accepted", "R004": "accepted", "R005": "pending_review", "R006": "rejected", "R007": "conditional", "R008": "rejected", "R009": "accepted", "R010": "rejected"},
+      "note": "Only contextId is removed; X001 is still typed as a Context and the id is not read, so nothing changes."
+    },
+    {
+      "case": "C08",
+      "decisions": {"R001": "pending_review", "R002": "pending_review", "R003": "pending_review", "R004": "pending_review", "R005": "pending_review", "R006": "rejected", "R007": "pending_review", "R008": "pending_review", "R009": "pending_review", "R010": "rejected"},
+      "note": "C001 now has two validatorKeys (conflict, unchecked), so every requirement where C001 is applicable goes to review unless a hard failure already rejects it."
+    },
+    {
+      "case": "C09",
+      "decisions": {"R001": "conditional", "R002": "accepted_with_reservations", "R003": "accepted", "R004": "accepted", "R005": "pending_review", "R006": "rejected", "R007": "conditional", "R008": "rejected", "R009": "accepted", "R010": "rejected"},
+      "note": "The new hard rule applies only to constraint C002, which is not a referenced element of any requirement, so it is applicable to none."
+    },
+    {
+      "case": "C10",
+      "decisions": {"R001": "conditional", "R002": "accepted_with_reservations", "R003": "accepted", "R004": "accepted", "R005": "pending_review", "R006": "rejected", "R007": "conditional", "R008": "rejected", "R009": "accepted", "R010": "rejected"},
+      "note": "EHR_System authority is read by no requirement (not an authority holder and never prescribes)."
+    },
+    {
+      "case": "C11",
+      "decisions": {"R001": "rejected", "R002": "accepted_with_reservations", "R003": "accepted", "R004": "accepted", "R005": "pending_review", "R006": "rejected", "R007": "rejected", "R008": "rejected", "R009": "accepted", "R010": "rejected"},
+      "note": "Prop_Contraindications is undefined, so O5 fails for R001 and R007."
+    },
+    {
+      "case": "C12",
+      "decisions": {"R001": "conditional", "R002": "accepted_with_reservations", "R003": "accepted", "R004": "accepted", "R005": "pending_review", "R006": "rejected", "R007": "conditional", "R008": "rejected", "R009": "accepted", "R010": "rejected"},
+      "note": "Prop_MedicalHistory is undefined but its only users R008 and R010 were already rejected."
+    },
+    {
+      "case": "C13",
+      "decisions": {"R001": "conditional", "R002": "accepted_with_reservations", "R003": "accepted", "R004": "accepted", "R005": "rejected", "R006": "rejected", "R007": "conditional", "R008": "rejected", "R009": "accepted", "R010": "rejected"},
+      "note": "Pharmacist loses the dispense capability, so R005 fails O2 and is rejected ahead of its review state."
+    },
+    {
+      "case": "C14",
+      "decisions": {"R001": "conditional", "R002": "accepted_with_reservations", "R003": "accepted", "R004": "accepted", "R005": "pending_review", "R006": "rejected", "R007": "conditional", "R008": "rejected", "R009": "accepted", "R010": "rejected"},
+      "note": "relatedTo between concepts is not read by any obligation."
+    },
+    {
+      "case": "C15",
+      "decisions": {"R001": "conditional", "R002": "accepted_with_reservations", "R003": "accepted", "R004": "accepted", "R005": "pending_review", "R006": "rejected", "R007": "conditional", "R008": "rejected", "R009": "rejected", "R010": "rejected"},
+      "note": "Prop_Route loses its DomainProperty type so it is undefined and R009 fails O5."
+    },
+    {
+      "case": "C16",
+      "decisions": {"R001": "conditional", "R002": "accepted_with_reservations", "R003": "conditional", "R004": "accepted", "R005": "pending_review", "R006": "rejected", "R007": "conditional", "R008": "rejected", "R009": "conditional", "R010": "rejected"},
+      "note": "An open high-impact uncertainty affecting G004 makes R003 and R009 conditional; R006 stays rejected."
+    },
+    {
+      "case": "C17",
+      "decisions": {"R001": "conditional", "R002": "accepted_with_reservations", "R003": "accepted", "R004": "accepted", "R005": "pending_review", "R006": "rejected", "R007": "conditional", "R008": "rejected", "R009": "accepted", "R010": "rejected"},
+      "note": "C004 now has both hard and soft enforcement levels (conflict, unchecked), so R005 stays in review."
+    },
+    {
+      "case": "C18",
+      "decisions": {"R001": "conditional", "R002": "accepted_with_reservations", "R003": "accepted_with_reservations", "R004": "accepted_with_reservations", "R005": "pending_review", "R006": "rejected", "R007": "conditional", "R008": "rejected", "R009": "accepted_with_reservations", "R010": "rejected"},
+      "note": "Soft C003 now applies to Medication, adding a reservation to R003, R004 and R009."
+    },
+    {
+      "case": "C19",
+      "decisions": {"R001": "pending_review", "R002": "pending_review", "R003": "accepted", "R004": "accepted", "R005": "pending_review", "R006": "rejected", "R007": "conditional", "R008": "rejected", "R009": "accepted", "R010": "rejected"},
+      "note": "New hard rule on Patient has no validator, so R001 and R002 go to review while R008 and R010 stay rejected."
+    },
+    {
+      "case": "C20",
+      "decisions": {"R001": "conditional", "R002": "accepted_with_reservations", "R003": "accepted", "R004": "accepted", "R005": "pending_review", "R006": "rejected", "R007": "conditional", "R008": "rejected", "R009": "accepted", "R010": "rejected"},
+      "note": "Domain invariants are not read by any obligation."
+    }
+  ]
+}

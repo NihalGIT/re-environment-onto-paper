@@ -1,0 +1,56 @@
+{
+  "core": {
+    "classes": 27,
+    "datatype_properties": 40,
+    "disjointness_axioms": 45,
+    "named_individuals": 0,
+    "object_properties": 19,
+    "restrictions": 6,
+    "triples": 500
+  },
+  "derivation": {
+    "classes": 4,
+    "datatype_properties": 6,
+    "disjointness_axioms": 1,
+    "named_individuals": 6,
+    "object_properties": 15,
+    "restrictions": 0,
+    "triples": 228
+  },
+  "derivation_shapes": {
+    "node_shapes": 2,
+    "property_shapes": 16,
+    "sparql_constraints": 2,
+    "triples": 97
+  },
+  "ontology_total": {
+    "classes": 31,
+    "datatype_properties": 46,
+    "disjointness_axioms": 46,
+    "named_individuals": 6,
+    "object_properties": 34,
+    "restrictions": 6,
+    "triples": 728
+  },
+  "reo_version": "1.1.0",
+  "shapes": {
+    "node_shapes": 12,
+    "property_shapes": 41,
+    "sparql_constraints": 2,
+    "triples": 354
+  },
+  "total_triples": 2075,
+  "triples_by_file": {
+    "examples/medical-emergency/hospital-extension.ttl": 38,
+    "examples/medical-emergency/hospital-requirements.ttl": 117,
+    "examples/medical-emergency/hospital.ttl": 243,
+    "ontology/reo-core.ttl": 500,
+    "ontology/reo-derivation-shapes.ttl": 97,
+    "ontology/reo-derivation.ttl": 228,
+    "ontology/reo-shapes.ttl": 354,
+    "test-cases/01-success/hospital-success.ttl": 161,
+    "test-cases/02-success-with-warning/hospital-warning.ttl": 207,
+    "test-cases/03-violations/hospital-violations.ttl": 130
+  },
+  "turtle_file_count": 10
+}

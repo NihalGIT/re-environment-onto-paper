@@ -1,0 +1,200 @@
+{
+  "author_code": "A1",
+  "self_reported_model": "claude-opus-5-5",
+  "scenarios": [
+    {
+      "id": "S01",
+      "description": "Uncertainty status: the blocking uncertainty U001 is refuted (status unvalidated -> rejected).",
+      "remove_turtle": "ex:U001_DrugDBFrequency reo:status \"unvalidated\" .",
+      "add_turtle": "ex:U001_DrugDBFrequency reo:status \"rejected\" .",
+      "add_requirements_turtle": "",
+      "obligations_targeted": ["O8"],
+      "expected": {"R001": "rejected", "R002": "accepted_with_reservations", "R003": "accepted", "R004": "accepted", "R005": "pending_review", "R006": "rejected", "R007": "rejected", "R008": "rejected", "R009": "accepted", "R010": "rejected"},
+      "rationale": "O8: an uncertainty blocking L(s) whose status is rejected yields fail (H_f); the 'rejected' guard covers 'a blocking premise was refuted'. U001 blocks G002, which is in the lineage only of R001 and R007 (seed G002), so both become rejected (H_f dominates the former U_o and the soft C003 reservation of R001). U001 affects only G002, which is not in refs/L/R/x of any other requirement, so R002-R006 and R008-R010 keep the worked-example decisions."
+    },
+    {
+      "id": "S02",
+      "description": "Uncertainty blocks/impact: U001 no longer blocks G002 and its impact is lowered from high to medium; it still affects G002.",
+      "remove_turtle": "ex:U001_DrugDBFrequency reo:blocks ex:G002 .\nex:U001_DrugDBFrequency reo:impactLevel \"high\" .",
+      "add_turtle": "ex:U001_DrugDBFrequency reo:impactLevel \"medium\" .",
+      "add_requirements_turtle": "",
+      "obligations_targeted": ["O8"],
+      "expected": {"R001": "accepted_with_reservations", "R002": "accepted_with_reservations", "R003": "accepted", "R004": "accepted", "R005": "pending_review", "R006": "rejected", "R007": "accepted_with_reservations", "R008": "rejected", "R009": "accepted", "R010": "rejected"},
+      "rationale": "With no blocks link, U001 is selected only because affects(U001)={G002} intersects L(s) for seeds G002 (R001, R007). O8 for affecting uncertainties: unvalidated low/medium -> reservation (S_r), not open. R001: hard obligations hold (worked example), S_r = {C003 soft unchecked, U001 reservation} -> accepted with reservations. R007: the spec counterfactual shows R007 is accepted once U001 no longer counts, so with only the U001 reservation it is accepted with reservations. Other requirements do not read U001."
+    },
+    {
+      "id": "S03",
+      "description": "New uncertainties affecting consulted evidence: U002 (critical, unvalidated) on Prop_Dosage, U003 (low, unvalidated) on Prop_Route, U004 (medium, rejected) on interaction I002.",
+      "remove_turtle": "",
+      "add_turtle": "ex:U002_DosageUnitRisk a reo:RiskUncertainty ;\n    reo:uncertaintyId \"U-002\" ;\n    reo:uncertaintyName \"Dosage unit convention\" ;\n    reo:subject \"Whether dosage values are expressed per dose or per kg is not settled.\" ;\n    reo:impactLevel \"critical\" ;\n    reo:status \"unvalidated\" ;\n    reo:affects ex:Prop_Dosage .\nex:U003_RouteCodeList a reo:AssumptionUncertainty ;\n    reo:uncertaintyId \"U-003\" ;\n    reo:uncertaintyName \"Route code list\" ;\n    reo:impactLevel \"low\" ;\n    reo:status \"unvalidated\" ;\n    reo:affects ex:Prop_Route .\nex:U004_PharmacyFeedFormat a reo:UnknownUncertainty ;\n    reo:uncertaintyId \"U-004\" ;\n    reo:uncertaintyName \"Pharmacy feed format\" ;\n    reo:impactLevel \"medium\" ;\n    reo:status \"rejected\" ;\n    reo:affects ex:I002_EHRToPharmacy .",
+      "add_requirements_turtle": "",
+      "obligations_targeted": ["O8"],
+      "expected": {"R001": "conditional", "R002": "accepted_with_reservations", "R003": "conditional", "R004": "pending_review", "R005": "pending_review", "R006": "rejected", "R007": "conditional", "R008": "rejected", "R009": "accepted_with_reservations", "R010": "rejected"},
+      "rationale": "Uncertainties are selected when affects(u) intersects refs(q) U L U R U {x}; O8 routes affecting ones: unvalidated high/critical -> open (U_o), low/medium -> reservation (S_r), rejected -> unchecked (H_u). U002 affects Prop_Dosage, referenced by R003 (otherwise accepted -> conditional) and R006 (H_f from O2/C002 still -> rejected). U003 affects Prop_Route, referenced only by R009 (accepted -> accepted with reservations). U004 affects I002, used by R004 (accepted -> pending review via H_u), R005 (already pending review) and R010 (H_f from O6 dominates -> rejected). Nothing new touches R001, R002, R007, R008."
+    },
+    {
+      "id": "S04",
+      "description": "Constraint exception: the outpatient context X002 is declared an exception of C001_HIPAA.",
+      "remove_turtle": "",
+      "add_turtle": "ex:C001_HIPAA reo:hasException ex:X002_Outpatient .",
+      "add_requirements_turtle": "",
+      "obligations_targeted": ["O7"],
+      "expected": {"R001": "conditional", "R002": "accepted_with_reservations", "R003": "accepted", "R004": "accepted", "R005": "pending_review", "R006": "rejected", "R007": "conditional", "R008": "accepted_with_reservations", "R009": "accepted", "R010": "rejected"},
+      "rationale": "consent-or-exception passes if the context is a declared exception or asserts consent. R008 (X002, performs access_records) was rejected only because C001 failed in X002; now C001 passes and only the soft C003 reservation (via governedBy(I001)) remains -> accepted with reservations, matching the spec counterfactual for consent in X002. R009 is in X002 but performs no access_records (C001 not triggered) -> still accepted. All other requirements are assessed in X001, whose C001 outcome is unchanged; the change only adds X002 to traces. Most decisions unchanged."
+    },
+    {
+      "id": "S05",
+      "description": "Enforcement level swap: C003_ResponseTime becomes hard, C004_DispensingLog becomes soft (neither has a validatorKey).",
+      "remove_turtle": "ex:C003_ResponseTime reo:enforcementLevel \"soft\" .\nex:C004_DispensingLog reo:enforcementLevel \"hard\" .",
+      "add_turtle": "ex:C003_ResponseTime reo:enforcementLevel \"hard\" .\nex:C004_DispensingLog reo:enforcementLevel \"soft\" .",
+      "add_requirements_turtle": "",
+      "obligations_targeted": ["O7"],
+      "expected": {"R001": "pending_review", "R002": "pending_review", "R003": "accepted", "R004": "accepted", "R005": "accepted_with_reservations", "R006": "rejected", "R007": "conditional", "R008": "rejected", "R009": "accepted", "R010": "rejected"},
+      "rationale": "Outcomes are routed to H_f/H_u/S_r by level(c); a constraint without registered validator is unchecked. C003 is applicable through governedBy(I001) to R001, R002, R008: as a hard unchecked rule it goes to H_u -> pending review for R001 (H_u precedes U_o) and R002; R008 stays rejected (C001 fails, H_f first). C004 is applicable through isSubjectTo/appliesTo(Pharmacist) to R005 and R006: as a soft unchecked rule it is a reservation -> R005 becomes accepted with reservations (C001, C002 not triggered); R006 stays rejected (O2 fail). Others do not consult C003/C004."
+    },
+    {
+      "id": "S06",
+      "description": "Constraint applicability: C004 (hard, no validator) now applies to D002_Patient; C003 (soft, no validator) now applies to goal G004.",
+      "remove_turtle": "",
+      "add_turtle": "ex:C004_DispensingLog reo:appliesTo ex:D002_Patient .\nex:C003_ResponseTime reo:appliesTo ex:G004 .",
+      "add_requirements_turtle": "",
+      "obligations_targeted": ["O7"],
+      "expected": {"R001": "pending_review", "R002": "pending_review", "R003": "accepted_with_reservations", "R004": "accepted", "R005": "pending_review", "R006": "rejected", "R007": "conditional", "R008": "rejected", "R009": "accepted_with_reservations", "R010": "rejected"},
+      "rationale": "A constraint applies if it applies to a referenced element or to a goal of the seed lineage; 'an applicable hard constraint without [a registered validator] sends the requirement to review'. C004 now applies to every requirement referencing D002: R001 (H_u precedes the U001 open premise -> pending review), R002 (-> pending review), R008 and R010 (already H_f -> rejected). C003 applies to the lineage of seed G004: R003 and R009 get a soft unchecked reservation -> accepted with reservations; R006 stays rejected. R004, R005, R007 reference neither D002 nor G004."
+    },
+    {
+      "id": "S07",
+      "description": "Validator key: C002_FDA is bound to an unregistered validator key ('fda-authority-check' instead of 'authority-equals').",
+      "remove_turtle": "ex:C002_FDA reo:validatorKey \"authority-equals\" .",
+      "add_turtle": "ex:C002_FDA reo:validatorKey \"fda-authority-check\" .",
+      "add_requirements_turtle": "",
+      "obligations_targeted": ["O7"],
+      "expected": {"R001": "pending_review", "R002": "pending_review", "R003": "pending_review", "R004": "pending_review", "R005": "pending_review", "R006": "rejected", "R007": "pending_review", "R008": "rejected", "R009": "pending_review", "R010": "rejected"},
+      "rationale": "The validator is chosen by validatorKey; V[key(c)] is undefined, so the outcome is unchecked ('unchecked if no validator'), and C002 is hard -> H_u. C002 is active in both X001 and X002, so it is applicable to all ten requirements. Not-triggered is an output of a registered validator reading the antecedent; without one the spec says an applicable hard constraint sends the requirement to review (so R004, R007, which do not prescribe, also go to review). Requirements with an independent hard failure stay rejected: R006 (O2: Pharmacist lacks Action_Prescribe), R008 (C001 fails in X002), R010 (O6: I002 exchanges no referenced concept). R007's open U001 is dominated by H_u."
+    },
+    {
+      "id": "S08",
+      "description": "Conflicting values and several view types: the Physician gets a second authorityLevel from another source, and I002 is additionally typed as a DomainConcept.",
+      "remove_turtle": "",
+      "add_turtle": "ex:Physician reo:authorityLevel \"resident_physician\" .\nex:I002_EHRToPharmacy a reo:DomainConcept .",
+      "add_requirements_turtle": "",
+      "obligations_targeted": ["O9", "O3", "O7"],
+      "expected": {"R001": "pending_review", "R002": "pending_review", "R003": "pending_review", "R004": "pending_review", "R005": "pending_review", "R006": "rejected", "R007": "conditional", "R008": "rejected", "R009": "pending_review", "R010": "rejected"},
+      "rationale": "Spec: with conflicting values for an attribute the contract reads (two authority levels for one actor) the contract does not choose -> pending review; O9: a consulted element with conflicting values or several view types -> unchecked (H_u); C002's authority-equals on conflicting values is also unchecked. Physician is in the trace of R001, R002, R003, R008, R009; I002 (Interaction + DomainConcept = two views) is in the trace of R004, R005, R010. Hence pending review for R001, R002, R003, R009, R004, R005; R008 (C001 fails) and R010 (O6 fails) keep H_f -> rejected. R006 (Pharmacist) and R007 (EHR_System, D001, Contraindications) consult neither element -> unchanged."
+    },
+    {
+      "id": "S09",
+      "description": "Refinement cycle: G001 is made to refine G002, creating the cycle G002 -> G001 -> G002.",
+      "remove_turtle": "",
+      "add_turtle": "ex:G001 reo:refines ex:G002 .",
+      "add_requirements_turtle": "",
+      "obligations_targeted": ["O9", "O8"],
+      "expected": {"R001": "pending_review", "R002": "conditional", "R003": "conditional", "R004": "conditional", "R005": "pending_review", "R006": "rejected", "R007": "pending_review", "R008": "rejected", "R009": "conditional", "R010": "rejected"},
+      "rationale": "O9: a refinement cycle passing through s is unchecked (H_u); the contract 'refuses to decide when a refinement cycle passes through the seed goal'. G002 is on the cycle, so R001 and R007 (seed G002) -> pending review (H_u precedes U_o). For seeds G003, G004, G005 the cycle does not pass through s (s is not its own ancestor), but L(s) = s plus ancestors now contains G001 and G002; U001 (unvalidated) blocks G002 in L -> open (U_o). Hence R002 (C003 reservation dominated), R003, R004, R009 -> conditional; R005 keeps H_u from C004 -> pending review; R006, R008, R010 keep their hard failures -> rejected."
+    },
+    {
+      "id": "S10",
+      "description": "Interaction obligations: I002 loses its protocol, and I001 gets a second (conflicting) source EHR_System.",
+      "remove_turtle": "ex:I002_EHRToPharmacy reo:protocol \"HL7-FHIR\" .",
+      "add_turtle": "ex:I001_PhysicianToEHR reo:hasSource ex:EHR_System .",
+      "add_requirements_turtle": "",
+      "obligations_targeted": ["O6", "O9"],
+      "expected": {"R001": "pending_review", "R002": "pending_review", "R003": "accepted", "R004": "rejected", "R005": "pending_review", "R006": "rejected", "R007": "conditional", "R008": "rejected", "R009": "accepted", "R010": "rejected"},
+      "rationale": "O6: the interaction must declare a protocol if required (fail per violated condition), and is unchecked if sources/targets conflict. R004 requires a protocol on I002 -> fail -> rejected. R005 uses I002 but does not set requiresProtocol -> unchanged pending review (C004). R010 already rejected. I001 now has two sources -> O6 unchecked (also an O9 conflicting value on I001) -> H_u for R001 (dominates U_o) and R002 -> pending review; R008 also uses I001 but C001 fails (H_f) -> rejected. R003, R007, R009 use no interaction."
+    },
+    {
+      "id": "S11",
+      "description": "New context X003 (telehealth, consent asserted, only the Physician active) plus seven new requirements exercising not-derived, vacuous review, O1, O4, O5 and a consent-based pass of C001.",
+      "remove_turtle": "",
+      "add_turtle": "ex:X003_Telehealth a reo:Context ;\n    reo:contextId \"X-003\" ;\n    reo:contextName \"Telehealth Consultation\" ;\n    reo:contextProperty \"time_critical=false\" ;\n    reo:contextProperty \"consent_obtained=true\" ;\n    reo:hasActiveConstraint ex:C002_FDA ;\n    reo:hasActiveActor ex:Physician .",
+      "add_requirements_turtle": "req:RX01 a reo:Requirement ;\n    reo:requirementId \"RX01\" ;\n    reo:requirementText \"The Physician shall diagnose the Patient before treatment planning.\" ;\n    reo:hasSeedGoal ex:G099_TreatmentPlanning ;\n    reo:assessedInContext ex:X001_EmergencyDept ;\n    reo:hasResponsibleActor ex:Physician ;\n    reo:performsAction ex:Action_Diagnose ;\n    reo:refersToConcept ex:D002_Patient .\nreq:RX02 a reo:Requirement ;\n    reo:requirementId \"RX02\" ;\n    reo:requirementText \"In home care, the Physician shall diagnose the Patient.\" ;\n    reo:hasSeedGoal ex:G003 ;\n    reo:assessedInContext ex:X009_HomeCare ;\n    reo:hasResponsibleActor ex:Physician ;\n    reo:performsAction ex:Action_Diagnose ;\n    reo:refersToConcept ex:D002_Patient .\nreq:RX03 a reo:Requirement ;\n    reo:requirementId \"RX03\" ;\n    reo:requirementText \"During telehealth consultations, allergies shall be checked.\" ;\n    reo:hasSeedGoal ex:G003 ;\n    reo:assessedInContext ex:X003_Telehealth .\nreq:RX04 a reo:Requirement ;\n    reo:requirementId \"RX04\" ;\n    reo:requirementText \"During telehealth consultations, the EHR_System shall query the drug database for Medication data.\" ;\n    reo:hasSeedGoal ex:G004 ;\n    reo:assessedInContext ex:X003_Telehealth ;\n    reo:hasResponsibleActor ex:EHR_System ;\n    reo:performsAction ex:Action_QueryDatabase ;\n    reo:refersToConcept ex:D001_Medication .\nreq:RX05 a reo:Requirement ;\n    reo:requirementId \"RX05\" ;\n    reo:requirementText \"During telehealth consultations, the Physician shall access the Prescription record.\" ;\n    reo:hasSeedGoal ex:G003 ;\n    reo:assessedInContext ex:X003_Telehealth ;\n    reo:hasResponsibleActor ex:Physician ;\n    reo:performsAction ex:Action_AccessRecords ;\n    reo:refersToConcept ex:D003_Prescription .\nreq:RX06 a reo:Requirement ;\n    reo:requirementId \"RX06\" ;\n    reo:requirementText \"During telehealth consultations, the Physician shall check Medication.allergies.\" ;\n    reo:hasSeedGoal ex:G003 ;\n    reo:assessedInContext ex:X003_Telehealth ;\n    reo:hasResponsibleActor ex:Physician ;\n    reo:performsAction ex:Action_AccessRecords ;\n    reo:refersToConcept ex:D001_Medication ;\n    reo:refersToProperty ex:Prop_Allergies .\nreq:RX07 a reo:Requirement ;\n    reo:requirementId \"RX07\" ;\n    reo:requirementText \"During telehealth consultations, the Physician shall check Patient.allergies before prescribing.\" ;\n    reo:hasSeedGoal ex:G003 ;\n    reo:assessedInContext ex:X003_Telehealth ;\n    reo:hasResponsibleActor ex:Physician ;\n    reo:performsAction ex:Action_Prescribe ;\n    reo:performsAction ex:Action_AccessRecords ;\n    reo:requiresAuthorityOf ex:Physician ;\n    reo:refersToConcept ex:D002_Patient ;\n    reo:refersToProperty ex:Prop_Allergies .",
+      "obligations_targeted": ["O1", "O4", "O5", "O7"],
+      "expected": {"R001": "conditional", "R002": "accepted_with_reservations", "R003": "accepted", "R004": "accepted", "R005": "pending_review", "R006": "rejected", "R007": "conditional", "R008": "rejected", "R009": "accepted", "R010": "rejected", "RX01": "not_derived", "RX02": "not_derived", "RX03": "pending_review", "RX04": "rejected", "RX05": "rejected", "RX06": "rejected", "RX07": "accepted"},
+      "rationale": "X003 is new and referenced by no base requirement, so R001-R010 keep the worked-example decisions. RX01: seed G099 is not a goal (s not in G) -> not derived. RX02: context X009 undefined -> not derived. RX03: valid seed and context but refs(q) empty -> pending review (vacuous acceptance guard). RX04: EHR_System is neither active in X003 nor responsible for a goal of L(G004)={G004,G001} -> O1 fail -> rejected (C001/C002 not triggered). RX05: D003_Prescription undefined -> O4 fail -> rejected. RX06: Prop_Allergies exists but belongs to D002, which RX06 does not reference -> O5 fail -> rejected. RX07: Physician active in X003, holds both actions, has an authority level, Prop_Allergies owned by D002; C002 (active, subject) passes on authority; C001 (subject/appliesTo Physician) is triggered by access_records and passes because X003 asserts consent (consent_obtained=true); no soft rule, no uncertainty on L(G003) -> accepted."
+    },
+    {
+      "id": "S12",
+      "description": "Evolution and actor obligations: Prop_Route is renamed to Prop_AdministrationRoute (supersededBy), EHR_System loses Action_QueryDatabase, a Nurse without authority level is added; three new requirements (O3 fail, O6 direction fail, declared soft constraint).",
+      "remove_turtle": "ex:D001_Medication reo:hasProperty ex:Prop_Route .\nex:Prop_Route a reo:DomainProperty .\nex:Prop_Route reo:propertyName \"route\" .\nex:Prop_Route reo:propertyType \"enum\" .\nex:Prop_Route reo:isMandatory true .\nex:EHR_System reo:hasCapability ex:Action_QueryDatabase .",
+      "add_turtle": "ex:Prop_AdministrationRoute a reo:DomainProperty ;\n    reo:propertyName \"administration_route\" ;\n    reo:propertyType \"enum\" ;\n    reo:isMandatory true .\nex:D001_Medication reo:hasProperty ex:Prop_AdministrationRoute .\nex:Prop_Route reo:supersededBy ex:Prop_AdministrationRoute .\nex:Nurse a reo:HumanActor ;\n    reo:actorId \"NUR001\" ;\n    reo:actorName \"Nurse\" ;\n    reo:organizationalUnit \"EmergencyDept\" ;\n    reo:hasCapability ex:Action_AccessRecords ;\n    reo:isResponsibleFor ex:G003 .",
+      "add_requirements_turtle": "req:RX08 a reo:Requirement ;\n    reo:requirementId \"RX08\" ;\n    reo:requirementText \"The Nurse shall check Patient.allergies under the Nurse's own authority.\" ;\n    reo:hasSeedGoal ex:G003 ;\n    reo:assessedInContext ex:X001_EmergencyDept ;\n    reo:hasResponsibleActor ex:Nurse ;\n    reo:performsAction ex:Action_AccessRecords ;\n    reo:requiresAuthorityOf ex:Nurse ;\n    reo:refersToConcept ex:D002_Patient ;\n    reo:refersToProperty ex:Prop_Allergies .\nreq:RX09 a reo:Requirement ;\n    reo:requirementId \"RX09\" ;\n    reo:requirementText \"The Pharmacist shall send each verified prescription to the EHR_System.\" ;\n    reo:hasSeedGoal ex:G005 ;\n    reo:assessedInContext ex:X001_EmergencyDept ;\n    reo:hasResponsibleActor ex:Pharmacist ;\n    reo:performsAction ex:Action_VerifyPrescription ;\n    reo:refersToConcept ex:D001_Medication ;\n    reo:usesInteraction ex:I002_EHRToPharmacy ;\n    reo:expectsInteractionSource ex:Pharmacist .\nreq:RX10 a reo:Requirement ;\n    reo:requirementId \"RX10\" ;\n    reo:requirementText \"In the outpatient clinic, the Physician shall validate Medication.dosage before prescribing, preferably within the EHR response-time target.\" ;\n    reo:hasSeedGoal ex:G004 ;\n    reo:assessedInContext ex:X002_Outpatient ;\n    reo:hasResponsibleActor ex:Physician ;\n    reo:performsAction ex:Action_Prescribe ;\n    reo:requiresAuthorityOf ex:Physician ;\n    reo:refersToConcept ex:D001_Medication ;\n    reo:refersToProperty ex:Prop_Dosage ;\n    reo:declaresSoftConstraint ex:C003_ResponseTime .",
+      "obligations_targeted": ["O2", "O3", "O5", "O6", "O7"],
+      "expected": {"R001": "conditional", "R002": "accepted_with_reservations", "R003": "accepted", "R004": "accepted", "R005": "pending_review", "R006": "rejected", "R007": "rejected", "R008": "rejected", "R009": "accepted", "R010": "rejected", "RX08": "rejected", "RX09": "rejected", "RX10": "accepted_with_reservations"},
+      "rationale": "Identity migration: 'before re-derivation, references of q are rewritten through this map'; one successor = rename. R009's reference to Prop_Route is rewritten to Prop_AdministrationRoute, which exists and is owned by D001 -> O5 passes -> R009 stays accepted. O2: EHR_System no longer holds Action_QueryDatabase, performed by R007 -> fail -> rejected (H_f precedes the open U001). Other base requirements are unaffected (D001 keeps its other properties; the Nurse is not referenced). RX08: Nurse participates (responsible for G003 in L), holds the action, but has no authorityLevel -> O3 fail -> rejected. RX09: I002's source is EHR_System, not the expected Pharmacist -> O6 fail -> rejected (C004 unchecked is dominated). RX10: all hard obligations hold (C002 passes on authority in X002, C001 not triggered), the declared soft C003 has no validator -> reservation -> accepted with reservations."
+    }
+  ],
+  "cqs": [
+    {
+      "id": "Q01",
+      "category": "lookup",
+      "question": "Which actors are active in the Emergency Department context?",
+      "kind": "select",
+      "sparql": "SELECT ?a WHERE { ex:X001_EmergencyDept reo:hasActiveActor ?a . }",
+      "expected": [["Physician"], ["EHR_System"], ["Pharmacist"]],
+      "rationale": "hospital.ttl asserts hasActiveActor Physician, EHR_System and Pharmacist for X001; the extension adds active actors only for X002."
+    },
+    {
+      "id": "Q02",
+      "category": "lookup",
+      "question": "Which properties does the Patient concept own, and what are their names?",
+      "kind": "select",
+      "sparql": "SELECT ?p ?name WHERE { ex:D002_Patient reo:hasProperty ?p . ?p reo:propertyName ?name . }",
+      "expected": [["Prop_PatientId", "id"], ["Prop_Allergies", "allergies"], ["Prop_CurrentMedications", "current_medications"], ["Prop_MedicalHistory", "medical_history"]],
+      "rationale": "D002_Patient has four hasProperty links in hospital.ttl, each property with exactly one propertyName literal."
+    },
+    {
+      "id": "Q03",
+      "category": "integrity",
+      "question": "Is there an interaction whose source is not typed as an actor (any Actor subclass)?",
+      "kind": "ask",
+      "sparql": "ASK { ?i reo:hasSource ?s . FILTER NOT EXISTS { ?s a ?t . ?t rdfs:subClassOf* reo:Actor . } }",
+      "expected": false,
+      "rationale": "WF requires source(i) in A. I001's source Physician is a HumanActor and I002's source EHR_System is a SystemActor, both subclasses of reo:Actor in reo-core.ttl."
+    },
+    {
+      "id": "Q04",
+      "category": "integrity",
+      "question": "Is there a hard constraint (of any constraint kind) that names no validator, so that any requirement making it applicable must go to review?",
+      "kind": "ask",
+      "sparql": "ASK { ?c a ?t . ?t rdfs:subClassOf* reo:Constraint . ?c reo:enforcementLevel \"hard\" . FILTER NOT EXISTS { ?c reo:validatorKey ?k . } }",
+      "expected": true,
+      "rationale": "C004_DispensingLog (BusinessConstraint, a subclass of Constraint) has enforcementLevel \"hard\" and no validatorKey in hospital-extension.ttl; C001 and C002 have keys; C003 is soft."
+    },
+    {
+      "id": "Q05",
+      "category": "reasoning",
+      "question": "Which constraints bear on the Physician, through being subject to them, being their applies-to target, initiating an interaction they govern, or being active in a context where they are active?",
+      "kind": "select",
+      "sparql": "SELECT DISTINCT ?c WHERE { { ex:Physician reo:isSubjectTo ?c . } UNION { ?c reo:appliesTo ex:Physician . } UNION { ?i reo:hasSource ex:Physician ; reo:governedBy ?c . } UNION { ?x reo:hasActiveActor ex:Physician ; reo:hasActiveConstraint ?c . } }",
+      "expected": [["C001_HIPAA"], ["C002_FDA"], ["C003_ResponseTime"]],
+      "rationale": "isSubjectTo and appliesTo give C001 and C002; I001 (source Physician) is governed by C001 and, in the extension, C003; X001 and X002 (Physician active) both activate C002. C004 concerns only the Pharmacist."
+    },
+    {
+      "id": "Q06",
+      "category": "requirement",
+      "question": "Which requirements make their responsible actor perform an action it does not hold as a capability?",
+      "kind": "select",
+      "sparql": "SELECT DISTINCT ?id WHERE { ?r reo:requirementId ?id ; reo:hasResponsibleActor ?a ; reo:performsAction ?act . FILTER NOT EXISTS { ?a reo:hasCapability ?act . } }",
+      "expected": [["R006"]],
+      "rationale": "Only R006 has the Pharmacist perform Action_Prescribe, which the Pharmacist does not hold (it holds Dispense and VerifyPrescription); all other performed actions are capabilities of their actors (O2)."
+    },
+    {
+      "id": "Q07",
+      "category": "provenance-of-decision",
+      "question": "Which requirements use an interaction that exchanges none of the concepts they refer to (the O6 failure that explains a rejection), and which interaction?",
+      "kind": "select",
+      "sparql": "SELECT DISTINCT ?id ?i WHERE { ?r reo:requirementId ?id ; reo:usesInteraction ?i . FILTER NOT EXISTS { ?r reo:refersToConcept ?d . ?i reo:exchangesData ?d . } }",
+      "expected": [["R010", "I002_EHRToPharmacy"]],
+      "rationale": "I001 exchanges D002 and is used by R001, R002, R008, which all refer to D002; I002 exchanges D001 and is used by R004, R005 (refer to D001) and R010, which refers only to D002. This is R010's determining outcome in the worked example."
+    },
+    {
+      "id": "Q08",
+      "category": "provenance-of-decision",
+      "question": "Which requirements have a goal of their seed lineage blocked by an unvalidated uncertainty (so they can be at best conditional), and by which uncertainty?",
+      "kind": "select",
+      "sparql": "SELECT DISTINCT ?id ?u WHERE { ?r reo:requirementId ?id ; reo:hasSeedGoal ?s . ?s reo:refines* ?g . ?u reo:blocks ?g ; reo:status \"unvalidated\" . }",
+      "expected": [["R001", "U001_DrugDBFrequency"], ["R007", "U001_DrugDBFrequency"]],
+      "rationale": "U001 (unvalidated) blocks only G002; the lineages of G003, G004, G005 are {self, G001}, so only R001 and R007 (seed G002) match, which is the determining outcome of their conditional decisions."
+    }
+  ]
+}

@@ -5,24 +5,43 @@
 @prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
 @prefix skos: <http://www.w3.org/2004/02/skos/core#> .
 @prefix dc:   <http://purl.org/dc/elements/1.1/> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix vann: <http://purl.org/vocab/vann/> .
 
 # ============================================================
-# ONTOLOGY REO — RE-Environment-Onto
-# Version: 1.0.0
-# Author: EE Modelisation Project
+# ONTOLOGY REO — RE-Environment Ontology
+# Version: 1.1.0 (revision of 1.0.0)
 #
-# Models the environment E = <A, G, D, C, X, U, I>
-# as defined in EE Modelisation (Part 1).
+# Models the socio-technical environment E = <A, G, D, C, X, U, I>
+# used by Environment-Centric Requirements Engineering (EC-RE).
+# Changes in 1.1.0 (see CHANGELOG.md):
+#   - English-only annotations and ontology metadata;
+#   - pairwise disjointness of the seven view classes and the three
+#     auxiliary classes (role separation is enforced, not only documented);
+#   - reo:validatorKey (binds a constraint to a registered validator
+#     independently of the constraint identifier);
+#   - reo:supersededBy (explicit identity migration: rename/split/merge).
+# The requirement, decision-record and provenance vocabulary is in the
+# separate module reo-derivation.ttl, which imports this module.
 # ============================================================
 
 <http://re-environment-onto.org/ontology>
     a owl:Ontology ;
-    dc:title "RE-Environment-Onto (REO)" ;
-    dc:description """Ontologie formelle pour l'Environment-Centric 
-    Requirements Engineering. Encode les sept dimensions de 
-    l'environnement socio-technique E = <A, G, D, C, X, U, I>.""" ;
-    dc:version "1.0.0" ;
-    owl:versionIRI <http://re-environment-onto.org/ontology/1.0.0> .
+    dc:title "RE-Environment Ontology (REO) - core module" ;
+    dc:description """Formal ontology for Environment-Centric Requirements
+    Engineering. Encodes the seven views of the socio-technical environment
+    E = <A, G, D, C, X, U, I>: actors, goals, domain, constraints, contexts,
+    uncertainties, and interactions.""" ;
+    dc:version "1.1.0" ;
+    dcterms:title "RE-Environment Ontology (REO) - core module"@en ;
+    dcterms:creator "Nihal Salih", "Mohamed Amine El Youssr", "Tarik Fissaa", "Mahmoud El Hamlaoui" ;
+    dcterms:license <https://opensource.org/licenses/MIT> ;
+    dcterms:modified "2026-10-07"^^xsd:date ;
+    vann:preferredNamespacePrefix "reo" ;
+    vann:preferredNamespaceUri "http://re-environment-onto.org/ontology#" ;
+    owl:versionInfo "1.1.0" ;
+    owl:priorVersion <http://re-environment-onto.org/ontology/1.0.0> ;
+    owl:versionIRI <http://re-environment-onto.org/ontology/1.1.0> .
 
 # ============================================================
 # SECTION 1 — A: ACTORS
@@ -90,7 +109,7 @@ reo:isResponsibleFor a owl:ObjectProperty ;
     rdfs:domain reo:Actor ;
     rdfs:range reo:Goal ;
     rdfs:label "is responsible for" ;
-    skos:definition "Goal dont l'acteur est accountable. responsibilities ⊆ G." .
+    skos:definition "Goal for which the actor is accountable. responsibilities ⊆ G." .
 
 reo:isSubjectTo a owl:ObjectProperty ;
     rdfs:domain reo:Actor ;
@@ -471,7 +490,7 @@ reo:status a owl:DatatypeProperty ;
     rdfs:domain reo:Uncertainty ;
     rdfs:range xsd:string ;
     rdfs:label "status" ;
-    skos:definition "unvalidated | validated | rejected" .
+    skos:definition "unvalidated (the premise is open) | validated (the premise has been established) | rejected (the premise has been refuted, i.e. shown not to hold)." .
 
 reo:validationPlan a owl:DatatypeProperty ;
     rdfs:domain reo:Uncertainty ;
@@ -483,14 +502,13 @@ reo:affects a owl:ObjectProperty ;
     rdfs:domain reo:Uncertainty ;
     rdfs:range owl:Thing ;
     rdfs:label "affects" ;
-    skos:definition "Elements of E impacted by this uncertainty. affects : U → P(E)." .
+    skos:definition "Elements of E whose values or links depend on this premise. affects : U → P(E). Only elements in the evidence of a requirement (its references, seed lineage, applicable constraints, and context) are considered by the derivation contract: an unvalidated high- or critical-impact premise makes the decision CONDITIONAL, a low- or medium-impact one adds a reservation, and a refuted one sends the requirement to review." .
 
 reo:blocks a owl:ObjectProperty ;
     rdfs:domain reo:Uncertainty ;
     rdfs:range reo:Goal ;
     rdfs:label "blocks" ;
-    skos:definition """Goals whose derivation is suspended until resolution. 
-    blocks : U → P(G). If non-empty and unresolved → requirement CONDITIONAL.""" .
+    skos:definition """Goals for which this uncertainty is a necessary premise: the goal, as stated, can be pursued only if the premise holds. blocks : U → P(G). For a requirement whose seed lineage contains such a goal, an unvalidated premise makes the decision CONDITIONAL and a refuted (rejected) premise makes it REJECTED. A premise that only influences a goal, without being necessary for it, is linked with reo:affects instead.""" .
 
 
 # ============================================================
@@ -628,3 +646,63 @@ reo:Uncertainty rdfs:subClassOf [
     owl:onProperty reo:status ;
     owl:minCardinality 1
 ] .
+
+
+# ============================================================
+# SECTION 9 — REVISION 1.1.0 ADDITIONS
+# ============================================================
+
+# --- 9.1 Role separation: the seven view classes and the three auxiliary
+# classes are pairwise disjoint. An entity that plays several roles (e.g., a
+# device that is both a data resource and an autonomous agent) is modelled by
+# distinct role individuals linked explicitly, so that a reasoner can detect
+# cross-view typing errors (e.g., a Goal used as an interaction source).
+[] a owl:AllDisjointClasses ;
+   owl:members ( reo:Actor reo:Goal reo:DomainConcept reo:Constraint
+                 reo:Context reo:Uncertainty reo:Interaction
+                 reo:Action reo:DomainProperty reo:DomainInvariant ) .
+
+# --- 9.2 Validator binding. A constraint names the registered validator
+# that discharges it; the binding is independent of the constraint IRI, so a
+# rename does not silently disable the check. A hard constraint without a
+# validatorKey is routed to review by the derivation contract.
+reo:validatorKey a owl:DatatypeProperty , owl:FunctionalProperty ;
+    rdfs:domain reo:Constraint ;
+    rdfs:range xsd:string ;
+    rdfs:label "validator key"@en ;
+    skos:definition "Name of the registered validator that evaluates this constraint (e.g., authority-equals, consent-or-exception)." .
+
+# --- 9.3 Identity migration. reo:supersededBy links an identifier of a
+# previous environment snapshot to its successor(s): one successor = rename,
+# several successors = split, several predecessors with one successor = merge.
+reo:supersededBy a owl:ObjectProperty ;
+    rdfs:label "superseded by"@en ;
+    skos:definition "Identity-migration link from an element of an earlier snapshot to its successor element(s)." .
+
+# --- Definitions added after the v1.1.0 pitfall scan (P08) ---
+reo:CommunicationInteraction skos:definition "Interaction in which actors exchange messages or notifications."@en .
+reo:ControlFlowInteraction skos:definition "Interaction in which one participant triggers or sequences the behaviour of another."@en .
+reo:DataFlowInteraction skos:definition "Interaction that transfers data about domain concepts between participants."@en .
+reo:ServiceCallInteraction skos:definition "Interaction in which a participant invokes a service offered by another participant."@en .
+reo:actorName skos:definition "Human-readable name of the actor."@en .
+reo:conceptId skos:definition "Unique identifier of the domain concept."@en .
+reo:conceptName skos:definition "Human-readable name of the domain concept."@en .
+reo:constraintId skos:definition "Unique identifier of the constraint."@en .
+reo:constraintName skos:definition "Human-readable name of the constraint."@en .
+reo:contextId skos:definition "Unique identifier of the context."@en .
+reo:contextName skos:definition "Human-readable name of the context."@en .
+reo:goalId skos:definition "Unique identifier of the goal."@en .
+reo:goalName skos:definition "Human-readable name of the goal."@en .
+reo:hasInvariant skos:definition "Links a domain concept to an invariant that its instances must satisfy."@en .
+reo:hasProperty skos:definition "Links a domain concept to one of its properties."@en .
+reo:interactionId skos:definition "Unique identifier of the interaction."@en .
+reo:interactionName skos:definition "Human-readable name of the interaction."@en .
+reo:isMandatory skos:definition "Whether a value for the domain property is required."@en .
+reo:organizationalUnit skos:definition "Organizational unit to which the actor belongs."@en .
+reo:propertyName skos:definition "Name of the domain property."@en .
+reo:temporalEnd skos:definition "End of the temporal validity of the context."@en .
+reo:uncertaintyId skos:definition "Unique identifier of the uncertainty."@en .
+reo:uncertaintyName skos:definition "Human-readable name of the uncertainty."@en .
+
+# --- Explicit domain/range added after the v1.1.0 pitfall scan (P11) ---
+reo:supersededBy rdfs:domain owl:Thing ; rdfs:range owl:Thing .

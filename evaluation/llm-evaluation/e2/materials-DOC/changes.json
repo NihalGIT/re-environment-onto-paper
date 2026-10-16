@@ -1,0 +1,185 @@
+[
+ {
+  "case": "C01",
+  "removed_statements": [],
+  "added_statements": [
+   "UNEW_blocks_G002 \u2014 blocks \u2014 G002",
+   "UNEW_blocks_G002 \u2014 impact level \u2014 \"high\"",
+   "UNEW_blocks_G002 \u2014 status \u2014 \"unvalidated\"",
+   "UNEW_blocks_G002 \u2014 subject \u2014 \"New uncertainty.\"",
+   "UNEW_blocks_G002 \u2014 uncertainty id \u2014 \"UNEW-G002\"",
+   "UNEW_blocks_G002 \u2014 validation plan \u2014 \"Review.\"",
+   "UNEW_blocks_G002 is of kind AssumptionUncertainty"
+  ]
+ },
+ {
+  "case": "C02",
+  "removed_statements": [
+   "Prop_Allergies \u2014 property type \u2014 \"reference\""
+  ],
+  "added_statements": [
+   "Prop_Allergies \u2014 property type \u2014 \"boolean\""
+  ]
+ },
+ {
+  "case": "C03",
+  "removed_statements": [],
+  "added_statements": [
+   "D001_Medication \u2014 has property \u2014 Prop_Allergies"
+  ]
+ },
+ {
+  "case": "C04",
+  "removed_statements": [
+   "Physician \u2014 authority level \u2014 \"licensed_medical_professional\""
+  ],
+  "added_statements": [
+   "Physician \u2014 authority level \u2014 \"system_level\""
+  ]
+ },
+ {
+  "case": "C05",
+  "removed_statements": [],
+  "added_statements": [
+   "I002_EHRToPharmacy \u2014 governed by \u2014 C004_DispensingLog"
+  ]
+ },
+ {
+  "case": "C06",
+  "removed_statements": [
+   "U001_DrugDBFrequency \u2014 status \u2014 \"unvalidated\""
+  ],
+  "added_statements": [
+   "U001_DrugDBFrequency \u2014 status \u2014 \"rejected\""
+  ]
+ },
+ {
+  "case": "C07",
+  "removed_statements": [
+   "X001_EmergencyDept \u2014 context id \u2014 \"X-001\""
+  ],
+  "added_statements": []
+ },
+ {
+  "case": "C08",
+  "removed_statements": [],
+  "added_statements": [
+   "C001_HIPAA \u2014 validator key \u2014 \"authority-equals\""
+  ]
+ },
+ {
+  "case": "C09",
+  "removed_statements": [],
+  "added_statements": [
+   "CNEW_C002_FDA \u2014 applies to \u2014 C002_FDA",
+   "CNEW_C002_FDA \u2014 constraint id \u2014 \"CNEW-C002_FDA\"",
+   "CNEW_C002_FDA \u2014 constraint name \u2014 \"New rule\"",
+   "CNEW_C002_FDA \u2014 enforcement level \u2014 \"hard\"",
+   "CNEW_C002_FDA \u2014 formal expression \u2014 \"manual_review\"",
+   "CNEW_C002_FDA \u2014 natural language \u2014 \"A new rule.\"",
+   "CNEW_C002_FDA is of kind BusinessConstraint"
+  ]
+ },
+ {
+  "case": "C10",
+  "removed_statements": [
+   "EHR_System \u2014 authority level \u2014 \"system_level\""
+  ],
+  "added_statements": [
+   "EHR_System \u2014 authority level \u2014 \"licensed_pharmacist\""
+  ]
+ },
+ {
+  "case": "C11",
+  "removed_statements": [
+   "Prop_Contraindications \u2014 is mandatory \u2014 \"false\"",
+   "Prop_Contraindications \u2014 property name \u2014 \"contraindications\"",
+   "Prop_Contraindications \u2014 property type \u2014 \"reference\"",
+   "Prop_Contraindications \u2014 reference target \u2014 \"KnownSubstances\"",
+   "Prop_Contraindications is of kind DomainProperty"
+  ],
+  "added_statements": []
+ },
+ {
+  "case": "C12",
+  "removed_statements": [
+   "Prop_MedicalHistory \u2014 is mandatory \u2014 \"false\"",
+   "Prop_MedicalHistory \u2014 property name \u2014 \"medical_history\"",
+   "Prop_MedicalHistory \u2014 property type \u2014 \"string\"",
+   "Prop_MedicalHistory is of kind DomainProperty"
+  ],
+  "added_statements": []
+ },
+ {
+  "case": "C13",
+  "removed_statements": [
+   "Pharmacist \u2014 has capability \u2014 Action_Dispense"
+  ],
+  "added_statements": [
+   "Pharmacist \u2014 has capability \u2014 Action_Diagnose"
+  ]
+ },
+ {
+  "case": "C14",
+  "removed_statements": [
+   "D002_Patient \u2014 related to \u2014 D001_Medication"
+  ],
+  "added_statements": [
+   "D002_Patient \u2014 related to \u2014 D002_Patient"
+  ]
+ },
+ {
+  "case": "C15",
+  "removed_statements": [
+   "Prop_Route is of kind DomainProperty"
+  ],
+  "added_statements": []
+ },
+ {
+  "case": "C16",
+  "removed_statements": [],
+  "added_statements": [
+   "UNEW_affects_G004 \u2014 affects \u2014 G004",
+   "UNEW_affects_G004 \u2014 impact level \u2014 \"high\"",
+   "UNEW_affects_G004 \u2014 status \u2014 \"unvalidated\"",
+   "UNEW_affects_G004 \u2014 subject \u2014 \"New uncertainty.\"",
+   "UNEW_affects_G004 \u2014 uncertainty id \u2014 \"UNEW-G004\"",
+   "UNEW_affects_G004 \u2014 validation plan \u2014 \"Review.\"",
+   "UNEW_affects_G004 is of kind AssumptionUncertainty"
+  ]
+ },
+ {
+  "case": "C17",
+  "removed_statements": [],
+  "added_statements": [
+   "C004_DispensingLog \u2014 enforcement level \u2014 \"soft\""
+  ]
+ },
+ {
+  "case": "C18",
+  "removed_statements": [],
+  "added_statements": [
+   "C003_ResponseTime \u2014 applies to \u2014 D001_Medication"
+  ]
+ },
+ {
+  "case": "C19",
+  "removed_statements": [],
+  "added_statements": [
+   "CNEW_D002_Patient \u2014 applies to \u2014 D002_Patient",
+   "CNEW_D002_Patient \u2014 constraint id \u2014 \"CNEW-D002_Patient\"",
+   "CNEW_D002_Patient \u2014 constraint name \u2014 \"New rule\"",
+   "CNEW_D002_Patient \u2014 enforcement level \u2014 \"hard\"",
+   "CNEW_D002_Patient \u2014 formal expression \u2014 \"manual_review\"",
+   "CNEW_D002_Patient \u2014 natural language \u2014 \"A new rule.\"",
+   "CNEW_D002_Patient is of kind BusinessConstraint"
+  ]
+ },
+ {
+  "case": "C20",
+  "removed_statements": [],
+  "added_statements": [
+   "D002_Patient \u2014 has invariant \u2014 Inv_ContraindicationsKnown"
+  ]
+ }
+]

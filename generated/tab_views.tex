@@ -1,0 +1,17 @@
+actor & 4 & 3 & 5/5 & yes & yes & yes & yes & view A \\
+stakeholder & 2 & 3 & 3/4 & no & no & no & yes & merged into A (reo:hasStakeholder links actors to goals) \\
+goal & 4 & 2 & 4/4 & yes & yes & yes & yes & view G \\
+quality & 3 & 3 & 3/3 & yes & no & yes & yes & merged: intention $\rightarrow$ G; measurable bound $\rightarrow$ C (QualityConstraint) \\
+domain entity & 3 & 3 & 5/5 & yes & yes & yes & yes & view D \\
+domain property / assumption & 3 & 2 & 7/6 & yes & no & yes & yes & merged into D (DomainProperty, DomainInvariant); unvalidated assumptions $\rightarrow$ U \\
+constraint & 3 & 5 & 4/3 & yes & yes & yes & yes & view C \\
+context & 3 & 2 & 3/3 & yes & yes & yes & yes & view X \\
+time & 2 & 0 & 4/3 & no & no & no & no & merged into X (temporalStart/temporalEnd) \\
+location & 1 & 0 & 1/1 & no & no & no & no & merged into X (spatialScope) \\
+uncertainty & 3 & 2 & 3/2 & yes & yes & yes & yes & view U \\
+interaction & 4 & 2 & 5/6 & yes & yes & yes & yes & view I \\
+action & 4 & 1 & 5/4 & yes & no & yes & yes & merged into A as auxiliary class Action \\
+resource & 1 & 1 & 1/1 & no & no & no & yes & merged into D (or A for an autonomous resource, as a distinct role individual) \\
+process & 0 & 1 & 1/1 & no & yes & no & yes & excluded from the core; candidate extension \\
+event & 0 & 4 & 3/4 & no & no & no & yes & merged into I (triggeringEvent) \\
+provenance & 1 & 1 & 3/2 & no & yes & no & yes & excluded from the views; derivation module (PROV-O) \\

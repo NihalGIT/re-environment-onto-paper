@@ -1,0 +1,519 @@
+{
+ "agents": 15,
+ "tool_calls": 114,
+ "blinding_violations": 0,
+ "models": [
+  "claude-haiku-5-5",
+  "claude-opus-5-5",
+  "claude-sonnet-5-5"
+ ],
+ "frozen_files": 15,
+ "e1": {
+  "authors": [
+   {
+    "author": "A1",
+    "model": "claude-opus-5-5",
+    "scenarios": 12,
+    "new_requirements": 10,
+    "expectations": 130,
+    "nontrivial": 46,
+    "matches_initial": 129,
+    "matches_final": 130,
+    "cqs": 8,
+    "cqs_match": 8,
+    "invalid": 0,
+    "seconds": 516
+   },
+   {
+    "author": "A2",
+    "model": "claude-sonnet-5-5",
+    "scenarios": 12,
+    "new_requirements": 12,
+    "expectations": 132,
+    "nontrivial": 39,
+    "matches_initial": 132,
+    "matches_final": 132,
+    "cqs": 8,
+    "cqs_match": 8,
+    "invalid": 0,
+    "seconds": 777
+   },
+   {
+    "author": "A3",
+    "model": "claude-haiku-5-5",
+    "scenarios": 12,
+    "new_requirements": 3,
+    "expectations": 123,
+    "nontrivial": 27,
+    "matches_initial": 123,
+    "matches_final": 123,
+    "cqs": 8,
+    "cqs_match": 8,
+    "invalid": 0,
+    "seconds": 780
+   }
+  ],
+  "totals": {
+   "scenarios": 36,
+   "new_requirements": 25,
+   "expectations": 385,
+   "nontrivial": 112,
+   "matches_initial": 384,
+   "matches_final": 385,
+   "cqs": 24,
+   "cqs_match": 24,
+   "invalid": 0
+  },
+  "obligations_targeted": [
+   "O1",
+   "O2",
+   "O3",
+   "O4",
+   "O5",
+   "O6",
+   "O7",
+   "O8",
+   "O9"
+  ],
+  "states_in_nontrivial": {
+   "rejected": 33,
+   "accepted_with_reservations": 17,
+   "conditional": 8,
+   "pending_review": 40,
+   "not_derived": 9,
+   "accepted": 5
+  },
+  "cq_reo_terms": 30
+ },
+ "e2": {
+  "cases": 20,
+  "pairs": 200,
+  "changing_pairs": 25,
+  "analysts": [
+   {
+    "analyst": "DOC-1",
+    "condition": "DOC",
+    "model": "claude-opus-5-5",
+    "decision_accuracy": 0.995,
+    "correct": 199,
+    "pairs": 200,
+    "changing_pair_accuracy": 1.0,
+    "impact": {
+     "precision": 0.962,
+     "recall": 1.0,
+     "f1": 0.98,
+     "tp": 25,
+     "fp": 1,
+     "fn": 0
+    },
+    "cases_without_error": 19,
+    "seconds": 140.9,
+    "seconds_per_decision": 0.7,
+    "runtime_tokens": 76458,
+    "n_errors": 1
+   },
+   {
+    "analyst": "DOC-2",
+    "condition": "DOC",
+    "model": "claude-sonnet-5-5",
+    "decision_accuracy": 0.995,
+    "correct": 199,
+    "pairs": 200,
+    "changing_pair_accuracy": 1.0,
+    "impact": {
+     "precision": 0.962,
+     "recall": 1.0,
+     "f1": 0.98,
+     "tp": 25,
+     "fp": 1,
+     "fn": 0
+    },
+    "cases_without_error": 19,
+    "seconds": 190.4,
+    "seconds_per_decision": 0.95,
+    "runtime_tokens": 87576,
+    "n_errors": 1
+   },
+   {
+    "analyst": "MODEL-1",
+    "condition": "MODEL",
+    "model": "claude-opus-5-5",
+    "decision_accuracy": 0.995,
+    "correct": 199,
+    "pairs": 200,
+    "changing_pair_accuracy": 1.0,
+    "impact": {
+     "precision": 0.962,
+     "recall": 1.0,
+     "f1": 0.98,
+     "tp": 25,
+     "fp": 1,
+     "fn": 0
+    },
+    "cases_without_error": 19,
+    "seconds": 143.1,
+    "seconds_per_decision": 0.72,
+    "runtime_tokens": 101459,
+    "n_errors": 1
+   },
+   {
+    "analyst": "MODEL-2",
+    "condition": "MODEL",
+    "model": "claude-sonnet-5-5",
+    "decision_accuracy": 1.0,
+    "correct": 200,
+    "pairs": 200,
+    "changing_pair_accuracy": 1.0,
+    "impact": {
+     "precision": 1.0,
+     "recall": 1.0,
+     "f1": 1.0,
+     "tp": 25,
+     "fp": 0,
+     "fn": 0
+    },
+    "cases_without_error": 20,
+    "seconds": 157.5,
+    "seconds_per_decision": 0.79,
+    "runtime_tokens": 107838,
+    "n_errors": 0
+   },
+   {
+    "analyst": "DOC-1r",
+    "condition": "DOC",
+    "model": "claude-opus-5-5",
+    "decision_accuracy": 0.995,
+    "correct": 199,
+    "pairs": 200,
+    "changing_pair_accuracy": 1.0,
+    "impact": {
+     "precision": 0.962,
+     "recall": 1.0,
+     "f1": 0.98,
+     "tp": 25,
+     "fp": 1,
+     "fn": 0
+    },
+    "cases_without_error": 19,
+    "seconds": 120.2,
+    "seconds_per_decision": 0.6,
+    "runtime_tokens": 74260,
+    "n_errors": 1
+   },
+   {
+    "analyst": "DOC-2r",
+    "condition": "DOC",
+    "model": "claude-sonnet-5-5",
+    "decision_accuracy": 0.995,
+    "correct": 199,
+    "pairs": 200,
+    "changing_pair_accuracy": 1.0,
+    "impact": {
+     "precision": 0.962,
+     "recall": 1.0,
+     "f1": 0.98,
+     "tp": 25,
+     "fp": 1,
+     "fn": 0
+    },
+    "cases_without_error": 19,
+    "seconds": 175.7,
+    "seconds_per_decision": 0.88,
+    "runtime_tokens": 85652,
+    "n_errors": 1
+   },
+   {
+    "analyst": "MODEL-1r",
+    "condition": "MODEL",
+    "model": "claude-opus-5-5",
+    "decision_accuracy": 0.995,
+    "correct": 199,
+    "pairs": 200,
+    "changing_pair_accuracy": 1.0,
+    "impact": {
+     "precision": 0.962,
+     "recall": 1.0,
+     "f1": 0.98,
+     "tp": 25,
+     "fp": 1,
+     "fn": 0
+    },
+    "cases_without_error": 19,
+    "seconds": 130.1,
+    "seconds_per_decision": 0.65,
+    "runtime_tokens": 100399,
+    "n_errors": 1
+   },
+   {
+    "analyst": "MODEL-2r",
+    "condition": "MODEL",
+    "model": "claude-sonnet-5-5",
+    "decision_accuracy": 0.995,
+    "correct": 199,
+    "pairs": 200,
+    "changing_pair_accuracy": 1.0,
+    "impact": {
+     "precision": 0.962,
+     "recall": 1.0,
+     "f1": 0.98,
+     "tp": 25,
+     "fp": 1,
+     "fn": 0
+    },
+    "cases_without_error": 19,
+    "seconds": 107.3,
+    "seconds_per_decision": 0.54,
+    "runtime_tokens": 100932,
+    "n_errors": 1
+   }
+  ],
+  "runs": 8,
+  "run_to_run_identical": 799,
+  "run_to_run_pairs": 800,
+  "ambiguous_item_runs": 7,
+  "errors_outside_ambiguous_item": 0
+ },
+ "e3": {
+  "cells": 204,
+  "pairwise": {
+   "author~B1": {
+    "exact_agreement": 0.657,
+    "cohen_kappa": 0.459,
+    "weighted_kappa_quadratic": 0.658,
+    "first_class_agreement": 0.868,
+    "disagreements": {
+     "0-1": 43,
+     "1-2": 17,
+     "0-2": 10
+    }
+   },
+   "author~B2": {
+    "exact_agreement": 0.716,
+    "cohen_kappa": 0.531,
+    "weighted_kappa_quadratic": 0.716,
+    "first_class_agreement": 0.892,
+    "disagreements": {
+     "0-1": 36,
+     "1-2": 14,
+     "0-2": 8
+    }
+   },
+   "B1~B2": {
+    "exact_agreement": 0.819,
+    "cohen_kappa": 0.722,
+    "weighted_kappa_quadratic": 0.861,
+    "first_class_agreement": 0.926,
+    "disagreements": {
+     "0-1": 22,
+     "1-2": 14,
+     "0-2": 1
+    }
+   }
+  },
+  "fleiss_kappa": 0.568,
+  "retained_by_coder": {
+   "author": [
+    "actor",
+    "constraint",
+    "context",
+    "domain_entity",
+    "goal",
+    "interaction",
+    "uncertainty"
+   ],
+   "B1": [
+    "actor",
+    "constraint",
+    "context",
+    "domain_entity",
+    "goal",
+    "interaction",
+    "uncertainty"
+   ],
+   "B2": [
+    "actor",
+    "constraint",
+    "context",
+    "domain_entity",
+    "goal",
+    "interaction"
+   ]
+  },
+  "first_class": {
+   "actor": {
+    "author": 4,
+    "B1": 5,
+    "B2": 5
+   },
+   "stakeholder": {
+    "author": 2,
+    "B1": 3,
+    "B2": 4
+   },
+   "goal": {
+    "author": 4,
+    "B1": 4,
+    "B2": 4
+   },
+   "quality": {
+    "author": 3,
+    "B1": 3,
+    "B2": 3
+   },
+   "domain_entity": {
+    "author": 3,
+    "B1": 5,
+    "B2": 5
+   },
+   "domain_property": {
+    "author": 3,
+    "B1": 7,
+    "B2": 6
+   },
+   "constraint": {
+    "author": 3,
+    "B1": 4,
+    "B2": 3
+   },
+   "context": {
+    "author": 3,
+    "B1": 3,
+    "B2": 3
+   },
+   "time": {
+    "author": 2,
+    "B1": 4,
+    "B2": 3
+   },
+   "location": {
+    "author": 1,
+    "B1": 1,
+    "B2": 1
+   },
+   "uncertainty": {
+    "author": 3,
+    "B1": 3,
+    "B2": 2
+   },
+   "interaction": {
+    "author": 4,
+    "B1": 5,
+    "B2": 6
+   },
+   "action": {
+    "author": 4,
+    "B1": 5,
+    "B2": 4
+   },
+   "resource": {
+    "author": 1,
+    "B1": 1,
+    "B2": 1
+   },
+   "process": {
+    "author": 0,
+    "B1": 1,
+    "B2": 1
+   },
+   "event": {
+    "author": 0,
+    "B1": 3,
+    "B2": 4
+   },
+   "provenance": {
+    "author": 1,
+    "B1": 3,
+    "B2": 2
+   }
+  },
+  "c1_threshold_sensitivity": {
+   "2": {
+    "author": [
+     "actor",
+     "constraint",
+     "context",
+     "domain_entity",
+     "goal",
+     "interaction",
+     "uncertainty"
+    ],
+    "B1": [
+     "actor",
+     "constraint",
+     "context",
+     "domain_entity",
+     "goal",
+     "interaction",
+     "uncertainty"
+    ],
+    "B2": [
+     "actor",
+     "constraint",
+     "context",
+     "domain_entity",
+     "goal",
+     "interaction",
+     "uncertainty"
+    ]
+   },
+   "3": {
+    "author": [
+     "actor",
+     "constraint",
+     "context",
+     "domain_entity",
+     "goal",
+     "interaction",
+     "uncertainty"
+    ],
+    "B1": [
+     "actor",
+     "constraint",
+     "context",
+     "domain_entity",
+     "goal",
+     "interaction",
+     "uncertainty"
+    ],
+    "B2": [
+     "actor",
+     "constraint",
+     "context",
+     "domain_entity",
+     "goal",
+     "interaction"
+    ]
+   },
+   "4": {
+    "author": [
+     "actor",
+     "goal",
+     "interaction"
+    ],
+    "B1": [
+     "actor",
+     "constraint",
+     "domain_entity",
+     "goal",
+     "interaction"
+    ],
+    "B2": [
+     "actor",
+     "domain_entity",
+     "goal",
+     "interaction"
+    ]
+   }
+  }
+ },
+ "adjudication": [
+  {
+   "item": "E1-1",
+   "verdict": "B"
+  },
+  {
+   "item": "E2-1",
+   "verdict": "C"
+  }
+ ]
+}

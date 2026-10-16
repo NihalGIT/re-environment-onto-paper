@@ -1,0 +1,379 @@
+{
+  "baseline": {
+    "R001": "conditional",
+    "R002": "accepted_with_reservations",
+    "R003": "accepted",
+    "R004": "accepted",
+    "R005": "pending_review",
+    "R006": "rejected",
+    "R007": "conditional",
+    "R008": "rejected",
+    "R009": "accepted",
+    "R010": "rejected",
+    "R011": "accepted_with_reservations"
+  },
+  "cases": {
+    "rename_C002": {
+      "supersession": {
+        "C002_FDA": [
+          "C002_PrescribingAuthority"
+        ]
+      },
+      "touched": [
+        "C002_FDA",
+        "C002_PrescribingAuthority",
+        "EHR_System",
+        "I002_EHRToPharmacy",
+        "Pharmacist",
+        "Physician",
+        "X001_EmergencyDept",
+        "X002_Outpatient"
+      ],
+      "selected": [
+        "R001",
+        "R002",
+        "R003",
+        "R004",
+        "R005",
+        "R006",
+        "R007",
+        "R008",
+        "R009",
+        "R010",
+        "R011"
+      ],
+      "requirements_with_migrated_references": [
+        "R001"
+      ],
+      "missed_by_impact_query": [],
+      "ambiguous": [],
+      "decisions_preserved_identity_aware": 11,
+      "decisions_changed_naive": 1,
+      "rows": {
+        "R001": {
+          "baseline": "conditional",
+          "naive": "pending_review",
+          "identity_aware": "conditional",
+          "selected_for_reevaluation": true,
+          "migration_notes": [
+            "renamed/merged C002_FDA -> C002_PrescribingAuthority"
+          ]
+        },
+        "R002": {
+          "baseline": "accepted_with_reservations",
+          "naive": "accepted_with_reservations",
+          "identity_aware": "accepted_with_reservations",
+          "selected_for_reevaluation": true,
+          "migration_notes": []
+        },
+        "R003": {
+          "baseline": "accepted",
+          "naive": "accepted",
+          "identity_aware": "accepted",
+          "selected_for_reevaluation": true,
+          "migration_notes": []
+        },
+        "R004": {
+          "baseline": "accepted",
+          "naive": "accepted",
+          "identity_aware": "accepted",
+          "selected_for_reevaluation": true,
+          "migration_notes": []
+        },
+        "R005": {
+          "baseline": "pending_review",
+          "naive": "pending_review",
+          "identity_aware": "pending_review",
+          "selected_for_reevaluation": true,
+          "migration_notes": []
+        },
+        "R006": {
+          "baseline": "rejected",
+          "naive": "rejected",
+          "identity_aware": "rejected",
+          "selected_for_reevaluation": true,
+          "migration_notes": []
+        },
+        "R007": {
+          "baseline": "conditional",
+          "naive": "conditional",
+          "identity_aware": "conditional",
+          "selected_for_reevaluation": true,
+          "migration_notes": []
+        },
+        "R008": {
+          "baseline": "rejected",
+          "naive": "rejected",
+          "identity_aware": "rejected",
+          "selected_for_reevaluation": true,
+          "migration_notes": []
+        },
+        "R009": {
+          "baseline": "accepted",
+          "naive": "accepted",
+          "identity_aware": "accepted",
+          "selected_for_reevaluation": true,
+          "migration_notes": []
+        },
+        "R010": {
+          "baseline": "rejected",
+          "naive": "rejected",
+          "identity_aware": "rejected",
+          "selected_for_reevaluation": true,
+          "migration_notes": []
+        },
+        "R011": {
+          "baseline": "accepted_with_reservations",
+          "naive": "accepted_with_reservations",
+          "identity_aware": "accepted_with_reservations",
+          "selected_for_reevaluation": true,
+          "migration_notes": []
+        }
+      }
+    },
+    "split_D002": {
+      "supersession": {
+        "D002_Patient": [
+          "D002a_PatientIdentity",
+          "D002b_PatientMedicationProfile"
+        ]
+      },
+      "touched": [
+        "D001_Medication",
+        "D002_Patient",
+        "D002a_PatientIdentity",
+        "D002b_PatientMedicationProfile",
+        "I001_PhysicianToEHR",
+        "Inv_PatientIdUnique",
+        "Prop_Allergies",
+        "Prop_CurrentMedications",
+        "Prop_MedicalHistory",
+        "Prop_PatientId"
+      ],
+      "selected": [
+        "R001",
+        "R002",
+        "R003",
+        "R004",
+        "R005",
+        "R006",
+        "R007",
+        "R008",
+        "R009",
+        "R010",
+        "R011"
+      ],
+      "requirements_with_migrated_references": [
+        "R001",
+        "R002",
+        "R008",
+        "R010",
+        "R011"
+      ],
+      "missed_by_impact_query": [],
+      "ambiguous": [
+        "R011"
+      ],
+      "decisions_preserved_identity_aware": 10,
+      "decisions_changed_naive": 3,
+      "rows": {
+        "R001": {
+          "baseline": "conditional",
+          "naive": "rejected",
+          "identity_aware": "conditional",
+          "selected_for_reevaluation": true,
+          "migration_notes": [
+            "split D002_Patient resolved by referenced properties -> ['D002b_PatientMedicationProfile']"
+          ]
+        },
+        "R002": {
+          "baseline": "accepted_with_reservations",
+          "naive": "rejected",
+          "identity_aware": "accepted_with_reservations",
+          "selected_for_reevaluation": true,
+          "migration_notes": [
+            "split D002_Patient resolved by referenced properties -> ['D002b_PatientMedicationProfile']"
+          ]
+        },
+        "R003": {
+          "baseline": "accepted",
+          "naive": "accepted",
+          "identity_aware": "accepted",
+          "selected_for_reevaluation": true,
+          "migration_notes": []
+        },
+        "R004": {
+          "baseline": "accepted",
+          "naive": "accepted",
+          "identity_aware": "accepted",
+          "selected_for_reevaluation": true,
+          "migration_notes": []
+        },
+        "R005": {
+          "baseline": "pending_review",
+          "naive": "pending_review",
+          "identity_aware": "pending_review",
+          "selected_for_reevaluation": true,
+          "migration_notes": []
+        },
+        "R006": {
+          "baseline": "rejected",
+          "naive": "rejected",
+          "identity_aware": "rejected",
+          "selected_for_reevaluation": true,
+          "migration_notes": []
+        },
+        "R007": {
+          "baseline": "conditional",
+          "naive": "conditional",
+          "identity_aware": "conditional",
+          "selected_for_reevaluation": true,
+          "migration_notes": []
+        },
+        "R008": {
+          "baseline": "rejected",
+          "naive": "rejected",
+          "identity_aware": "rejected",
+          "selected_for_reevaluation": true,
+          "migration_notes": [
+            "split D002_Patient resolved by referenced properties -> ['D002a_PatientIdentity']"
+          ]
+        },
+        "R009": {
+          "baseline": "accepted",
+          "naive": "accepted",
+          "identity_aware": "accepted",
+          "selected_for_reevaluation": true,
+          "migration_notes": []
+        },
+        "R010": {
+          "baseline": "rejected",
+          "naive": "rejected",
+          "identity_aware": "rejected",
+          "selected_for_reevaluation": true,
+          "migration_notes": [
+            "split D002_Patient resolved by referenced properties -> ['D002a_PatientIdentity']"
+          ]
+        },
+        "R011": {
+          "baseline": "accepted_with_reservations",
+          "naive": "rejected",
+          "identity_aware": "pending_review",
+          "selected_for_reevaluation": true,
+          "migration_notes": [
+            "AMBIGUOUS split of D002_Patient -> ['D002a_PatientIdentity', 'D002b_PatientMedicationProfile']"
+          ]
+        }
+      }
+    },
+    "merge_pharmacist_actions": {
+      "supersession": {
+        "Action_VerifyPrescription": [
+          "Action_DispenseVerified"
+        ],
+        "Action_Dispense": [
+          "Action_DispenseVerified"
+        ]
+      },
+      "touched": [
+        "Action_Dispense",
+        "Action_DispenseVerified",
+        "Action_VerifyPrescription",
+        "Pharmacist"
+      ],
+      "selected": [
+        "R005",
+        "R006"
+      ],
+      "requirements_with_migrated_references": [
+        "R005"
+      ],
+      "missed_by_impact_query": [],
+      "ambiguous": [],
+      "decisions_preserved_identity_aware": 11,
+      "decisions_changed_naive": 1,
+      "rows": {
+        "R001": {
+          "baseline": "conditional",
+          "naive": "conditional",
+          "identity_aware": "conditional",
+          "selected_for_reevaluation": false,
+          "migration_notes": []
+        },
+        "R002": {
+          "baseline": "accepted_with_reservations",
+          "naive": "accepted_with_reservations",
+          "identity_aware": "accepted_with_reservations",
+          "selected_for_reevaluation": false,
+          "migration_notes": []
+        },
+        "R003": {
+          "baseline": "accepted",
+          "naive": "accepted",
+          "identity_aware": "accepted",
+          "selected_for_reevaluation": false,
+          "migration_notes": []
+        },
+        "R004": {
+          "baseline": "accepted",
+          "naive": "accepted",
+          "identity_aware": "accepted",
+          "selected_for_reevaluation": false,
+          "migration_notes": []
+        },
+        "R005": {
+          "baseline": "pending_review",
+          "naive": "rejected",
+          "identity_aware": "pending_review",
+          "selected_for_reevaluation": true,
+          "migration_notes": [
+            "renamed/merged Action_Dispense -> Action_DispenseVerified",
+            "renamed/merged Action_VerifyPrescription -> Action_DispenseVerified"
+          ]
+        },
+        "R006": {
+          "baseline": "rejected",
+          "naive": "rejected",
+          "identity_aware": "rejected",
+          "selected_for_reevaluation": true,
+          "migration_notes": []
+        },
+        "R007": {
+          "baseline": "conditional",
+          "naive": "conditional",
+          "identity_aware": "conditional",
+          "selected_for_reevaluation": false,
+          "migration_notes": []
+        },
+        "R008": {
+          "baseline": "rejected",
+          "naive": "rejected",
+          "identity_aware": "rejected",
+          "selected_for_reevaluation": false,
+          "migration_notes": []
+        },
+        "R009": {
+          "baseline": "accepted",
+          "naive": "accepted",
+          "identity_aware": "accepted",
+          "selected_for_reevaluation": false,
+          "migration_notes": []
+        },
+        "R010": {
+          "baseline": "rejected",
+          "naive": "rejected",
+          "identity_aware": "rejected",
+          "selected_for_reevaluation": false,
+          "migration_notes": []
+        },
+        "R011": {
+          "baseline": "accepted_with_reservations",
+          "naive": "accepted_with_reservations",
+          "identity_aware": "accepted_with_reservations",
+          "selected_for_reevaluation": false,
+          "migration_notes": []
+        }
+      }
+    }
+  }
+}

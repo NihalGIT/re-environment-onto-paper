@@ -1,0 +1,507 @@
+{
+ "cells": 204,
+ "c1_threshold_sensitivity": {
+  "2": {
+   "author": [
+    "actor",
+    "constraint",
+    "context",
+    "domain_entity",
+    "goal",
+    "interaction",
+    "uncertainty"
+   ],
+   "B1": [
+    "actor",
+    "constraint",
+    "context",
+    "domain_entity",
+    "goal",
+    "interaction",
+    "uncertainty"
+   ],
+   "B2": [
+    "actor",
+    "constraint",
+    "context",
+    "domain_entity",
+    "goal",
+    "interaction",
+    "uncertainty"
+   ]
+  },
+  "3": {
+   "author": [
+    "actor",
+    "constraint",
+    "context",
+    "domain_entity",
+    "goal",
+    "interaction",
+    "uncertainty"
+   ],
+   "B1": [
+    "actor",
+    "constraint",
+    "context",
+    "domain_entity",
+    "goal",
+    "interaction",
+    "uncertainty"
+   ],
+   "B2": [
+    "actor",
+    "constraint",
+    "context",
+    "domain_entity",
+    "goal",
+    "interaction"
+   ]
+  },
+  "4": {
+   "author": [
+    "actor",
+    "goal",
+    "interaction"
+   ],
+   "B1": [
+    "actor",
+    "constraint",
+    "domain_entity",
+    "goal",
+    "interaction"
+   ],
+   "B2": [
+    "actor",
+    "domain_entity",
+    "goal",
+    "interaction"
+   ]
+  }
+ },
+ "pairwise": {
+  "author~B1": {
+   "exact_agreement": 0.657,
+   "cohen_kappa": 0.459,
+   "weighted_kappa_quadratic": 0.658,
+   "first_class_agreement": 0.868,
+   "disagreements": {
+    "0-1": 43,
+    "1-2": 17,
+    "0-2": 10
+   }
+  },
+  "author~B2": {
+   "exact_agreement": 0.716,
+   "cohen_kappa": 0.531,
+   "weighted_kappa_quadratic": 0.716,
+   "first_class_agreement": 0.892,
+   "disagreements": {
+    "0-1": 36,
+    "1-2": 14,
+    "0-2": 8
+   }
+  },
+  "B1~B2": {
+   "exact_agreement": 0.819,
+   "cohen_kappa": 0.722,
+   "weighted_kappa_quadratic": 0.861,
+   "first_class_agreement": 0.926,
+   "disagreements": {
+    "0-1": 22,
+    "1-2": 14,
+    "0-2": 1
+   }
+  }
+ },
+ "fleiss_kappa": 0.568,
+ "per_concern": {
+  "actor": {
+   "author": {
+    "first_class": 4,
+    "partial": 3,
+    "C1": true,
+    "retained": true
+   },
+   "B1": {
+    "first_class": 5,
+    "partial": 4,
+    "C1": true,
+    "retained": true
+   },
+   "B2": {
+    "first_class": 5,
+    "partial": 4,
+    "C1": true,
+    "retained": true
+   },
+   "decision_changes": []
+  },
+  "stakeholder": {
+   "author": {
+    "first_class": 2,
+    "partial": 3,
+    "C1": false,
+    "retained": false
+   },
+   "B1": {
+    "first_class": 3,
+    "partial": 3,
+    "C1": true,
+    "retained": false
+   },
+   "B2": {
+    "first_class": 4,
+    "partial": 2,
+    "C1": true,
+    "retained": false
+   },
+   "decision_changes": []
+  },
+  "goal": {
+   "author": {
+    "first_class": 4,
+    "partial": 2,
+    "C1": true,
+    "retained": true
+   },
+   "B1": {
+    "first_class": 4,
+    "partial": 6,
+    "C1": true,
+    "retained": true
+   },
+   "B2": {
+    "first_class": 4,
+    "partial": 5,
+    "C1": true,
+    "retained": true
+   },
+   "decision_changes": []
+  },
+  "quality": {
+   "author": {
+    "first_class": 3,
+    "partial": 3,
+    "C1": true,
+    "retained": false
+   },
+   "B1": {
+    "first_class": 3,
+    "partial": 3,
+    "C1": true,
+    "retained": false
+   },
+   "B2": {
+    "first_class": 3,
+    "partial": 3,
+    "C1": true,
+    "retained": false
+   },
+   "decision_changes": []
+  },
+  "domain_entity": {
+   "author": {
+    "first_class": 3,
+    "partial": 3,
+    "C1": true,
+    "retained": true
+   },
+   "B1": {
+    "first_class": 5,
+    "partial": 4,
+    "C1": true,
+    "retained": true
+   },
+   "B2": {
+    "first_class": 5,
+    "partial": 4,
+    "C1": true,
+    "retained": true
+   },
+   "decision_changes": []
+  },
+  "domain_property": {
+   "author": {
+    "first_class": 3,
+    "partial": 2,
+    "C1": true,
+    "retained": false
+   },
+   "B1": {
+    "first_class": 7,
+    "partial": 4,
+    "C1": true,
+    "retained": false
+   },
+   "B2": {
+    "first_class": 6,
+    "partial": 4,
+    "C1": true,
+    "retained": false
+   },
+   "decision_changes": []
+  },
+  "constraint": {
+   "author": {
+    "first_class": 3,
+    "partial": 5,
+    "C1": true,
+    "retained": true
+   },
+   "B1": {
+    "first_class": 4,
+    "partial": 4,
+    "C1": true,
+    "retained": true
+   },
+   "B2": {
+    "first_class": 3,
+    "partial": 2,
+    "C1": true,
+    "retained": true
+   },
+   "decision_changes": []
+  },
+  "context": {
+   "author": {
+    "first_class": 3,
+    "partial": 2,
+    "C1": true,
+    "retained": true
+   },
+   "B1": {
+    "first_class": 3,
+    "partial": 6,
+    "C1": true,
+    "retained": true
+   },
+   "B2": {
+    "first_class": 3,
+    "partial": 5,
+    "C1": true,
+    "retained": true
+   },
+   "decision_changes": []
+  },
+  "time": {
+   "author": {
+    "first_class": 2,
+    "partial": 0,
+    "C1": false,
+    "retained": false
+   },
+   "B1": {
+    "first_class": 4,
+    "partial": 3,
+    "C1": true,
+    "retained": false
+   },
+   "B2": {
+    "first_class": 3,
+    "partial": 3,
+    "C1": true,
+    "retained": false
+   },
+   "decision_changes": []
+  },
+  "location": {
+   "author": {
+    "first_class": 1,
+    "partial": 0,
+    "C1": false,
+    "retained": false
+   },
+   "B1": {
+    "first_class": 1,
+    "partial": 1,
+    "C1": false,
+    "retained": false
+   },
+   "B2": {
+    "first_class": 1,
+    "partial": 1,
+    "C1": false,
+    "retained": false
+   },
+   "decision_changes": []
+  },
+  "uncertainty": {
+   "author": {
+    "first_class": 3,
+    "partial": 2,
+    "C1": true,
+    "retained": true
+   },
+   "B1": {
+    "first_class": 3,
+    "partial": 3,
+    "C1": true,
+    "retained": true
+   },
+   "B2": {
+    "first_class": 2,
+    "partial": 3,
+    "C1": false,
+    "retained": false
+   },
+   "decision_changes": [
+    "B2"
+   ]
+  },
+  "interaction": {
+   "author": {
+    "first_class": 4,
+    "partial": 2,
+    "C1": true,
+    "retained": true
+   },
+   "B1": {
+    "first_class": 5,
+    "partial": 4,
+    "C1": true,
+    "retained": true
+   },
+   "B2": {
+    "first_class": 6,
+    "partial": 3,
+    "C1": true,
+    "retained": true
+   },
+   "decision_changes": []
+  },
+  "action": {
+   "author": {
+    "first_class": 4,
+    "partial": 1,
+    "C1": true,
+    "retained": false
+   },
+   "B1": {
+    "first_class": 5,
+    "partial": 4,
+    "C1": true,
+    "retained": false
+   },
+   "B2": {
+    "first_class": 4,
+    "partial": 5,
+    "C1": true,
+    "retained": false
+   },
+   "decision_changes": []
+  },
+  "resource": {
+   "author": {
+    "first_class": 1,
+    "partial": 1,
+    "C1": false,
+    "retained": false
+   },
+   "B1": {
+    "first_class": 1,
+    "partial": 3,
+    "C1": false,
+    "retained": false
+   },
+   "B2": {
+    "first_class": 1,
+    "partial": 1,
+    "C1": false,
+    "retained": false
+   },
+   "decision_changes": []
+  },
+  "process": {
+   "author": {
+    "first_class": 0,
+    "partial": 1,
+    "C1": false,
+    "retained": false
+   },
+   "B1": {
+    "first_class": 1,
+    "partial": 3,
+    "C1": false,
+    "retained": false
+   },
+   "B2": {
+    "first_class": 1,
+    "partial": 2,
+    "C1": false,
+    "retained": false
+   },
+   "decision_changes": []
+  },
+  "event": {
+   "author": {
+    "first_class": 0,
+    "partial": 4,
+    "C1": false,
+    "retained": false
+   },
+   "B1": {
+    "first_class": 3,
+    "partial": 3,
+    "C1": true,
+    "retained": false
+   },
+   "B2": {
+    "first_class": 4,
+    "partial": 1,
+    "C1": true,
+    "retained": false
+   },
+   "decision_changes": []
+  },
+  "provenance": {
+   "author": {
+    "first_class": 1,
+    "partial": 1,
+    "C1": false,
+    "retained": false
+   },
+   "B1": {
+    "first_class": 3,
+    "partial": 3,
+    "C1": true,
+    "retained": false
+   },
+   "B2": {
+    "first_class": 2,
+    "partial": 3,
+    "C1": false,
+    "retained": false
+   },
+   "decision_changes": []
+  }
+ },
+ "retained_by_coder": {
+  "author": [
+   "actor",
+   "constraint",
+   "context",
+   "domain_entity",
+   "goal",
+   "interaction",
+   "uncertainty"
+  ],
+  "B1": [
+   "actor",
+   "constraint",
+   "context",
+   "domain_entity",
+   "goal",
+   "interaction",
+   "uncertainty"
+  ],
+  "B2": [
+   "actor",
+   "constraint",
+   "context",
+   "domain_entity",
+   "goal",
+   "interaction"
+  ]
+ }
+}

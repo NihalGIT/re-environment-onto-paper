@@ -1,0 +1,20 @@
+@prefix reo:  <http://re-environment-onto.org/ontology#> .
+@prefix tx:   <http://re-environment-onto.org/ext/temporal#> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+
+# Example vocabulary extension used to test the extension contract:
+# a temporal constraint kind and its validity bound. No validator is
+# registered for it, so applicable hard instances must go to review.
+<http://re-environment-onto.org/ext/temporal> a owl:Ontology ;
+    owl:imports <http://re-environment-onto.org/ontology> .
+tx:TemporalConstraint a owl:Class ;
+    rdfs:subClassOf reo:Constraint ;
+    rdfs:label "Temporal Constraint"@en ;
+    skos:definition "Constraint whose obligation holds only within a time window."@en .
+tx:validUntil a owl:DatatypeProperty ;
+    rdfs:domain tx:TemporalConstraint ; rdfs:range xsd:dateTime ;
+    rdfs:label "valid until"@en ;
+    skos:definition "End of the time window in which the constraint applies."@en .

@@ -1,0 +1,17 @@
+{
+  "suite_id": "external-mutations-v1",
+  "frozen_commit": "",
+  "freeze_date": "",
+  "evaluators": [],
+  "base_files": ["examples/medical-emergency/hospital.ttl", "examples/medical-emergency/hospital-extension.ttl"],
+  "requirements_file": "examples/medical-emergency/hospital-requirements.ttl",
+  "mutations": [
+    {
+      "id": "EXT-01",
+      "description": "<natural-language change written by the evaluator>",
+      "expected": {"R001": "<decision>", "R002": "<decision>"},
+      "rationale": "<why, from the specification>",
+      "encoding": {"remove_turtle": "", "add_turtle": ""}
+    }
+  ]
+}

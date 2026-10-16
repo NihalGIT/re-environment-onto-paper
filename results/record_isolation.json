@@ -1,0 +1,49 @@
+{
+  "added_triples": 388,
+  "annotation_triples": 117,
+  "record_triples": 271,
+  "touched_identifiers": [],
+  "snapshot_hash_unchanged": true,
+  "raw_diff_touched_environment_identifiers": [
+    "Action_AccessRecords",
+    "Action_Dispense",
+    "Action_ForwardPrescription",
+    "Action_Prescribe",
+    "Action_QueryDatabase",
+    "Action_VerifyPrescription",
+    "C001_HIPAA",
+    "C002_FDA",
+    "C003_ResponseTime",
+    "C004_DispensingLog",
+    "D001_Medication",
+    "D002_Patient",
+    "EHR_System",
+    "G001",
+    "G002",
+    "G003",
+    "G004",
+    "G005",
+    "I001_PhysicianToEHR",
+    "I002_EHRToPharmacy",
+    "Pharmacist",
+    "Physician",
+    "Prop_Allergies",
+    "Prop_Contraindications",
+    "Prop_CurrentMedications",
+    "Prop_Dosage",
+    "Prop_MedicalHistory",
+    "Prop_Route",
+    "U001_DrugDBFrequency",
+    "X001_EmergencyDept",
+    "X002_Outpatient"
+  ],
+  "single_untyped_record_triple": {
+    "touched_identifiers": [],
+    "raw_diff_touched": [
+      "Physician",
+      "ValidationActivity1"
+    ],
+    "snapshot_hash_unchanged": true
+  },
+  "pass": true
+}

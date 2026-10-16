@@ -1,0 +1,126 @@
+module,kind,element,domain_or_parent,range,definition
+core,Class,reo:Action,--,--,"Atomic action that an actor can perform (prescribe, diagnose, etc.)."
+core,Class,reo:Actor,--,--,"Entity (human, system or organization) 
+    interacting in the socio-technical environment. 
+    Corresponds to a_i ∈ A."
+core,Class,reo:AmbiguityUncertainty,reo:Uncertainty,--,Conflicting stakeholder views on the same element.
+core,Class,reo:AssumptionUncertainty,reo:Uncertainty,--,Value believed true but not yet validated.
+core,Class,reo:BusinessConstraint,reo:Constraint,--,Organizational business rule. Part of C_normative.
+core,Class,reo:CommunicationInteraction,reo:Interaction,--,Interaction in which actors exchange messages or notifications.
+core,Class,reo:Constraint,--,--,Rule bounding the space of valid requirements. Element of C.
+core,Class,reo:Context,--,--,Operational situation in which the system operates. Element of X.
+core,Class,reo:ControlFlowInteraction,reo:Interaction,--,Interaction in which one participant triggers or sequences the behaviour of another.
+core,Class,reo:DataFlowInteraction,reo:Interaction,--,Interaction that transfers data about domain concepts between participants.
+core,Class,reo:DomainConcept,--,--,"Business domain entity (Medication, Patient, Prescription...). 
+    Element of E_D."
+core,Class,reo:DomainInvariant,--,--,"Rule that must always hold on instances of a concept. 
+    ι = <expression, formal_logic, severity>."
+core,Class,reo:DomainProperty,--,--,"Attribute of a DomainConcept. 
+    p = <name, property_type, is_mandatory, default_value, reference_target>."
+core,Class,reo:Goal,--,--,"Intentional objective of one or more actors. 
+    Element of G = <Gs, Go, R_G>."
+core,Class,reo:HumanActor,reo:Actor,--,"Human-type actor (physician, pharmacist, etc.)."
+core,Class,reo:Interaction,--,--,"Communication or data flow between actors and/or domain entities. 
+    Element of I ⊆ A × (A ∪ E_D)."
+core,Class,reo:OperationalGoal,reo:Goal,--,Leaf goal (Go). Direct seed for requirement derivation.
+core,Class,reo:OrganizationActor,reo:Actor,--,"Organization-type actor (hospital, regulatory agency, etc.)."
+core,Class,reo:QualityConstraint,reo:Constraint,--,"Quality constraint (security, availability). Part of C_technical."
+core,Class,reo:RegulatoryConstraint,reo:Constraint,--,"Constraint originating from laws, regulations (HIPAA, GDPR, FDA...). C_normative."
+core,Class,reo:RiskUncertainty,reo:Uncertainty,--,Condition that may occur and impact the system.
+core,Class,reo:ServiceCallInteraction,reo:Interaction,--,Interaction in which a participant invokes a service offered by another participant.
+core,Class,reo:StrategicGoal,reo:Goal,--,High-level objective (Gs). Always decomposed into sub-goals.
+core,Class,reo:SystemActor,reo:Actor,--,"Software or hardware system actor (EHR, API, etc.)."
+core,Class,reo:TechnicalConstraint,reo:Constraint,--,"Technical constraint (performance, interface, capacity). C_technical."
+core,Class,reo:Uncertainty,--,--,"Epistemic marker on an environment element. 
+    Element of U. Can block requirement derivation."
+core,Class,reo:UnknownUncertainty,reo:Uncertainty,--,Value or decision simply not yet available.
+core,Object property,reo:affects,reo:Uncertainty,owl:Thing,"Elements of E whose values or links depend on this premise. affects : U → P(E). Only elements in the evidence of a requirement (its references, seed lineage, applicable constraints, and context) are considered by the derivation contract: an unvalidated high- or critical-impact premise makes the decision CONDITIONAL, a low- or medium-impact one adds a reservation, and a refuted one sends the requirement to review."
+core,Object property,reo:appliesTo,reo:Constraint,owl:Thing,Elements governed by this constraint. applies_to ⊆ A ∪ I ∪ G.
+core,Object property,reo:blocks,reo:Uncertainty,reo:Goal,"Goals for which this uncertainty is a necessary premise: the goal, as stated, can be pursued only if the premise holds. blocks : U → P(G). For a requirement whose seed lineage contains such a goal, an unvalidated premise makes the decision CONDITIONAL and a refuted (rejected) premise makes it REJECTED. A premise that only influences a goal, without being necessary for it, is linked with reo:affects instead."
+core,Object property,reo:exchangesData,reo:Interaction,reo:DomainConcept,Domain concepts transferred. data_exchanged ⊆ E_D.
+core,Object property,reo:governedBy,reo:Interaction,reo:Constraint,Constraints that govern this interaction. constraints ⊆ C.
+core,Object property,reo:hasActiveActor,reo:Context,reo:Actor,Actors operating in this context. active_actors ⊆ A.
+core,Object property,reo:hasActiveConstraint,reo:Context,reo:Constraint,Active constraints in this context. active_constraints ⊆ C.
+core,Object property,reo:hasCapability,reo:Actor,reo:Action,Action that the actor is authorized to perform. capabilities ⊆ P(Actions).
+core,Object property,reo:hasException,reo:Constraint,reo:Context,Contexts in which this constraint does not apply. exceptions ⊆ X.
+core,Object property,reo:hasInvariant,reo:DomainConcept,reo:DomainInvariant,Links a domain concept to an invariant that its instances must satisfy.
+core,Object property,reo:hasProperty,reo:DomainConcept,reo:DomainProperty,Links a domain concept to one of its properties.
+core,Object property,reo:hasSource,reo:Interaction,reo:Actor,"Source of the interaction — ALWAYS an Actor. 
+    source ∈ A. Structural constraint: only actors initiate."
+core,Object property,reo:hasStakeholder,reo:Goal,reo:Actor,Actor concerned by this goal. stakeholders ⊆ A.
+core,Object property,reo:hasTarget,reo:Interaction,owl:Thing,Target: an Actor or a DomainConcept. target ∈ A ∪ E_D.
+core,Object property,reo:isResponsibleFor,reo:Actor,reo:Goal,Goal for which the actor is accountable. responsibilities ⊆ G.
+core,Object property,reo:isSubjectTo,reo:Actor,reo:Constraint,Constraint directly applicable to this actor. constraints ⊆ C.
+core,Object property,reo:refines,reo:Goal,reo:Goal,Relation R_G: this goal is a sub-goal of the object. Must be acyclic.
+core,Object property,reo:relatedTo,reo:DomainConcept,reo:DomainConcept,Relation R_D between domain concepts.
+core,Object property,reo:supersededBy,owl:Thing,owl:Thing,Identity-migration link from an element of an earlier snapshot to its successor element(s).
+core,Datatype property,reo:actorId,reo:Actor,xsd:string,"Unique identifier of the actor (e.g., PHY001)."
+core,Datatype property,reo:actorName,reo:Actor,xsd:string,Human-readable name of the actor.
+core,Datatype property,reo:authorityLevel,reo:Actor,xsd:string,Authority level defining the scope of permitted actions.
+core,Datatype property,reo:conceptId,reo:DomainConcept,xsd:string,Unique identifier of the domain concept.
+core,Datatype property,reo:conceptName,reo:DomainConcept,xsd:string,Human-readable name of the domain concept.
+core,Datatype property,reo:constraintId,reo:Constraint,xsd:string,Unique identifier of the constraint.
+core,Datatype property,reo:constraintName,reo:Constraint,xsd:string,Human-readable name of the constraint.
+core,Datatype property,reo:contextId,reo:Context,xsd:string,Unique identifier of the context.
+core,Datatype property,reo:contextName,reo:Context,xsd:string,Human-readable name of the context.
+core,Datatype property,reo:contextProperty,reo:Context,xsd:string,"Operational characteristics (time_critical, resource_constrained...)."
+core,Datatype property,reo:enforcementLevel,reo:Constraint,xsd:string,"hard (inviolable) | soft (preference, relaxable)."
+core,Datatype property,reo:formalExpression,reo:Constraint,xsd:string,Formal encoding machine-verifiable of the constraint.
+core,Datatype property,reo:formalLogic,reo:DomainInvariant,xsd:string,Formal encoding machine-verifiable.
+core,Datatype property,reo:goalId,reo:Goal,xsd:string,Unique identifier of the goal.
+core,Datatype property,reo:goalName,reo:Goal,xsd:string,Human-readable name of the goal.
+core,Datatype property,reo:hasAuthoritativeText,reo:RegulatoryConstraint,xsd:string,Reference to the source legal text (mandatory for C_normative).
+core,Datatype property,reo:impactLevel,reo:Uncertainty,xsd:string,low | medium | high | critical
+core,Datatype property,reo:interactionId,reo:Interaction,xsd:string,Unique identifier of the interaction.
+core,Datatype property,reo:interactionName,reo:Interaction,xsd:string,Human-readable name of the interaction.
+core,Datatype property,reo:invariantExpression,reo:DomainInvariant,xsd:string,"Human-readable expression (e.g., 'dosage > 0')."
+core,Datatype property,reo:isMandatory,reo:DomainProperty,xsd:boolean,Whether a value for the domain property is required.
+core,Datatype property,reo:naturalLanguage,reo:Constraint,xsd:string,Version readable by stakeholders.
+core,Datatype property,reo:organizationalUnit,reo:Actor,xsd:string,Organizational unit to which the actor belongs.
+core,Datatype property,reo:priority,reo:Goal,xsd:integer,"Priority from 1 (critical) to 10 (low). priority ∈ [1,10]."
+core,Datatype property,reo:propertyName,reo:DomainProperty,xsd:string,Name of the domain property.
+core,Datatype property,reo:propertyType,reo:DomainProperty,xsd:string,string | integer | decimal | boolean | enum | reference
+core,Datatype property,reo:protocol,reo:Interaction,xsd:string,"Communication standard (HL7-FHIR, REST, DICOM, SOAP...)."
+core,Datatype property,reo:referenceTarget,reo:DomainProperty,xsd:string,"If propertyType=reference, name of the target DomainConcept."
+core,Datatype property,reo:refinementType,reo:Goal,xsd:string,AND = all sub-goals required. OR = at least one is sufficient. ∅ = leaf goal.
+core,Datatype property,reo:severity,reo:DomainInvariant,xsd:string,error (blocks derivation) | warning (signal only).
+core,Datatype property,reo:spatialScope,reo:Context,xsd:string,Geographic or organizational boundary.
+core,Datatype property,reo:status,reo:Uncertainty,xsd:string,"unvalidated (the premise is open) | validated (the premise has been established) | rejected (the premise has been refuted, i.e. shown not to hold)."
+core,Datatype property,reo:subject,reo:Uncertainty,xsd:string,Description of what is uncertain.
+core,Datatype property,reo:temporalEnd,reo:Context,xsd:dateTime,End of the temporal validity of the context.
+core,Datatype property,reo:temporalStart,reo:Context,xsd:dateTime,Start of temporal validity. ∅ if permanent.
+core,Datatype property,reo:triggeringEvent,reo:Interaction,xsd:string,Condition that triggers the interaction.
+core,Datatype property,reo:uncertaintyId,reo:Uncertainty,xsd:string,Unique identifier of the uncertainty.
+core,Datatype property,reo:uncertaintyName,reo:Uncertainty,xsd:string,Human-readable name of the uncertainty.
+core,Datatype property,reo:validationPlan,reo:Uncertainty,xsd:string,Describes how and when this uncertainty will be resolved.
+core,Datatype property,reo:validatorKey,reo:Constraint,xsd:string,"Name of the registered validator that evaluates this constraint (e.g., authority-equals, consent-or-exception)."
+derivation,Class,reo:DecisionState,--,--,Requirement-level decision state assigned by the derivation contract.
+derivation,Class,reo:DerivationRecord,http://www.w3.org/ns/prov#Entity,--,"Persistent result of assessing one requirement against one
+    environment snapshot under one validation policy: decision state,
+    justifications and the trace of consulted environment elements."
+derivation,Class,reo:Requirement,--,--,"A candidate requirement statement together with its explicit
+    mapping to environment elements (seed goal, context, actor, actions, domain
+    concepts and properties, interaction, declared constraints). The text is kept
+    for presentation; the mapping is what the derivation contract evaluates."
+derivation,Class,reo:ValidationActivity,http://www.w3.org/ns/prov#Activity,--,Execution of the derivation contract that generated a derivation record. The elements it consulted form the record's trace.
+derivation,Object property,reo:assessedInContext,reo:Requirement,reo:Context,Context under which the requirement is assessed.
+derivation,Object property,reo:assesses,reo:DerivationRecord,reo:Requirement,Requirement assessed by the derivation record.
+derivation,Object property,reo:consulted,reo:ValidationActivity,owl:Thing,Environment element read by the validation activity; the set of consulted elements is the record's trace.
+derivation,Object property,reo:declaresHardConstraint,reo:Requirement,reo:Constraint,Constraint that the requirement explicitly declares as a mandatory obligation.
+derivation,Object property,reo:declaresSoftConstraint,reo:Requirement,reo:Constraint,Constraint that the requirement explicitly declares as an advisory obligation.
+derivation,Object property,reo:expectsInteractionSource,reo:Requirement,reo:Actor,Expected originating actor of the used interaction (direction check).
+derivation,Object property,reo:hasDecision,reo:DerivationRecord,reo:DecisionState,Decision state assigned by the derivation contract.
+derivation,Object property,reo:hasResponsibleActor,reo:Requirement,reo:Actor,Actor who must perform the required behaviour.
+derivation,Object property,reo:hasSeedGoal,reo:Requirement,reo:Goal,Goal from which the requirement is derived; anchors the seed slice.
+derivation,Object property,reo:performsAction,reo:Requirement,reo:Action,Action that the responsible actor performs; each one induces a capability obligation and may trigger rule antecedents.
+derivation,Object property,reo:refersToConcept,reo:Requirement,reo:DomainConcept,Domain concept referenced by the requirement statement.
+derivation,Object property,reo:refersToProperty,reo:Requirement,reo:DomainProperty,Domain property referenced by the statement; the owning concept is given by reo:hasProperty.
+derivation,Object property,reo:requiresAuthorityOf,reo:Requirement,reo:Actor,Actor whose authority level the requirement relies on.
+derivation,Object property,reo:supersedes,reo:DerivationRecord,reo:DerivationRecord,Link from a re-derived record to the record it replaces after an environment change.
+derivation,Object property,reo:usesInteraction,reo:Requirement,reo:Interaction,Interaction through which the required behaviour exchanges data.
+derivation,Datatype property,reo:environmentSnapshot,reo:DerivationRecord,xsd:string,"Content hash of the environment snapshot (canonical N-Triples, SHA-256)."
+derivation,Datatype property,reo:hasJustification,reo:DerivationRecord,xsd:string,Human-readable justification recorded for one obligation outcome.
+derivation,Datatype property,reo:policyVersion,reo:DerivationRecord,xsd:string,Version of the validation policy (decision order and validator registry) applied.
+derivation,Datatype property,reo:requirementId,reo:Requirement,xsd:string,Unique identifier of the requirement.
+derivation,Datatype property,reo:requirementText,reo:Requirement,xsd:string,Natural-language statement; not parsed by the reference checker.
+derivation,Datatype property,reo:requiresProtocol,reo:Requirement,xsd:boolean,Whether the used interaction must declare a protocol.

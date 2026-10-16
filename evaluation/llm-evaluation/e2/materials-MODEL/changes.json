@@ -1,0 +1,102 @@
+[
+ {
+  "case": "C01",
+  "remove_turtle": "",
+  "add_turtle": "ex:UNEW_blocks_G002 a reo:AssumptionUncertainty ;\n    reo:blocks ex:G002 ;\n    reo:impactLevel \"high\" ;\n    reo:status \"unvalidated\" ;\n    reo:subject \"New uncertainty.\" ;\n    reo:uncertaintyId \"UNEW-G002\" ;\n    reo:validationPlan \"Review.\" ."
+ },
+ {
+  "case": "C02",
+  "remove_turtle": "ex:Prop_Allergies reo:propertyType \"reference\" .",
+  "add_turtle": "ex:Prop_Allergies reo:propertyType \"boolean\" ."
+ },
+ {
+  "case": "C03",
+  "remove_turtle": "",
+  "add_turtle": "ex:D001_Medication reo:hasProperty ex:Prop_Allergies ."
+ },
+ {
+  "case": "C04",
+  "remove_turtle": "ex:Physician reo:authorityLevel \"licensed_medical_professional\" .",
+  "add_turtle": "ex:Physician reo:authorityLevel \"system_level\" ."
+ },
+ {
+  "case": "C05",
+  "remove_turtle": "",
+  "add_turtle": "ex:I002_EHRToPharmacy reo:governedBy ex:C004_DispensingLog ."
+ },
+ {
+  "case": "C06",
+  "remove_turtle": "ex:U001_DrugDBFrequency reo:status \"unvalidated\" .",
+  "add_turtle": "ex:U001_DrugDBFrequency reo:status \"rejected\" ."
+ },
+ {
+  "case": "C07",
+  "remove_turtle": "ex:X001_EmergencyDept reo:contextId \"X-001\" .",
+  "add_turtle": ""
+ },
+ {
+  "case": "C08",
+  "remove_turtle": "",
+  "add_turtle": "ex:C001_HIPAA reo:validatorKey \"authority-equals\" ."
+ },
+ {
+  "case": "C09",
+  "remove_turtle": "",
+  "add_turtle": "ex:CNEW_C002_FDA a reo:BusinessConstraint ;\n    reo:appliesTo ex:C002_FDA ;\n    reo:constraintId \"CNEW-C002_FDA\" ;\n    reo:constraintName \"New rule\" ;\n    reo:enforcementLevel \"hard\" ;\n    reo:formalExpression \"manual_review\" ;\n    reo:naturalLanguage \"A new rule.\" ."
+ },
+ {
+  "case": "C10",
+  "remove_turtle": "ex:EHR_System reo:authorityLevel \"system_level\" .",
+  "add_turtle": "ex:EHR_System reo:authorityLevel \"licensed_pharmacist\" ."
+ },
+ {
+  "case": "C11",
+  "remove_turtle": "ex:Prop_Contraindications a reo:DomainProperty ;\n    reo:isMandatory false ;\n    reo:propertyName \"contraindications\" ;\n    reo:propertyType \"reference\" ;\n    reo:referenceTarget \"KnownSubstances\" .",
+  "add_turtle": ""
+ },
+ {
+  "case": "C12",
+  "remove_turtle": "ex:Prop_MedicalHistory a reo:DomainProperty ;\n    reo:isMandatory false ;\n    reo:propertyName \"medical_history\" ;\n    reo:propertyType \"string\" .",
+  "add_turtle": ""
+ },
+ {
+  "case": "C13",
+  "remove_turtle": "ex:Pharmacist reo:hasCapability ex:Action_Dispense .",
+  "add_turtle": "ex:Pharmacist reo:hasCapability ex:Action_Diagnose ."
+ },
+ {
+  "case": "C14",
+  "remove_turtle": "ex:D002_Patient reo:relatedTo ex:D001_Medication .",
+  "add_turtle": "ex:D002_Patient reo:relatedTo ex:D002_Patient ."
+ },
+ {
+  "case": "C15",
+  "remove_turtle": "ex:Prop_Route a reo:DomainProperty .",
+  "add_turtle": ""
+ },
+ {
+  "case": "C16",
+  "remove_turtle": "",
+  "add_turtle": "ex:UNEW_affects_G004 a reo:AssumptionUncertainty ;\n    reo:affects ex:G004 ;\n    reo:impactLevel \"high\" ;\n    reo:status \"unvalidated\" ;\n    reo:subject \"New uncertainty.\" ;\n    reo:uncertaintyId \"UNEW-G004\" ;\n    reo:validationPlan \"Review.\" ."
+ },
+ {
+  "case": "C17",
+  "remove_turtle": "",
+  "add_turtle": "ex:C004_DispensingLog reo:enforcementLevel \"soft\" ."
+ },
+ {
+  "case": "C18",
+  "remove_turtle": "",
+  "add_turtle": "ex:C003_ResponseTime reo:appliesTo ex:D001_Medication ."
+ },
+ {
+  "case": "C19",
+  "remove_turtle": "",
+  "add_turtle": "ex:CNEW_D002_Patient a reo:BusinessConstraint ;\n    reo:appliesTo ex:D002_Patient ;\n    reo:constraintId \"CNEW-D002_Patient\" ;\n    reo:constraintName \"New rule\" ;\n    reo:enforcementLevel \"hard\" ;\n    reo:formalExpression \"manual_review\" ;\n    reo:naturalLanguage \"A new rule.\" ."
+ },
+ {
+  "case": "C20",
+  "remove_turtle": "",
+  "add_turtle": "ex:D002_Patient reo:hasInvariant ex:Inv_ContraindicationsKnown ."
+ }
+]

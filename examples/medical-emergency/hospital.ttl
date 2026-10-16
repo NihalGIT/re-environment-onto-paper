@@ -3,14 +3,16 @@
 @prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
 
 # ============================================================
 # COMPLETE INSTANCE — "Emergency Prescription" Example
-# Corresponds to the Complete Medical Example in the EE Modelisation document
+# Illustrative synthetic fixture (REO v1.1.0). Constraint identifiers are
+# illustrative labels, not authoritative interpretations of the regulations.
 #
 # Structure:
 #   A — 3 actors (Physician, Pharmacist, EHR_System)
-#   G — 6 goals (G001 to G005 + G000 root)
+#   G — 5 goals (G001 to G005)
 #   D — 2 concepts (Medication, Patient)
 #   C — 2 constraints (HIPAA, FDA)
 #   X — 1 context (Emergency Department)
@@ -107,9 +109,7 @@ ex:G001 a reo:StrategicGoal ;
     reo:refinementType "AND" ;
     reo:priority 1 ;
     reo:hasStakeholder ex:Physician ;
-    # G001 se raffine en G002, G003, G004, G005
-    # Note: refines goes from sub-goal to parent (upward convention)
-    # Inverse property used for readability
+    # G002-G005 refine G001 (reo:refines runs from sub-goal to parent)
     .
 
 ex:G002 a reo:OperationalGoal ;
@@ -252,7 +252,8 @@ ex:Inv_PatientIdUnique a reo:DomainInvariant ;
 ex:C001_HIPAA a reo:RegulatoryConstraint ;
     reo:constraintId "C-001" ;
     reo:constraintName "HIPAA Privacy Rule" ;
-    reo:formalExpression "access_record → has_consent(patient) ∨ emergency_override" ;
+    reo:formalExpression "access_records → has_consent(context) ∨ exception(context)" ;
+    reo:validatorKey "consent-or-exception" ;
     reo:naturalLanguage "Patient consent required before accessing medical records, unless emergency override applies." ;
     reo:enforcementLevel "hard" ;
     reo:hasAuthoritativeText "45 CFR Parts 160 and 164 (HIPAA Privacy Rule, HHS 2013)" ;
@@ -267,7 +268,8 @@ ex:C001_HIPAA a reo:RegulatoryConstraint ;
 ex:C002_FDA a reo:RegulatoryConstraint ;
     reo:constraintId "C-002" ;
     reo:constraintName "FDA Prescription Rules" ;
-    reo:formalExpression "prescribe(medication) → actor.authority = licensed_medical_professional" ;
+    reo:formalExpression "prescribe → actor.authority = licensed_medical_professional" ;
+    reo:validatorKey "authority-equals" ;
     reo:naturalLanguage "Only licensed medical professionals may prescribe controlled medications." ;
     reo:enforcementLevel "hard" ;
     reo:hasAuthoritativeText "21 CFR Part 1306 (DEA Prescription Requirements)" ;
@@ -306,7 +308,7 @@ ex:X001_EmergencyDept a reo:Context ;
 ex:U001_DrugDBFrequency a reo:UnknownUncertainty ;
     reo:uncertaintyId "U-001" ;
     reo:uncertaintyName "Drug DB Update Frequency" ;
-    reo:subject "Fréquence de mise à jour de la base de données médicaments — non encore déterminée." ;
+    reo:subject "Update frequency of the drug-interaction database (not yet determined)." ;
     reo:impactLevel "high" ;
     reo:status "unvalidated" ;
     reo:validationPlan "Infrastructure analysis scheduled Week 12." ;
@@ -360,3 +362,17 @@ ex:I002_EHRToPharmacy a reo:DataFlowInteraction ;
     reo:protocol "HL7-FHIR" ;
 
     reo:governedBy ex:C002_FDA .
+
+
+# ============================================================
+# Unique-name assertion for the named environment individuals
+# (REO v1.1.0). Lets an OWL reasoner detect, e.g., a second
+# source for an interaction (max-cardinality 1 on reo:hasSource).
+# ============================================================
+[] a owl:AllDifferent ;
+   owl:distinctMembers ( ex:Physician ex:Pharmacist ex:EHR_System
+                         ex:G001 ex:G002 ex:G003 ex:G004 ex:G005
+                         ex:D001_Medication ex:D002_Patient
+                         ex:C001_HIPAA ex:C002_FDA
+                         ex:X001_EmergencyDept ex:U001_DrugDBFrequency
+                         ex:I001_PhysicianToEHR ex:I002_EHRToPharmacy ) .

@@ -1,0 +1,31 @@
+[
+ {
+  "item": "E2-1",
+  "source": "study E2, case C09 (four analysts)",
+  "change": {
+   "case": "C09",
+   "remove_turtle": "",
+   "add_turtle": "ex:CNEW_C002_FDA a reo:BusinessConstraint ;\n    reo:appliesTo ex:C002_FDA ;\n    reo:constraintId \"CNEW-C002_FDA\" ;\n    reo:constraintName \"New rule\" ;\n    reo:enforcementLevel \"hard\" ;\n    reo:formalExpression \"manual_review\" ;\n    reo:naturalLanguage \"A new rule.\" ."
+  },
+  "requirement": "R001",
+  "analyst_answers": {
+   "DOC-1": {
+    "R001": "pending_review",
+    "note": "The new hard rule without a validator applies to C002, which only R001 references (declares), making R001 unchecked."
+   },
+   "DOC-2": {
+    "R001": "pending_review",
+    "note": "The new hard validator-less rule applies to C002, which only R001 declares as its hard constraint, so R001 goes to pending review."
+   },
+   "MODEL-1": {
+    "R001": "pending_review",
+    "note": "The new hard rule without a validator applies to C002_FDA, which only R001 references (declared), so R001 goes to review."
+   },
+   "MODEL-2": {
+    "R001": "conditional",
+    "note": "The new hard rule applies only to constraint C002, which is not a referenced element of any requirement, so it is applicable to none."
+   }
+  },
+  "implementation_observed": "conditional"
+ }
+]

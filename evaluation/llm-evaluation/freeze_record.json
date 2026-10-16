@@ -1,0 +1,94 @@
+{
+ "entries": [
+  {
+   "file": "E1_A1_suite.json",
+   "sha256": "c3d202cc95c5735980cb095acb92a88047aeaa9c2a9e31d6bafe0229ba89b549",
+   "bytes": 27612,
+   "frozen_utc": "2026-10-12T15:48:08+00:00"
+  },
+  {
+   "file": "E1_A2_suite.json",
+   "sha256": "33f3645ac2673139660b2eb2776c8ff3d1317902d91e7daff31ed48a319b6613",
+   "bytes": 28395,
+   "frozen_utc": "2026-10-12T15:48:08+00:00"
+  },
+  {
+   "file": "E1_A3_suite.json",
+   "sha256": "39d5bc2d9e87aae8256d1a92ec91359e9e894f8c4d9580c6e6b91d10786ba47c",
+   "bytes": 16214,
+   "frozen_utc": "2026-10-12T15:48:08+00:00"
+  },
+  {
+   "file": "E2_DOC-1_answers.json",
+   "sha256": "3bff69effc16023500c7ef414588644efd3f3178da88c5f16afad5e6e9941fe1",
+   "bytes": 7710,
+   "frozen_utc": "2026-10-12T15:48:08+00:00"
+  },
+  {
+   "file": "E2_DOC-2_answers.json",
+   "sha256": "175eebe816e54ba619c5a85adf306c548e8cb1c955b1dbc7cdd2a57cfcc521d2",
+   "bytes": 8039,
+   "frozen_utc": "2026-10-12T15:48:08+00:00"
+  },
+  {
+   "file": "E2_MODEL-1_answers.json",
+   "sha256": "357975a2ec7db0fb89011b35dfff9d4c77285018bae7e7acd36c567dbb24b2e2",
+   "bytes": 7777,
+   "frozen_utc": "2026-10-12T15:48:08+00:00"
+  },
+  {
+   "file": "E2_MODEL-2_answers.json",
+   "sha256": "11e7410e7fc36cbd7dd7c7a285f4e08e64f644540a5c52bd263abe7bca21d68d",
+   "bytes": 8017,
+   "frozen_utc": "2026-10-12T15:48:08+00:00"
+  },
+  {
+   "file": "E3_B1_coding.json",
+   "sha256": "776b936a66d5561b8979fc45307692c3494f34f27f569d96f14110717979956d",
+   "bytes": 8228,
+   "frozen_utc": "2026-10-12T15:48:08+00:00"
+  },
+  {
+   "file": "E3_B2_coding.json",
+   "sha256": "0aa12eab0ec319afe179a69fb334b0b28d58d46d36e321f164c91f0529fff7ce",
+   "bytes": 7277,
+   "frozen_utc": "2026-10-12T15:48:08+00:00"
+  },
+  {
+   "file": "ADJ_1_adjudication.json",
+   "sha256": "61c7f5d437df99175aaaaa151072c3056a907e860fc0ffbf08870f6e9b988a12",
+   "bytes": 3751,
+   "frozen_utc": "2026-10-12T15:54:41+00:00"
+  },
+  {
+   "file": "ADJ_2_adjudication.json",
+   "sha256": "1fa38df9386d9467b2d0226af1657826bb1668a9807bae112030c9b4a85ce219",
+   "bytes": 4251,
+   "frozen_utc": "2026-10-12T15:54:41+00:00"
+  },
+  {
+   "file": "E2_DOC-1r_answers.json",
+   "sha256": "15d31823fc64ceef528e8f44272a9e09b4cc8a17cc7b19bc3d4df480b2c41b9e",
+   "bytes": 7894,
+   "frozen_utc": "2026-10-12T16:01:04+00:00"
+  },
+  {
+   "file": "E2_DOC-2r_answers.json",
+   "sha256": "9feb37541b95a9efaf2aa9d36681c0fa4d5a189977f4c9b5a818555ae162d2f3",
+   "bytes": 8074,
+   "frozen_utc": "2026-10-12T16:01:04+00:00"
+  },
+  {
+   "file": "E2_MODEL-1r_answers.json",
+   "sha256": "a59a8cfbb9271bf225c58ca9b4f8d0e464f70747499d6d7d8c47905c70a301cf",
+   "bytes": 7965,
+   "frozen_utc": "2026-10-12T16:01:04+00:00"
+  },
+  {
+   "file": "E2_MODEL-2r_answers.json",
+   "sha256": "af161830dc89b4491654ca51f036b5895d462ffbb6c29b88d0cfc0a6bcc1526c",
+   "bytes": 8065,
+   "frozen_utc": "2026-10-12T16:01:04+00:00"
+  }
+ ]
+}

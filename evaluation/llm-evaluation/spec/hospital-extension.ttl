@@ -1,0 +1,52 @@
+@prefix reo:  <http://re-environment-onto.org/ontology#> .
+@prefix ex:   <http://hospital.example.org#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+
+# ============================================================
+# EXTENSION OF THE EMERGENCY-PRESCRIPTION FIXTURE (REO v1.1.0)
+#
+# Loaded together with hospital.ttl for the requirement-set evaluation.
+# It adds one context, one soft quality constraint and one hard business
+# constraint, so that the ten-requirement set exercises every decision
+# state. hospital.ttl alone is used for the 18 regression scenarios,
+# which therefore keep their original environment.
+# ============================================================
+
+ex:X002_Outpatient a reo:Context ;
+    reo:contextId "X-002" ;
+    reo:contextName "Outpatient Clinic" ;
+    reo:spatialScope "Outpatient_Wing_Hospital" ;
+    reo:contextProperty "time_critical=false" ;
+    reo:contextProperty "consent_obtained=false" ;
+    reo:hasActiveConstraint ex:C002_FDA ;
+    reo:hasActiveActor ex:Physician ;
+    reo:hasActiveActor ex:Pharmacist .
+
+# Soft quality constraint on the Physician-to-EHR exchange. No validator is
+# registered for it, so it produces a reservation rather than a rejection.
+ex:C003_ResponseTime a reo:QualityConstraint ;
+    reo:constraintId "C-003" ;
+    reo:constraintName "EHR response time" ;
+    reo:formalExpression "response_time(I001) <= 2s" ;
+    reo:naturalLanguage "Patient data should be returned to the physician within two seconds." ;
+    reo:enforcementLevel "soft" .
+
+ex:I001_PhysicianToEHR reo:governedBy ex:C003_ResponseTime .
+
+# Hard business constraint on the Pharmacist without a registered validator:
+# requirements that make it applicable must go to review.
+ex:C004_DispensingLog a reo:BusinessConstraint ;
+    reo:constraintId "C-004" ;
+    reo:constraintName "Dispensing log" ;
+    reo:formalExpression "dispense → logged(dispensing_event)" ;
+    reo:naturalLanguage "Every dispensing event must be recorded in the pharmacy log." ;
+    reo:enforcementLevel "hard" ;
+    reo:appliesTo ex:Pharmacist .
+
+ex:Pharmacist reo:isSubjectTo ex:C004_DispensingLog .
+
+[] a owl:AllDifferent ;
+   owl:distinctMembers ( ex:X002_Outpatient ex:C003_ResponseTime ex:C004_DispensingLog
+                         ex:X001_EmergencyDept ex:C001_HIPAA ex:C002_FDA ) .

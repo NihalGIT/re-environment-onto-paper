@@ -1,0 +1,61 @@
+{
+  "v1.0.0": {
+    "classes": 27,
+    "properties": 57,
+    "P04_unconnected": [],
+    "P08_missing_annotations": [
+      "CommunicationInteraction",
+      "ControlFlowInteraction",
+      "DataFlowInteraction",
+      "ServiceCallInteraction",
+      "actorName",
+      "conceptId",
+      "conceptName",
+      "constraintId",
+      "constraintName",
+      "contextId",
+      "contextName",
+      "goalId",
+      "goalName",
+      "hasInvariant",
+      "hasProperty",
+      "interactionId",
+      "interactionName",
+      "isMandatory",
+      "organizationalUnit",
+      "propertyName",
+      "temporalEnd",
+      "uncertaintyId",
+      "uncertaintyName"
+    ],
+    "P10_top_classes_without_disjointness": [
+      "Action",
+      "Actor",
+      "Constraint",
+      "Context",
+      "DomainConcept",
+      "DomainInvariant",
+      "DomainProperty",
+      "Goal",
+      "Interaction",
+      "Uncertainty"
+    ],
+    "P11_missing_domain_or_range": [],
+    "P13_no_inverse_declared_count": 18,
+    "P22_naming": [],
+    "P41_no_license": [
+      "http://re-environment-onto.org/ontology"
+    ]
+  },
+  "v1.1.0": {
+    "classes": 31,
+    "properties": 80,
+    "P04_unconnected": [],
+    "P08_missing_annotations": [],
+    "P10_top_classes_without_disjointness": [],
+    "P11_missing_domain_or_range": [],
+    "P13_no_inverse_declared_count": 34,
+    "P22_naming": [],
+    "P41_no_license": []
+  }
+}

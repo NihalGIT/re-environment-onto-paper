@@ -1,0 +1,9 @@
+{
+  "critical_uncertainty_affects_actor": "accepted",
+  "uncertainty_blocks_parent_goal": "accepted",
+  "blocking_premise_refuted": "accepted",
+  "interaction_direction_reversed": "accepted",
+  "interaction_exchanges_no_concept": "accepted",
+  "actor_neither_active_nor_responsible": "accepted",
+  "constraint_identifier_renamed": "pending_review"
+}

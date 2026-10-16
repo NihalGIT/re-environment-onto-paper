@@ -1,0 +1,12 @@
+{
+  "title": "RE-Environment Ontology (REO) v1.1.0 and EC-RE reference checker",
+  "upload_type": "software",
+  "license": "MIT",
+  "creators": [
+    {"name": "Salih, Nihal", "affiliation": "ENSIAS, Mohammed V University in Rabat"},
+    {"name": "El Youssr, Mohamed Amine", "affiliation": "ENSIAS, Mohammed V University in Rabat"},
+    {"name": "Fissaa, Tarik", "affiliation": "INPT, Rabat"},
+    {"name": "El Hamlaoui, Mahmoud", "affiliation": "ENSIAS, Mohammed V University in Rabat"}
+  ],
+  "keywords": ["requirements engineering", "ontology", "SHACL", "traceability", "change impact"]
+}

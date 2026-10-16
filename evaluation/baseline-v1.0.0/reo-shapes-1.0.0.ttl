@@ -1,0 +1,501 @@
+@prefix reo:  <http://re-environment-onto.org/ontology#> .
+@prefix sh:   <http://www.w3.org/ns/shacl#> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+
+# ============================================================
+# REO SHACL SHAPES — Instance Validation
+#
+# These shapes encode the validate(d, inst) function and the
+# integrity constraints of Section 1.3 of EE Modelisation.
+#
+# Each shape defines what a valid instance MUST have.
+# A violation = instance rejected before derivation.
+# ============================================================
+
+
+# ============================================================
+# SHAPES FOR A — ACTORS
+# ============================================================
+
+reo:ActorShape a sh:NodeShape ;
+    sh:targetClass reo:Actor ;
+    sh:name "ActorShape" ;
+    sh:description "Validates that an Actor is correctly defined." ;
+
+    # actorId required and not empty
+    sh:property [
+        sh:path reo:actorId ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:datatype xsd:string ;
+        sh:minLength 1 ;
+        sh:message "An Actor must have exactly one non-empty actorId." ;
+        sh:severity sh:Violation ;
+    ] ;
+
+    # actorName required
+    sh:property [
+        sh:path reo:actorName ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:datatype xsd:string ;
+        sh:minLength 1 ;
+        sh:message "An Actor must have an actorName." ;
+        sh:severity sh:Violation ;
+    ] ;
+
+    # authorityLevel required
+    sh:property [
+        sh:path reo:authorityLevel ;
+        sh:minCount 1 ;
+        sh:datatype xsd:string ;
+        sh:message "An Actor must have an authorityLevel (referential integrity A-C)." ;
+        sh:severity sh:Violation ;
+    ] ;
+
+    # isResponsibleFor: at least one Goal
+    sh:property [
+        sh:path reo:isResponsibleFor ;
+        sh:minCount 1 ;
+        sh:class reo:Goal ;
+        sh:message "An Actor must be responsible for at least one Goal (∀g ∈ G : ∃a ∈ A : responsible_for(a,g))." ;
+        sh:severity sh:Violation ;
+    ] .
+
+
+# ============================================================
+# SHAPES FOR G — GOALS
+# ============================================================
+
+reo:GoalShape a sh:NodeShape ;
+    sh:targetClass reo:Goal ;
+    sh:name "GoalShape" ;
+
+    # goalId required
+    sh:property [
+        sh:path reo:goalId ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:datatype xsd:string ;
+        sh:minLength 1 ;
+        sh:message "A Goal must have a unique goalId." ;
+        sh:severity sh:Violation ;
+    ] ;
+
+    # goalName required
+    sh:property [
+        sh:path reo:goalName ;
+        sh:minCount 1 ;
+        sh:datatype xsd:string ;
+        sh:message "A Goal must have a goalName." ;
+        sh:severity sh:Violation ;
+    ] ;
+
+    # priority between 1 and 10
+    sh:property [
+        sh:path reo:priority ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:datatype xsd:integer ;
+        sh:minInclusive 1 ;
+        sh:maxInclusive 10 ;
+        sh:message "priority ∈ [1,10] — 1 critical, 10 low." ;
+        sh:severity sh:Violation ;
+    ] ;
+
+    # refinementType : AND | OR | leaf
+    sh:property [
+        sh:path reo:refinementType ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:datatype xsd:string ;
+        sh:in ("AND" "OR" "leaf") ;
+        sh:message "refinementType must be AND, OR, or leaf." ;
+        sh:severity sh:Violation ;
+    ] ;
+
+    # At least one stakeholder
+    sh:property [
+        sh:path reo:hasStakeholder ;
+        sh:minCount 1 ;
+        sh:class reo:Actor ;
+        sh:message "A Goal must have at least one stakeholder (∀g ∈ G, ∀a_id ∈ g.stakeholders : ∃a ∈ A)." ;
+        sh:severity sh:Violation ;
+    ] .
+
+# Specific StrategicGoal Shape
+reo:StrategicGoalShape a sh:NodeShape ;
+    sh:targetClass reo:StrategicGoal ;
+    sh:name "StrategicGoalShape" ;
+
+    # A StrategicGoal must have at least one sub-goal
+    sh:property [
+        sh:path reo:refines ;
+        sh:minCount 0 ;
+    ] ;
+
+    # refinementType cannot be leaf for a StrategicGoal
+    sh:property [
+        sh:path reo:refinementType ;
+        sh:not [
+            sh:hasValue "leaf"
+        ] ;
+        sh:message "A StrategicGoal cannot be a leaf goal — it must be decomposed." ;
+        sh:severity sh:Violation ;
+    ] .
+
+# Acyclicity shape (detected by SPARQL — see sparql/acyclicity.sparql)
+# Note: Pure OWL/SHACL cannot express transitive acyclicity.
+# We use a SPARQL constraint for this.
+reo:GoalAcyclicityShape a sh:NodeShape ;
+    sh:targetClass reo:Goal ;
+    sh:sparql [
+        sh:message "Cycle detected in Goal hierarchy (∀g ∈ G : g ∉ descendants(g))." ;
+        sh:severity sh:Violation ;
+        sh:select """
+            PREFIX reo: <http://re-environment-onto.org/ontology#>
+            SELECT $this WHERE {
+                $this reo:refines+ $this .
+            }
+        """ ;
+    ] .
+
+
+# ============================================================
+# SHAPES FOR D — DOMAIN
+# ============================================================
+
+reo:DomainConceptShape a sh:NodeShape ;
+    sh:targetClass reo:DomainConcept ;
+    sh:name "DomainConceptShape" ;
+
+    sh:property [
+        sh:path reo:conceptId ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:datatype xsd:string ;
+        sh:message "A DomainConcept must have a conceptId." ;
+        sh:severity sh:Violation ;
+    ] ;
+
+    sh:property [
+        sh:path reo:conceptName ;
+        sh:minCount 1 ;
+        sh:datatype xsd:string ;
+        sh:message "A DomainConcept must have a conceptName." ;
+        sh:severity sh:Violation ;
+    ] ;
+
+    # At least one property
+    sh:property [
+        sh:path reo:hasProperty ;
+        sh:minCount 1 ;
+        sh:class reo:DomainProperty ;
+        sh:message "A DomainConcept must have at least one property." ;
+        sh:severity sh:Warning ;
+    ] .
+
+reo:DomainPropertyShape a sh:NodeShape ;
+    sh:targetClass reo:DomainProperty ;
+    sh:name "DomainPropertyShape" ;
+
+    sh:property [
+        sh:path reo:propertyName ;
+        sh:minCount 1 ;
+        sh:datatype xsd:string ;
+        sh:message "DomainProperty must have a propertyName." ;
+        sh:severity sh:Violation ;
+    ] ;
+
+    sh:property [
+        sh:path reo:propertyType ;
+        sh:minCount 1 ;
+        sh:datatype xsd:string ;
+        sh:in ("string" "integer" "decimal" "boolean" "enum" "reference") ;
+        sh:message "propertyType ∈ {string, integer, decimal, boolean, enum, reference}." ;
+        sh:severity sh:Violation ;
+    ] ;
+
+    sh:property [
+        sh:path reo:isMandatory ;
+        sh:minCount 1 ;
+        sh:datatype xsd:boolean ;
+        sh:message "isMandatory must be specified." ;
+        sh:severity sh:Violation ;
+    ] .
+
+reo:DomainInvariantShape a sh:NodeShape ;
+    sh:targetClass reo:DomainInvariant ;
+    sh:name "DomainInvariantShape" ;
+
+    sh:property [
+        sh:path reo:invariantExpression ;
+        sh:minCount 1 ;
+        sh:datatype xsd:string ;
+        sh:message "A DomainInvariant must have a human-readable expression." ;
+        sh:severity sh:Violation ;
+    ] ;
+
+    sh:property [
+        sh:path reo:severity ;
+        sh:minCount 1 ;
+        sh:datatype xsd:string ;
+        sh:in ("error" "warning") ;
+        sh:message "severity ∈ {error, warning}." ;
+        sh:severity sh:Violation ;
+    ] .
+
+
+# ============================================================
+# SHAPES FOR C — CONSTRAINTS
+# ============================================================
+
+reo:ConstraintShape a sh:NodeShape ;
+    sh:targetClass reo:Constraint ;
+    sh:name "ConstraintShape" ;
+
+    sh:property [
+        sh:path reo:constraintId ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:datatype xsd:string ;
+        sh:message "A Constraint must have a constraintId." ;
+        sh:severity sh:Violation ;
+    ] ;
+
+    sh:property [
+        sh:path reo:constraintName ;
+        sh:minCount 1 ;
+        sh:datatype xsd:string ;
+        sh:message "A Constraint must have a constraintName." ;
+        sh:severity sh:Violation ;
+    ] ;
+
+    sh:property [
+        sh:path reo:formalExpression ;
+        sh:minCount 1 ;
+        sh:datatype xsd:string ;
+        sh:message "A Constraint must have a machine-verifiable formalExpression." ;
+        sh:severity sh:Violation ;
+    ] ;
+
+    sh:property [
+        sh:path reo:naturalLanguage ;
+        sh:minCount 1 ;
+        sh:datatype xsd:string ;
+        sh:message "A Constraint must have a naturalLanguage version for stakeholders." ;
+        sh:severity sh:Violation ;
+    ] ;
+
+    sh:property [
+        sh:path reo:enforcementLevel ;
+        sh:minCount 1 ;
+        sh:datatype xsd:string ;
+        sh:in ("hard" "soft") ;
+        sh:message "enforcementLevel ∈ {hard, soft}." ;
+        sh:severity sh:Violation ;
+    ] ;
+
+    # Referential integrity: exceptions ⊆ X
+    sh:property [
+        sh:path reo:hasException ;
+        sh:class reo:Context ;
+        sh:message "Constraint exceptions must reference valid Contexts (∀c ∈ C, ∀x_id ∈ c.exceptions : ∃x ∈ X)." ;
+        sh:severity sh:Violation ;
+    ] .
+
+# RegulatoryConstraint must have an authoritative text
+reo:RegulatoryConstraintShape a sh:NodeShape ;
+    sh:targetClass reo:RegulatoryConstraint ;
+    sh:name "RegulatoryConstraintShape" ;
+
+    sh:property [
+        sh:path reo:hasAuthoritativeText ;
+        sh:minCount 1 ;
+        sh:datatype xsd:string ;
+        sh:message "A RegulatoryConstraint must cite its source legal text (∀c ∈ C_normative : ∃ authoritative_text(c))." ;
+        sh:severity sh:Violation ;
+    ] .
+
+
+# ============================================================
+# SHAPES FOR X — CONTEXTS
+# ============================================================
+
+reo:ContextShape a sh:NodeShape ;
+    sh:targetClass reo:Context ;
+    sh:name "ContextShape" ;
+
+    sh:property [
+        sh:path reo:contextId ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:datatype xsd:string ;
+        sh:message "A Context must have a contextId." ;
+        sh:severity sh:Violation ;
+    ] ;
+
+    sh:property [
+        sh:path reo:contextName ;
+        sh:minCount 1 ;
+        sh:datatype xsd:string ;
+        sh:message "A Context must have a contextName." ;
+        sh:severity sh:Violation ;
+    ] ;
+
+    # Referential integrity: active_constraints ⊆ C
+    sh:property [
+        sh:path reo:hasActiveConstraint ;
+        sh:class reo:Constraint ;
+        sh:message "Active constraints of a Context must be valid Constraints (∀x ∈ X, ∀c_id ∈ x.active_constraints : ∃c ∈ C)." ;
+        sh:severity sh:Violation ;
+    ] ;
+
+    # Referential integrity: active_actors ⊆ A
+    sh:property [
+        sh:path reo:hasActiveActor ;
+        sh:class reo:Actor ;
+        sh:message "Active actors of a Context must be valid Actors (∀x ∈ X, ∀a_id ∈ x.active_actors : ∃a ∈ A)." ;
+        sh:severity sh:Violation ;
+    ] .
+
+
+# ============================================================
+# SHAPES FOR U — UNCERTAINTIES
+# ============================================================
+
+reo:UncertaintyShape a sh:NodeShape ;
+    sh:targetClass reo:Uncertainty ;
+    sh:name "UncertaintyShape" ;
+
+    sh:property [
+        sh:path reo:uncertaintyId ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:datatype xsd:string ;
+        sh:message "An Uncertainty must have an uncertaintyId." ;
+        sh:severity sh:Violation ;
+    ] ;
+
+    sh:property [
+        sh:path reo:subject ;
+        sh:minCount 1 ;
+        sh:datatype xsd:string ;
+        sh:message "An Uncertainty must describe its subject." ;
+        sh:severity sh:Violation ;
+    ] ;
+
+    sh:property [
+        sh:path reo:impactLevel ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:datatype xsd:string ;
+        sh:in ("low" "medium" "high" "critical") ;
+        sh:message "impactLevel ∈ {low, medium, high, critical}." ;
+        sh:severity sh:Violation ;
+    ] ;
+
+    sh:property [
+        sh:path reo:status ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:datatype xsd:string ;
+        sh:in ("unvalidated" "validated" "rejected") ;
+        sh:message "status ∈ {unvalidated, validated, rejected}." ;
+        sh:severity sh:Violation ;
+    ] ;
+
+    # Referential integrity: blocks ⊆ G
+    sh:property [
+        sh:path reo:blocks ;
+        sh:class reo:Goal ;
+        sh:message "Blocked Goals must exist (∀u ∈ U, ∀g_id ∈ u.blocks : ∃g ∈ G)." ;
+        sh:severity sh:Violation ;
+    ] .
+
+    # If status=unvalidated and blocks not empty → warning for conditional derivation
+    # Informative rule:
+    # If an uncertainty is unvalidated and blocks goals,
+    # conditional requirements should be generated.
+    reo:UncertaintyShape a sh:NodeShape ;
+        sh:severity sh:Warning ;
+        sh:sparql [
+            sh:message "Unresolved uncertainty blocks Goals — conditional requirements generated." ;
+            sh:severity sh:Warning ;
+            sh:select """
+                PREFIX reo: <http://re-environment-onto.org/ontology#>
+                SELECT $this WHERE {
+                    $this reo:status "unvalidated" ;
+                          reo:blocks ?goal .
+                }
+            """ ;
+        ] .
+
+
+# ============================================================
+# SHAPES FOR I — INTERACTIONS
+# ============================================================
+
+reo:InteractionShape a sh:NodeShape ;
+    sh:targetClass reo:Interaction ;
+    sh:name "InteractionShape" ;
+
+    sh:property [
+        sh:path reo:interactionId ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:datatype xsd:string ;
+        sh:message "An Interaction must have an interactionId." ;
+        sh:severity sh:Violation ;
+    ] ;
+
+    sh:property [
+        sh:path reo:interactionName ;
+        sh:minCount 1 ;
+        sh:datatype xsd:string ;
+        sh:message "An Interaction must have an interactionName." ;
+        sh:severity sh:Violation ;
+    ] ;
+
+    # CRITICAL CONSTRAINT: source ∈ A always
+    sh:property [
+        sh:path reo:hasSource ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:class reo:Actor ;
+        sh:message "source ∈ A — only Actors initiate an Interaction (∀i ∈ I : source(i) ∈ A)." ;
+        sh:severity sh:Violation ;
+    ] ;
+
+    # target ∈ A ∪ E_D
+    sh:property [
+        sh:path reo:hasTarget ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:or (
+            [ sh:class reo:Actor ]
+            [ sh:class reo:DomainConcept ]
+        ) ;
+        sh:message "target ∈ A ∪ E_D — target must be an Actor or a DomainConcept." ;
+        sh:severity sh:Violation ;
+    ] ;
+
+    # Referential integrity: data_exchanged ⊆ E_D
+    sh:property [
+        sh:path reo:exchangesData ;
+        sh:class reo:DomainConcept ;
+        sh:message "data_exchanged ⊆ E_D — exchanged data must be valid DomainConcepts (∀i ∈ I, ∀d_id ∈ i.data_exchanged : ∃d ∈ D)." ;
+        sh:severity sh:Violation ;
+    ] ;
+
+    # protocol recommended
+    sh:property [
+        sh:path reo:protocol ;
+        sh:minCount 1 ;
+        sh:datatype xsd:string ;
+        sh:message "An Interaction should specify a protocol (HL7-FHIR, REST, DICOM...)." ;
+        sh:severity sh:Warning ;
+    ] .

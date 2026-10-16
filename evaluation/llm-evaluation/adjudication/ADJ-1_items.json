@@ -1,0 +1,24 @@
+[
+ {
+  "item": "E1-1",
+  "source": "author A1, scenario S12",
+  "scenario": {
+   "description": "Evolution and actor obligations: Prop_Route is renamed to Prop_AdministrationRoute (supersededBy), EHR_System loses Action_QueryDatabase, a Nurse without authority level is added; three new requirements (O3 fail, O6 direction fail, declared soft constraint).",
+   "remove_turtle": "ex:D001_Medication reo:hasProperty ex:Prop_Route .\nex:Prop_Route a reo:DomainProperty .\nex:Prop_Route reo:propertyName \"route\" .\nex:Prop_Route reo:propertyType \"enum\" .\nex:Prop_Route reo:isMandatory true .\nex:EHR_System reo:hasCapability ex:Action_QueryDatabase .",
+   "add_turtle": "ex:Prop_AdministrationRoute a reo:DomainProperty ;\n    reo:propertyName \"administration_route\" ;\n    reo:propertyType \"enum\" ;\n    reo:isMandatory true .\nex:D001_Medication reo:hasProperty ex:Prop_AdministrationRoute .\nex:Prop_Route reo:supersededBy ex:Prop_AdministrationRoute .\nex:Nurse a reo:HumanActor ;\n    reo:actorId \"NUR001\" ;\n    reo:actorName \"Nurse\" ;\n    reo:organizationalUnit \"EmergencyDept\" ;\n    reo:hasCapability ex:Action_AccessRecords ;\n    reo:isResponsibleFor ex:G003 ."
+  },
+  "requirement": "R009",
+  "author_expected": "accepted",
+  "author_rationale": "Identity migration: 'before re-derivation, references of q are rewritten through this map'; one successor = rename. R009's reference to Prop_Route is rewritten to Prop_AdministrationRoute, which exists and is owned by D001 -> O5 passes -> R009 stays accepted. O2: EHR_System no longer holds Action_QueryDatabase, performed by R007 -> fail -> rejected (H_f precedes the open U001). Other base requirements are unaffected (D001 keeps its other properties; the Nurse is not referenced). RX08: Nurse participates (responsible for G003 in L), holds the action, but has no authorityLevel -> O3 fail -> rejected. RX09: I002's source is EHR_System, not the expected Pharmacist -> O6 fail -> rejected (C004 unchecked is dominated). RX10: all hard obligations hold (C002 passes on authority in X002, C001 not triggered), the declared soft C003 has no validator -> reservation -> accepted with reservations.",
+  "implementation_observed": "rejected",
+  "implementation_justifications": [
+   "OK [hard]: actor Physician participates (active in X002_Outpatient)",
+   "OK [hard]: actor Physician has capability Action_Prescribe",
+   "OK [hard]: Physician has an authority level",
+   "OK [hard]: domain concept D001_Medication defined",
+   "FAIL [hard]: domain property Prop_Route undefined",
+   "NOT TRIGGERED [hard]: C001_HIPAA: antecedent 'access_records' not performed by the requirement",
+   "OK [hard]: C002_FDA: Physician has authority licensed_medical_professional"
+  ]
+ }
+]

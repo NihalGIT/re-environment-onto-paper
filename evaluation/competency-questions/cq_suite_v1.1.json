@@ -1,0 +1,567 @@
+[
+ {
+  "id": "CQ-A1",
+  "question": "Which actors are represented in the emergency-prescription environment?",
+  "kind": "select",
+  "query": "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> PREFIX reo: <http://re-environment-onto.org/ontology#> SELECT DISTINCT ?actor WHERE { ?actor rdf:type ?t . ?t rdfs:subClassOf* reo:Actor . } ORDER BY ?actor",
+  "expected": [
+   [
+    "EHR_System"
+   ],
+   [
+    "Pharmacist"
+   ],
+   [
+    "Physician"
+   ]
+  ],
+  "origin": "v1.0.0 suite",
+  "category": "lookup",
+  "graph": "base"
+ },
+ {
+  "id": "CQ-A2",
+  "question": "What authority level is asserted for the Physician?",
+  "kind": "select",
+  "query": "PREFIX reo: <http://re-environment-onto.org/ontology#> PREFIX ex: <http://hospital.example.org#> SELECT ?authority WHERE { ex:Physician reo:authorityLevel ?authority . }",
+  "expected": [
+   [
+    "licensed_medical_professional"
+   ]
+  ],
+  "origin": "v1.0.0 suite",
+  "category": "lookup",
+  "graph": "base"
+ },
+ {
+  "id": "CQ-G1",
+  "question": "Which actors are stakeholders of G005?",
+  "kind": "select",
+  "query": "PREFIX reo: <http://re-environment-onto.org/ontology#> PREFIX ex: <http://hospital.example.org#> SELECT ?actor WHERE { ex:G005 reo:hasStakeholder ?actor . } ORDER BY ?actor",
+  "expected": [
+   [
+    "EHR_System"
+   ],
+   [
+    "Pharmacist"
+   ]
+  ],
+  "origin": "v1.0.0 suite",
+  "category": "lookup",
+  "graph": "base"
+ },
+ {
+  "id": "CQ-G2",
+  "question": "Does the goal-refinement graph contain a cycle?",
+  "kind": "ask",
+  "query": "PREFIX reo: <http://re-environment-onto.org/ontology#> ASK { ?g reo:refines+ ?g . }",
+  "expected": false,
+  "origin": "v1.0.0 suite",
+  "category": "integrity",
+  "graph": "base"
+ },
+ {
+  "id": "CQ-D1",
+  "question": "Which domain properties belong to Medication?",
+  "kind": "select",
+  "query": "PREFIX reo: <http://re-environment-onto.org/ontology#> PREFIX ex: <http://hospital.example.org#> SELECT ?property WHERE { ex:D001_Medication reo:hasProperty ?property . } ORDER BY ?property",
+  "expected": [
+   [
+    "Prop_Contraindications"
+   ],
+   [
+    "Prop_Dosage"
+   ],
+   [
+    "Prop_MedName"
+   ],
+   [
+    "Prop_Route"
+   ]
+  ],
+  "origin": "v1.0.0 suite",
+  "category": "lookup",
+  "graph": "base"
+ },
+ {
+  "id": "CQ-C1",
+  "question": "Which hard constraints explicitly apply to the Physician?",
+  "kind": "select",
+  "query": "PREFIX reo: <http://re-environment-onto.org/ontology#> PREFIX ex: <http://hospital.example.org#> SELECT ?constraint WHERE { ?constraint reo:appliesTo ex:Physician ; reo:enforcementLevel \"hard\" . } ORDER BY ?constraint",
+  "expected": [
+   [
+    "C001_HIPAA"
+   ],
+   [
+    "C002_FDA"
+   ]
+  ],
+  "origin": "v1.0.0 suite",
+  "category": "lookup",
+  "graph": "base"
+ },
+ {
+  "id": "CQ-C2",
+  "question": "Is the Emergency Department declared as an exception to the HIPAA constraint?",
+  "kind": "ask",
+  "query": "PREFIX reo: <http://re-environment-onto.org/ontology#> PREFIX ex: <http://hospital.example.org#> ASK { ex:C001_HIPAA reo:hasException ex:X001_EmergencyDept . }",
+  "expected": true,
+  "origin": "v1.0.0 suite",
+  "category": "lookup",
+  "graph": "base"
+ },
+ {
+  "id": "CQ-X1",
+  "question": "Which constraints are explicitly active in the Emergency Department context?",
+  "kind": "select",
+  "query": "PREFIX reo: <http://re-environment-onto.org/ontology#> PREFIX ex: <http://hospital.example.org#> SELECT ?constraint WHERE { ex:X001_EmergencyDept reo:hasActiveConstraint ?constraint . } ORDER BY ?constraint",
+  "expected": [
+   [
+    "C002_FDA"
+   ]
+  ],
+  "origin": "v1.0.0 suite",
+  "category": "lookup",
+  "graph": "base"
+ },
+ {
+  "id": "CQ-X2",
+  "question": "Which actors are active in the Emergency Department context?",
+  "kind": "select",
+  "query": "PREFIX reo: <http://re-environment-onto.org/ontology#> PREFIX ex: <http://hospital.example.org#> SELECT ?actor WHERE { ex:X001_EmergencyDept reo:hasActiveActor ?actor . } ORDER BY ?actor",
+  "expected": [
+   [
+    "EHR_System"
+   ],
+   [
+    "Pharmacist"
+   ],
+   [
+    "Physician"
+   ]
+  ],
+  "origin": "v1.0.0 suite",
+  "category": "lookup",
+  "graph": "base"
+ },
+ {
+  "id": "CQ-U1",
+  "question": "Which unresolved uncertainty blocks G002?",
+  "kind": "select",
+  "query": "PREFIX reo: <http://re-environment-onto.org/ontology#> PREFIX ex: <http://hospital.example.org#> SELECT ?uncertainty WHERE { ?uncertainty reo:status \"unvalidated\" ; reo:blocks ex:G002 . } ORDER BY ?uncertainty",
+  "expected": [
+   [
+    "U001_DrugDBFrequency"
+   ]
+  ],
+  "origin": "v1.0.0 suite",
+  "category": "lookup",
+  "graph": "base"
+ },
+ {
+  "id": "CQ-U2",
+  "question": "Is there any goal-blocking uncertainty without a validation plan?",
+  "kind": "ask",
+  "query": "PREFIX reo: <http://re-environment-onto.org/ontology#> ASK { ?u reo:blocks ?g . FILTER NOT EXISTS { ?u reo:validationPlan ?plan . } }",
+  "expected": false,
+  "origin": "v1.0.0 suite",
+  "category": "integrity",
+  "graph": "base"
+ },
+ {
+  "id": "CQ-I1",
+  "question": "What are the source and target of the Physician-to-EHR interaction?",
+  "kind": "select",
+  "query": "PREFIX reo: <http://re-environment-onto.org/ontology#> PREFIX ex: <http://hospital.example.org#> SELECT ?source ?target WHERE { ex:I001_PhysicianToEHR reo:hasSource ?source ; reo:hasTarget ?target . }",
+  "expected": [
+   [
+    "Physician",
+    "EHR_System"
+   ]
+  ],
+  "origin": "v1.0.0 suite",
+  "category": "lookup",
+  "graph": "base"
+ },
+ {
+  "id": "CQ-I2",
+  "question": "Which domain concept is exchanged by I001?",
+  "kind": "select",
+  "query": "PREFIX reo: <http://re-environment-onto.org/ontology#> PREFIX ex: <http://hospital.example.org#> SELECT ?data WHERE { ex:I001_PhysicianToEHR reo:exchangesData ?data . }",
+  "expected": [
+   [
+    "D002_Patient"
+   ]
+  ],
+  "origin": "v1.0.0 suite",
+  "category": "lookup",
+  "graph": "base"
+ },
+ {
+  "id": "CQ-I3",
+  "question": "Is there any interaction in the fixture without a source or target?",
+  "kind": "ask",
+  "query": "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> PREFIX reo: <http://re-environment-onto.org/ontology#> ASK { ?i rdf:type ?t . ?t rdfs:subClassOf* reo:Interaction . FILTER (NOT EXISTS { ?i reo:hasSource ?s . } || NOT EXISTS { ?i reo:hasTarget ?tgt . }) }",
+  "expected": false,
+  "origin": "v1.0.0 suite",
+  "category": "integrity",
+  "graph": "base"
+ },
+ {
+  "id": "CQ-R1",
+  "question": "Is there any explicitly typed RegulatoryConstraint without authoritative text?",
+  "kind": "ask",
+  "query": "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> PREFIX reo: <http://re-environment-onto.org/ontology#> ASK { ?c rdf:type reo:RegulatoryConstraint . FILTER NOT EXISTS { ?c reo:hasAuthoritativeText ?text . } }",
+  "expected": false,
+  "origin": "v1.0.0 suite",
+  "category": "integrity",
+  "graph": "base"
+ },
+ {
+  "id": "CQ-C3",
+  "question": "Which constraints are applicable to R001 through any applicability route (declared, active in its context, governing its actor or interaction, or applying to one of its references)?",
+  "kind": "select",
+  "query": "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> PREFIX reo: <http://re-environment-onto.org/ontology#> PREFIX ex: <http://hospital.example.org#> PREFIX prov: <http://www.w3.org/ns/prov#> SELECT DISTINCT ?c WHERE { BIND(<http://hospital.example.org/requirements#R001> AS ?r) { ?r reo:declaresHardConstraint ?c } UNION { ?r reo:assessedInContext ?x . ?x reo:hasActiveConstraint ?c } UNION { ?r reo:hasResponsibleActor ?a . ?a reo:isSubjectTo ?c } UNION { ?r reo:usesInteraction ?i . ?i reo:governedBy ?c } UNION { ?r (reo:hasResponsibleActor|reo:requiresAuthorityOf|reo:refersToConcept|reo:refersToProperty|reo:usesInteraction|reo:performsAction|reo:expectsInteractionSource) ?e . ?c reo:appliesTo ?e } } ORDER BY ?c",
+  "expected": [
+   [
+    "C001_HIPAA"
+   ],
+   [
+    "C002_FDA"
+   ],
+   [
+    "C003_ResponseTime"
+   ]
+  ],
+  "origin": "v1.1.0 revision",
+  "category": "reasoning",
+  "graph": "full"
+ },
+ {
+  "id": "CQ-C4",
+  "question": "For which requirements is a rule governing their responsible actor waived by an exception for the requirement's context?",
+  "kind": "select",
+  "query": "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> PREFIX reo: <http://re-environment-onto.org/ontology#> PREFIX ex: <http://hospital.example.org#> PREFIX prov: <http://www.w3.org/ns/prov#> SELECT DISTINCT ?r WHERE { ?r reo:assessedInContext ?x ; reo:hasResponsibleActor ?a . ?a reo:isSubjectTo ?c . ?c reo:hasException ?x . } ORDER BY ?r",
+  "expected": [
+   [
+    "R001"
+   ],
+   [
+    "R002"
+   ],
+   [
+    "R003"
+   ],
+   [
+    "R004"
+   ],
+   [
+    "R007"
+   ],
+   [
+    "R010"
+   ]
+  ],
+  "origin": "v1.1.0 revision",
+  "category": "reasoning",
+  "graph": "full"
+ },
+ {
+  "id": "CQ-U3",
+  "question": "Which goals are blocked, directly or through an ancestor goal, by an unvalidated uncertainty?",
+  "kind": "select",
+  "query": "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> PREFIX reo: <http://re-environment-onto.org/ontology#> PREFIX ex: <http://hospital.example.org#> PREFIX prov: <http://www.w3.org/ns/prov#> SELECT DISTINCT ?g WHERE { ?g reo:refines* ?b . ?u reo:blocks ?b ; reo:status \"unvalidated\" . ?g a/rdfs:subClassOf* reo:Goal . } ORDER BY ?g",
+  "expected": [
+   [
+    "G002"
+   ]
+  ],
+  "origin": "v1.1.0 revision",
+  "category": "reasoning",
+  "graph": "full"
+ },
+ {
+  "id": "CQ-U4",
+  "question": "Which requirements depend, through their seed lineage, on an unvalidated uncertainty?",
+  "kind": "select",
+  "query": "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> PREFIX reo: <http://re-environment-onto.org/ontology#> PREFIX ex: <http://hospital.example.org#> PREFIX prov: <http://www.w3.org/ns/prov#> SELECT DISTINCT ?r WHERE { ?r reo:hasSeedGoal ?s . ?s reo:refines* ?b . ?u reo:blocks ?b ; reo:status \"unvalidated\" . } ORDER BY ?r",
+  "expected": [
+   [
+    "R001"
+   ],
+   [
+    "R007"
+   ]
+  ],
+  "origin": "v1.1.0 revision",
+  "category": "requirement",
+  "graph": "full"
+ },
+ {
+  "id": "CQ-A3",
+  "question": "Which requirements ask their responsible actor to perform an action outside its capabilities?",
+  "kind": "select",
+  "query": "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> PREFIX reo: <http://re-environment-onto.org/ontology#> PREFIX ex: <http://hospital.example.org#> PREFIX prov: <http://www.w3.org/ns/prov#> SELECT DISTINCT ?r ?act WHERE { ?r reo:hasResponsibleActor ?a ; reo:performsAction ?act . FILTER NOT EXISTS { ?a reo:hasCapability ?act } } ORDER BY ?r",
+  "expected": [
+   [
+    "R006",
+    "Action_Prescribe"
+   ]
+  ],
+  "origin": "v1.1.0 revision",
+  "category": "requirement",
+  "graph": "full"
+ },
+ {
+  "id": "CQ-I4",
+  "question": "Which requirements use an interaction that exchanges none of the concepts they reference?",
+  "kind": "select",
+  "query": "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> PREFIX reo: <http://re-environment-onto.org/ontology#> PREFIX ex: <http://hospital.example.org#> PREFIX prov: <http://www.w3.org/ns/prov#> SELECT DISTINCT ?r WHERE { ?r reo:usesInteraction ?i ; reo:refersToConcept ?c0 . FILTER NOT EXISTS { ?r reo:refersToConcept ?c . ?i reo:exchangesData ?c } } ORDER BY ?r",
+  "expected": [
+   [
+    "R010"
+   ]
+  ],
+  "origin": "v1.1.0 revision",
+  "category": "requirement",
+  "graph": "full"
+ },
+ {
+  "id": "CQ-I5",
+  "question": "Is there a requirement whose expected interaction source differs from the interaction's actual source?",
+  "kind": "ask",
+  "query": "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> PREFIX reo: <http://re-environment-onto.org/ontology#> PREFIX ex: <http://hospital.example.org#> PREFIX prov: <http://www.w3.org/ns/prov#> ASK { ?r reo:usesInteraction ?i ; reo:expectsInteractionSource ?s . FILTER NOT EXISTS { ?i reo:hasSource ?s } }",
+  "expected": false,
+  "origin": "v1.1.0 revision",
+  "category": "integrity",
+  "graph": "full"
+ },
+ {
+  "id": "CQ-X3",
+  "question": "Is there a requirement assessed in a context in which its responsible actor is neither active nor responsible for the seed lineage?",
+  "kind": "ask",
+  "query": "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> PREFIX reo: <http://re-environment-onto.org/ontology#> PREFIX ex: <http://hospital.example.org#> PREFIX prov: <http://www.w3.org/ns/prov#> ASK { ?r reo:assessedInContext ?x ; reo:hasResponsibleActor ?a ; reo:hasSeedGoal ?s . FILTER NOT EXISTS { ?x reo:hasActiveActor ?a } FILTER NOT EXISTS { ?s reo:refines* ?g . ?a reo:isResponsibleFor ?g } }",
+  "expected": false,
+  "origin": "v1.1.0 revision",
+  "category": "integrity",
+  "graph": "full"
+ },
+ {
+  "id": "CQ-D2",
+  "question": "Is there a requirement that references a domain property not owned by any concept it references?",
+  "kind": "ask",
+  "query": "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> PREFIX reo: <http://re-environment-onto.org/ontology#> PREFIX ex: <http://hospital.example.org#> PREFIX prov: <http://www.w3.org/ns/prov#> ASK { ?r reo:refersToProperty ?p . FILTER NOT EXISTS { ?r reo:refersToConcept ?c . ?c reo:hasProperty ?p } }",
+  "expected": false,
+  "origin": "v1.1.0 revision",
+  "category": "integrity",
+  "graph": "full"
+ },
+ {
+  "id": "CQ-G3",
+  "question": "Which goals have no requirement anchored in them?",
+  "kind": "select",
+  "query": "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> PREFIX reo: <http://re-environment-onto.org/ontology#> PREFIX ex: <http://hospital.example.org#> PREFIX prov: <http://www.w3.org/ns/prov#> SELECT ?g WHERE { ?g a/rdfs:subClassOf* reo:Goal . FILTER NOT EXISTS { ?r reo:hasSeedGoal ?g } } ORDER BY ?g",
+  "expected": [
+   [
+    "G001"
+   ]
+  ],
+  "origin": "v1.1.0 revision",
+  "category": "requirement",
+  "graph": "full"
+ },
+ {
+  "id": "CQ-P1",
+  "question": "Which requirements must be re-evaluated if the Physician changes (direct trace-based impact)?",
+  "kind": "select",
+  "query": "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> PREFIX reo: <http://re-environment-onto.org/ontology#> PREFIX ex: <http://hospital.example.org#> PREFIX prov: <http://www.w3.org/ns/prov#> SELECT DISTINCT ?r WHERE { ?rec reo:assesses ?req ; prov:wasGeneratedBy ?act . ?act reo:consulted ex:Physician . ?req reo:requirementId ?r . } ORDER BY ?r",
+  "expected": [
+   [
+    "R001"
+   ],
+   [
+    "R002"
+   ],
+   [
+    "R003"
+   ],
+   [
+    "R008"
+   ],
+   [
+    "R009"
+   ]
+  ],
+  "origin": "v1.1.0 revision",
+  "category": "provenance",
+  "graph": "full"
+ },
+ {
+  "id": "CQ-P2",
+  "question": "Which records are conditional, and which uncertainty did their validation consult?",
+  "kind": "select",
+  "query": "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> PREFIX reo: <http://re-environment-onto.org/ontology#> PREFIX ex: <http://hospital.example.org#> PREFIX prov: <http://www.w3.org/ns/prov#> SELECT ?r ?u WHERE { ?rec reo:hasDecision reo:Conditional ; reo:assesses ?req ; prov:wasGeneratedBy ?act . ?req reo:requirementId ?r . ?act reo:consulted ?u . ?u a/rdfs:subClassOf* reo:Uncertainty . } ORDER BY ?r ?u",
+  "expected": [
+   [
+    "R001",
+    "U001_DrugDBFrequency"
+   ],
+   [
+    "R007",
+    "U001_DrugDBFrequency"
+   ]
+  ],
+  "origin": "v1.1.0 revision",
+  "category": "provenance",
+  "graph": "full"
+ },
+ {
+  "id": "CQ-P3",
+  "question": "Which records consulted a constraint that names no validator, and what decision did they receive?",
+  "kind": "select",
+  "query": "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> PREFIX reo: <http://re-environment-onto.org/ontology#> PREFIX ex: <http://hospital.example.org#> PREFIX prov: <http://www.w3.org/ns/prov#> SELECT ?r ?c ?d WHERE { ?rec reo:assesses ?req ; reo:hasDecision ?d ; prov:wasGeneratedBy ?act . ?req reo:requirementId ?r . ?act reo:consulted ?c . ?c a/rdfs:subClassOf* reo:Constraint . FILTER NOT EXISTS { ?c reo:validatorKey ?k } } ORDER BY ?r ?c",
+  "expected": [
+   [
+    "R001",
+    "C003_ResponseTime",
+    "Conditional"
+   ],
+   [
+    "R002",
+    "C003_ResponseTime",
+    "AcceptedWithReservations"
+   ],
+   [
+    "R005",
+    "C004_DispensingLog",
+    "PendingReview"
+   ],
+   [
+    "R006",
+    "C004_DispensingLog",
+    "Rejected"
+   ],
+   [
+    "R008",
+    "C003_ResponseTime",
+    "Rejected"
+   ]
+  ],
+  "origin": "v1.1.0 revision",
+  "category": "provenance",
+  "graph": "full"
+ },
+ {
+  "id": "CQ-P4",
+  "question": "What decision did each requirement receive?",
+  "kind": "select",
+  "query": "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> PREFIX reo: <http://re-environment-onto.org/ontology#> PREFIX ex: <http://hospital.example.org#> PREFIX prov: <http://www.w3.org/ns/prov#> SELECT ?r ?d WHERE { ?rec reo:assesses ?req ; reo:hasDecision ?d . ?req reo:requirementId ?r . } ORDER BY ?r",
+  "expected": [
+   [
+    "R001",
+    "Conditional"
+   ],
+   [
+    "R002",
+    "AcceptedWithReservations"
+   ],
+   [
+    "R003",
+    "Accepted"
+   ],
+   [
+    "R004",
+    "Accepted"
+   ],
+   [
+    "R005",
+    "PendingReview"
+   ],
+   [
+    "R006",
+    "Rejected"
+   ],
+   [
+    "R007",
+    "Conditional"
+   ],
+   [
+    "R008",
+    "Rejected"
+   ],
+   [
+    "R009",
+    "Accepted"
+   ],
+   [
+    "R010",
+    "Rejected"
+   ]
+  ],
+  "origin": "v1.1.0 revision",
+  "category": "provenance",
+  "graph": "full"
+ },
+ {
+  "id": "CQ-P5",
+  "question": "Is there an accepted record whose validation consulted no element?",
+  "kind": "ask",
+  "query": "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> PREFIX reo: <http://re-environment-onto.org/ontology#> PREFIX ex: <http://hospital.example.org#> PREFIX prov: <http://www.w3.org/ns/prov#> ASK { ?rec reo:hasDecision ?d ; prov:wasGeneratedBy ?act . FILTER(?d IN (reo:Accepted, reo:AcceptedWithReservations)) FILTER NOT EXISTS { ?act reo:consulted ?e } }",
+  "expected": false,
+  "origin": "v1.1.0 revision",
+  "category": "integrity",
+  "graph": "full"
+ },
+ {
+  "id": "CQ-U5",
+  "question": "Which elements are affected by an uncertainty of high or critical impact, and by which uncertainty?",
+  "kind": "select",
+  "query": "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> PREFIX reo: <http://re-environment-onto.org/ontology#> PREFIX ex: <http://hospital.example.org#> PREFIX prov: <http://www.w3.org/ns/prov#> SELECT ?e ?u WHERE { ?u reo:affects ?e ; reo:impactLevel ?l . FILTER(?l IN (\"high\",\"critical\")) } ORDER BY ?e ?u",
+  "expected": [
+   [
+    "G002",
+    "U001_DrugDBFrequency"
+   ]
+  ],
+  "origin": "v1.1.0 revision",
+  "category": "reasoning",
+  "graph": "full"
+ },
+ {
+  "id": "CQ-D3",
+  "question": "Which invariants constrain the concepts related to Patient?",
+  "kind": "select",
+  "query": "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> PREFIX reo: <http://re-environment-onto.org/ontology#> PREFIX ex: <http://hospital.example.org#> PREFIX prov: <http://www.w3.org/ns/prov#> SELECT ?i WHERE { ex:D002_Patient reo:relatedTo ?c . ?c reo:hasInvariant ?i . } ORDER BY ?i",
+  "expected": [
+   [
+    "Inv_ContraindicationsKnown"
+   ],
+   [
+    "Inv_DosagePositive"
+   ]
+  ],
+  "origin": "v1.1.0 revision",
+  "category": "reasoning",
+  "graph": "full"
+ },
+ {
+  "id": "CQ-G5",
+  "question": "Is there a strategic goal declared as a leaf?",
+  "kind": "ask",
+  "query": "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> PREFIX reo: <http://re-environment-onto.org/ontology#> PREFIX ex: <http://hospital.example.org#> PREFIX prov: <http://www.w3.org/ns/prov#> ASK { ?g a reo:StrategicGoal ; reo:refinementType \"leaf\" . }",
+  "expected": false,
+  "origin": "v1.1.0 revision",
+  "category": "integrity",
+  "graph": "full"
+ },
+ {
+  "id": "CQ-I6",
+  "question": "Is there a data-flow interaction without a declared protocol?",
+  "kind": "ask",
+  "query": "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> PREFIX reo: <http://re-environment-onto.org/ontology#> PREFIX ex: <http://hospital.example.org#> PREFIX prov: <http://www.w3.org/ns/prov#> ASK { ?i a reo:DataFlowInteraction . FILTER NOT EXISTS { ?i reo:protocol ?p } }",
+  "expected": false,
+  "origin": "v1.1.0 revision",
+  "category": "integrity",
+  "graph": "full"
+ }
+]

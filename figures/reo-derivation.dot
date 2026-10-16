@@ -1,0 +1,31 @@
+digraph REO {
+ graph [rankdir=LR, nodesep=0.18, ranksep=0.3, splines=true, fontname="Helvetica", newrank=true];
+ node [shape=plain, fontname="Helvetica", fontsize=16];
+ edge [fontname="Helvetica", fontsize=14, arrowsize=0.7];
+ Action [label=<<table border="1" cellborder="0" cellspacing="0" cellpadding="3"><tr><td bgcolor="#ffffff"><b>Action</b></td></tr></table>>];
+ Actor [label=<<table border="1" cellborder="0" cellspacing="0" cellpadding="3"><tr><td bgcolor="#e8eef7"><b>Actor (A)</b></td></tr></table>>];
+ Constraint [label=<<table border="1" cellborder="0" cellspacing="0" cellpadding="3"><tr><td bgcolor="#e8eef7"><b>Constraint (C)</b></td></tr></table>>];
+ Context [label=<<table border="1" cellborder="0" cellspacing="0" cellpadding="3"><tr><td bgcolor="#e8eef7"><b>Context (X)</b></td></tr></table>>];
+ DecisionState [label=<<table border="1" cellborder="0" cellspacing="0" cellpadding="3" style="dashed"><tr><td bgcolor="#f2f2f2"><b>DecisionState</b></td></tr></table>>];
+ DerivationRecord [label=<<table border="1" cellborder="0" cellspacing="0" cellpadding="3" style="dashed"><tr><td bgcolor="#f2f2f2"><b>DerivationRecord</b></td></tr><tr><td align="left"><font point-size="12.5" color="#444444">3 datatype properties</font></td></tr></table>>];
+ DomainConcept [label=<<table border="1" cellborder="0" cellspacing="0" cellpadding="3"><tr><td bgcolor="#e8eef7"><b>DomainConcept (D)</b></td></tr></table>>];
+ DomainProperty [label=<<table border="1" cellborder="0" cellspacing="0" cellpadding="3"><tr><td bgcolor="#ffffff"><b>DomainProperty</b></td></tr></table>>];
+ Goal [label=<<table border="1" cellborder="0" cellspacing="0" cellpadding="3"><tr><td bgcolor="#e8eef7"><b>Goal (G)</b></td></tr></table>>];
+ Interaction [label=<<table border="1" cellborder="0" cellspacing="0" cellpadding="3"><tr><td bgcolor="#e8eef7"><b>Interaction (I)</b></td></tr></table>>];
+ Requirement [label=<<table border="1" cellborder="0" cellspacing="0" cellpadding="3" style="dashed"><tr><td bgcolor="#f2f2f2"><b>Requirement</b></td></tr><tr><td align="left"><font point-size="12.5" color="#444444">3 datatype properties</font></td></tr></table>>];
+ ValidationActivity [label=<<table border="1" cellborder="0" cellspacing="0" cellpadding="3" style="dashed"><tr><td bgcolor="#f2f2f2"><b>ValidationActivity</b></td></tr></table>>];
+ Any [shape=box, style="rounded,dotted", fontsize=14, label="any element\n(owl:Thing)"];
+ DerivationRecord -> DecisionState [label="hasDecision", style="dashed"];
+ DerivationRecord -> DerivationRecord [label="supersedes", style="dashed"];
+ DerivationRecord -> Requirement [label="assesses", style="dashed"];
+ Requirement -> Action [label="performsAction", style="dashed"];
+ Requirement -> Actor [label="expectsInteractionSource\nhasResponsibleActor\nrequiresAuthorityOf", style="dashed"];
+ Requirement -> Constraint [label="declaresHardConstraint\ndeclaresSoftConstraint", style="dashed"];
+ Requirement -> Context [label="assessedInContext", style="dashed"];
+ Requirement -> DomainConcept [label="refersToConcept", style="dashed"];
+ Requirement -> DomainProperty [label="refersToProperty", style="dashed"];
+ Requirement -> Goal [label="hasSeedGoal", style="dashed"];
+ Requirement -> Interaction [label="usesInteraction", style="dashed"];
+ ValidationActivity -> Any [label="consulted", style="dashed"];
+ DerivationRecord -> ValidationActivity [label="prov:wasGeneratedBy", style="dashed"];
+}

@@ -1,0 +1,10 @@
+R001 & G002 & X001 & conditional & 15 & U001\_DrugDBFrequency (unvalidated) blocks G002 \\
+R002 & G003 & X001 & acc.\ w/ reservations & 12 & soft constraint C003\_ResponseTime (via governedBy(I001\_PhysicianToEHR)) has no registered validator \\
+R003 & G004 & X001 & accepted & 9 & all obligations hold \\
+R004 & G005 & X001 & accepted & 9 & all obligations hold \\
+R005 & G005 & X001 & pending review & 12 & hard constraint C004\_DispensingLog (via isSubjectTo(Pharmacist)) has no registered validator \\
+R006 & G004 & X001 & rejected & 9 & actor Pharmacist lacks capability Action\_Prescribe \\
+R007 & G002 & X001 & conditional & 10 & U001\_DrugDBFrequency (unvalidated) blocks G002 \\
+R008 & G003 & X002 & rejected & 13 & C001\_HIPAA: consent required in X002\_Outpatient, which is not an exception and asserts no consent \\
+R009 & G004 & X002 & accepted & 10 & all obligations hold \\
+R010 & G005 & X001 & rejected & 10 & I002\_EHRToPharmacy exchanges none of the referenced concepts \\

@@ -1,0 +1,35 @@
+digraph REO {
+ graph [rankdir=LR, nodesep=0.18, ranksep=0.3, splines=true, fontname="Helvetica", newrank=true];
+ node [shape=plain, fontname="Helvetica", fontsize=16];
+ edge [fontname="Helvetica", fontsize=14, arrowsize=0.7];
+ Action [label=<<table border="1" cellborder="0" cellspacing="0" cellpadding="3"><tr><td bgcolor="#ffffff"><b>Action</b></td></tr></table>>];
+ Actor [label=<<table border="1" cellborder="0" cellspacing="0" cellpadding="3"><tr><td bgcolor="#e8eef7"><b>Actor (A)</b></td></tr><tr><td align="left"><font point-size="14">HumanActor<br/>OrganizationActor<br/>SystemActor</font></td></tr><tr><td align="left"><font point-size="12.5" color="#444444">4 datatype properties</font></td></tr></table>>];
+ Constraint [label=<<table border="1" cellborder="0" cellspacing="0" cellpadding="3"><tr><td bgcolor="#e8eef7"><b>Constraint (C)</b></td></tr><tr><td align="left"><font point-size="14">BusinessConstraint<br/>QualityConstraint<br/>RegulatoryConstraint<br/>TechnicalConstraint</font></td></tr><tr><td align="left"><font point-size="12.5" color="#444444">7 datatype properties</font></td></tr></table>>];
+ Context [label=<<table border="1" cellborder="0" cellspacing="0" cellpadding="3"><tr><td bgcolor="#e8eef7"><b>Context (X)</b></td></tr><tr><td align="left"><font point-size="12.5" color="#444444">6 datatype properties</font></td></tr></table>>];
+ DomainConcept [label=<<table border="1" cellborder="0" cellspacing="0" cellpadding="3"><tr><td bgcolor="#e8eef7"><b>DomainConcept (D)</b></td></tr><tr><td align="left"><font point-size="12.5" color="#444444">2 datatype properties</font></td></tr></table>>];
+ DomainInvariant [label=<<table border="1" cellborder="0" cellspacing="0" cellpadding="3"><tr><td bgcolor="#ffffff"><b>DomainInvariant</b></td></tr><tr><td align="left"><font point-size="12.5" color="#444444">3 datatype properties</font></td></tr></table>>];
+ DomainProperty [label=<<table border="1" cellborder="0" cellspacing="0" cellpadding="3"><tr><td bgcolor="#ffffff"><b>DomainProperty</b></td></tr><tr><td align="left"><font point-size="12.5" color="#444444">4 datatype properties</font></td></tr></table>>];
+ Goal [label=<<table border="1" cellborder="0" cellspacing="0" cellpadding="3"><tr><td bgcolor="#e8eef7"><b>Goal (G)</b></td></tr><tr><td align="left"><font point-size="14">OperationalGoal<br/>StrategicGoal</font></td></tr><tr><td align="left"><font point-size="12.5" color="#444444">4 datatype properties</font></td></tr></table>>];
+ Interaction [label=<<table border="1" cellborder="0" cellspacing="0" cellpadding="3"><tr><td bgcolor="#e8eef7"><b>Interaction (I)</b></td></tr><tr><td align="left"><font point-size="14">CommunicationInteraction<br/>ControlFlowInteraction<br/>DataFlowInteraction<br/>ServiceCallInteraction</font></td></tr><tr><td align="left"><font point-size="12.5" color="#444444">4 datatype properties</font></td></tr></table>>];
+ Uncertainty [label=<<table border="1" cellborder="0" cellspacing="0" cellpadding="3"><tr><td bgcolor="#e8eef7"><b>Uncertainty (U)</b></td></tr><tr><td align="left"><font point-size="14">AmbiguityUncertainty<br/>AssumptionUncertainty<br/>RiskUncertainty<br/>UnknownUncertainty</font></td></tr><tr><td align="left"><font point-size="12.5" color="#444444">6 datatype properties</font></td></tr></table>>];
+ Any [shape=box, style="rounded,dotted", fontsize=14, label="any element\n(owl:Thing)"];
+ Actor -> Action [label="hasCapability"];
+ Actor -> Constraint [label="isSubjectTo"];
+ Actor -> Goal [label="isResponsibleFor"];
+ Any -> Any [label="supersededBy"];
+ Constraint -> Any [label="appliesTo"];
+ Constraint -> Context [label="hasException"];
+ Context -> Actor [label="hasActiveActor"];
+ Context -> Constraint [label="hasActiveConstraint"];
+ DomainConcept -> DomainConcept [label="relatedTo"];
+ DomainConcept -> DomainInvariant [label="hasInvariant"];
+ DomainConcept -> DomainProperty [label="hasProperty"];
+ Goal -> Actor [label="hasStakeholder"];
+ Goal -> Goal [label="refines"];
+ Interaction -> Actor [label="hasSource"];
+ Interaction -> Any [label="hasTarget"];
+ Interaction -> Constraint [label="governedBy"];
+ Interaction -> DomainConcept [label="exchangesData"];
+ Uncertainty -> Any [label="affects"];
+ Uncertainty -> Goal [label="blocks"];
+}

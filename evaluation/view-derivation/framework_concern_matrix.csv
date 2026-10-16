@@ -1,0 +1,13 @@
+framework,bibkey,actor,stakeholder,goal,quality,domain_entity,domain_property,constraint,context,time,location,uncertainty,interaction,action,resource,process,event,provenance
+Reference model WRSPM (Zave-Jackson; Gunter et al.),zave1997dark;gunter2000reference,0,0,0,0,2,2,1,0,0,0,0,2,0,0,0,1,0
+Problem Frames,jackson2001problemframes,1,0,0,0,2,1,1,0,0,0,0,2,0,0,0,1,0
+KAOS (goals; agents; obstacles),dardenne1993kaos;vanlamsweerde2001gore;vanlamsweerde2000obstacles,2,0,2,1,2,2,1,0,0,0,2,1,2,0,0,1,0
+i* / iStar 2.0,yu1997istar;dalpiaz2016istar,2,1,2,2,0,0,0,0,0,0,0,2,2,2,0,0,0
+CORE ontology for RE,jureta2008core,0,1,2,2,0,2,2,0,0,0,0,0,2,0,0,0,0
+Context (Dey),dey2001context,1,0,0,0,1,0,0,2,2,2,0,0,1,1,0,0,0
+Contextual goal models,ali2010contextual,2,0,2,1,0,1,0,2,0,0,0,0,2,0,0,0,0
+Uncertainty taxonomy for adaptive systems,ramirez2012uncertainty,0,0,0,0,0,0,0,1,0,0,2,0,0,0,0,0,0
+RELAX,whittle2009relax,0,0,0,1,0,0,1,1,2,0,2,0,0,0,0,1,0
+ISO/IEC/IEEE 29148,iso29148,1,2,1,2,1,0,2,2,0,0,1,2,0,0,1,0,1
+SysML v2 requirements,omg2024sysmlv2,2,2,1,0,1,0,2,0,0,0,1,1,0,0,0,0,0
+Traceability reference model,ramesh2001traceability,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,2

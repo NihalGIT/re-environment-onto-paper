@@ -1,0 +1,9 @@
+{
+  "regression_cases": 37,
+  "regression_changed_by_vocabulary": [],
+  "cq_total": 34,
+  "cq_changed_by_vocabulary": [],
+  "instance_recognized_as_constraint": true,
+  "R001_with_instance": "pending_review",
+  "pass": true
+}
