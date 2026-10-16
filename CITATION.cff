@@ -1,0 +1,16 @@
+cff-version: 1.2.0
+message: "If you use REO, please cite the accompanying article."
+title: "RE-Environment Ontology (REO) and EC-RE reference checker"
+version: 1.1.0
+date-released: 2026-10-07
+license: MIT
+repository-code: "https://github.com/NihalGIT/re-environment-onto-paper"
+authors:
+  - family-names: Salih
+    given-names: Nihal
+  - family-names: El Youssr
+    given-names: Mohamed Amine
+  - family-names: Fissaa
+    given-names: Tarik
+  - family-names: El Hamlaoui
+    given-names: Mahmoud
